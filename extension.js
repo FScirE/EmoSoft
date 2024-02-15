@@ -22,7 +22,15 @@ function activate(context) {
 	//});
 	//context.subscriptions.push(disposable);
 
-	vscode.window.showInformationMessage('Hello World from emoide!');
+	var newItem = vscode.window.createWebviewPanel(
+		'fcLevels', 
+		'Focus and Calmness', 
+		vscode.ViewColumn.Beside,
+		{ enableScripts: true }
+	);
+	const styleSrc = newItem.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, ...['webview.css']));
+	newItem.webview.html = getWebViewHTML(40, 60, styleSrc)
+	context.subscriptions.push(newItem)
 }
 
 // This method is called when your extension is deactivated
@@ -31,4 +39,34 @@ function deactivate() {}
 module.exports = {
 	activate,
 	deactivate
+}
+
+function getWebViewHTML(focus, calm, styleSrc) {
+	return `
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="${styleSrc}">
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<p>Header</p>
+			</div>
+			<div class="ai">
+				<p>AI</p>
+			</div>
+			<div class="focus">
+				<p>Focus </p>
+				<progress value=${focus} max=100></progress>
+			</div>
+			<div class="calm">
+				<p>Calm</p>
+				<progress value=${calm} max=100></progress>
+			</div>
+		</div>
+	</body>
+	</html>
+	`
 }
