@@ -17,8 +17,9 @@ export async function retrieveResponse(preset, msg) {
     });
     for await (const chunk of stream) {
         var output = chunk.choices[0]?.delta?.content || "";
-        outputList.push(output)
+        outputList.push(output);
         process.stdout.write(chunk.choices[0]?.delta?.content || "");
+        
 
     }
     return outputList;

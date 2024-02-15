@@ -5,11 +5,12 @@
 //  */
 
 class AIhandler {
-    constructor(codeinput, standardinput, output){
+    constructor(codeinput, standardinput){
         
         this.codeinput = codeinput;
         this.standardinput = standardinput;
-        this.output = output;
+        this.output = [];
+        
     }
     //WORK IN PROGESS,
     retrieveContext(){
@@ -17,29 +18,28 @@ class AIhandler {
     };
     //Typ klar behövs test
     sendMsgToAI(preset,msg){
-        
-        import ('./openai-test.mjs').then(module => {
-            this.output = module.retrieveResponse(preset,msg); 
+        // sends a message and preset to the AI. Returns an array contains all words in each slot. 
+        import ('./openai-test.mjs').then(async module => {
+            this.output.push(await module.retrieveResponse(preset,msg)); 
+            console.log(this.output);
         });
+       
  
     };
 
     sendMsgToUnfocuesedDev(){
-        import ('./openai-test.mjs').then(module => {
-            this.output = module.retrieveResponse(this.CONTEXT_HELPADEV,this.MESSAGE_HELP_UNFOCUSED_DEV); 
-        });
+        // sends a message to the AI with standard message telling the user to focus. Returns an array contains all words in each slot. 
+        this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_HELP_UNFOCUSED_DEV);
     }
 
     sendMsgToAggitatedDev(){
-        import ('./openai-test.mjs').then(module => {
-            this.output = module.retrieveResponse(this.CONTEXT_HELPADEV,this.MESSAGE_CALM_DOWN); 
-        });
+        // sends a message to the AI with standard message telling the user to calm down. Returns an array contains all words in each slot. 
+        this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_CALM_DOWN);
     }
 
     sendMsgToTakeBreak(){
-        import ('./openai-test.mjs').then(module => {
-            this.output = module.retrieveResponse(this.CONTEXT_HELPADEV,this.MESSAGE_TAKE_BREAK); 
-        });
+        // sends a message to the AI with standard message telling the user to take a break. Returns an array contains all words in each slot. 
+        this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_TAKE_BREAK);
     }
     
     // CONSTANTS 
@@ -49,5 +49,9 @@ class AIhandler {
     CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
 
 }
+const ai = new AIhandler;
+ai.sendMsgToAggitatedDev();
+
+
 
 
