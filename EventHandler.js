@@ -6,6 +6,7 @@ class EventHandler {
     allowNotificationFocus = true 
     allowNotificationCalm = true
 
+    // Check focus level and notifies user when focus drops below 30%
     checkFocus() {
         var focus = 50 // Ska vara focus = DataHandler.getFocus
         if (focus < 30 && this.allowNotificationFocus == true) {
@@ -17,10 +18,11 @@ class EventHandler {
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
             this.allowNotificationFocus = false
         }
-        if (this.allowNotificationFocus == false && focus > 40) {
+        if (this.allowNotificationFocus == false && focus > 40) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
         }
     }
+    // Check calmness level and notifies user when calmness drops below 30%
     checkCalm() {
         var calm = 50 // Ska vara calm = DataHandler.getCalm
         if (calm < 60 && this.allowNotificationCalm == true) {
@@ -32,7 +34,7 @@ class EventHandler {
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
             this.allowNotificationCalm = false
         }
-        if (this.allowNotificationCalm == false && calm > 40) {
+        if (this.allowNotificationCalm == false && calm > 40) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
         }
     }
