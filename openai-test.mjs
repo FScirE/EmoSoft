@@ -19,8 +19,7 @@ export async function retrieveResponse(preset, msg) {
         var output = chunk.choices[0]?.delta?.content || "";
         outputList.push(output);
         process.stdout.write(chunk.choices[0]?.delta?.content || "");
-        
-
     }
+    
     return outputList;
 }
