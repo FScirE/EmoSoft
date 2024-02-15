@@ -35,6 +35,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "dotenv": "^16.4.4",
     "vscode": "^1.1.34"
   }
 }
