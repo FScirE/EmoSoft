@@ -1,8 +1,8 @@
 
-const vscode = require('vscode');
-/**
- * @param {vscode.ExtensionContext} context
- */
+// const vscode = require('vscode');
+// /**
+//  * @param {vscode.ExtensionContext} context
+//  */
 
 class AIhandler {
     constructor(codeinput, standardinput, output){
@@ -11,23 +11,43 @@ class AIhandler {
         this.standardinput = standardinput;
         this.output = output;
     }
+    //WORK IN PROGESS,
     retrieveContext(){
         
     };
-    
-    sendMsgToAI(context,msg){
-        var inputToAI=context+msg;
+    //Typ klar behövs test
+    sendMsgToAI(preset,msg){
+        
         import ('./openai-test.mjs').then(module => {
-            module.main(); 
+            this.output = module.retrieveResponse(preset,msg); 
         });
-        (async () => {
-            const module = await import('./openai-test.mjs');
-            module.main(inputToAI); // Kör funktionen från den importerade modulen
-        })();
+ 
     };
+
+    sendMsgToUnfocuesedDev(){
+        import ('./openai-test.mjs').then(module => {
+            this.output = module.retrieveResponse(this.CONTEXT_HELPADEV,this.MESSAGE_HELP_UNFOCUSED_DEV); 
+        });
+    }
+
+    sendMsgToAggitatedDev(){
+        import ('./openai-test.mjs').then(module => {
+            this.output = module.retrieveResponse(this.CONTEXT_HELPADEV,this.MESSAGE_CALM_DOWN); 
+        });
+    }
+
+    sendMsgToTakeBreak(){
+        import ('./openai-test.mjs').then(module => {
+            this.output = module.retrieveResponse(this.CONTEXT_HELPADEV,this.MESSAGE_TAKE_BREAK); 
+        });
+    }
+    
     // CONSTANTS 
-    MESSAGE_HELP_UNFOCUSED_DEV = "Hjälp en programmerare som är ofokuserad att bli mer fokuserad. Ge 3 exempel på vad han kan göra med två meningar per exempel. "
-    MESSAGE_TAKE_BREAK = "Generera ett vänligt meddelande som uppmanar en programmerare till att ta en paus. "
-    CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. "
+    MESSAGE_HELP_UNFOCUSED_DEV = "Help a programmer who is unfocused become more focused. Give 3 example of what he can do to become more focused with two sentances.  "
+    MESSAGE_TAKE_BREAK = "Generate a friendly messsage telling a developer to take a short brake. 2 sentances. "
+    MESSAGE_CALM_DOWN = "Help a programmer who is not calm to calm down in a friendly manner, but not weird. 2 sentaces. "
+    CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
+
 }
+
 
