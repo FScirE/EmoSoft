@@ -1,68 +1,19 @@
 const { Neurosity } = require("@neurosity/sdk");
-require("dotenv").config();
-
-// var do_exit = false;
-
-// var start_time = (new Date()).getTime()
-
-// var session_data = [[], [], [], [], [], [], [], []]
-
-
-// //TODO: remove check_for_exit and testfuncignoredis, and also do_exit, start_time, session_data
-// const check_for_exit = async () => {
-//     if ((new Date()).getTime() > start_time + 10000) { // .getTime() returns milliseconds
-//         console.log("Exiting!");
-//         exit(0) // Cannot find name exit, but that's okay,  because it works anyway lol (albeit with the wrong exit code)
-//     }
-// };
-
-// const testfuncignoredis = async () => {
-//     return;
-//     await neurosity
-//         .login({
-//         email,
-//         password
-//         })
-//         .catch((error) => {
-//         console.log(error);
-//         throw new Error(error);
-//         });
-//     console.log("Logged in");
-    
-//     return;
-//     console.log("running brainwaves test stuff, this function should probably return before this");
-//         // raw, rawUnfiltered and several other options exist
-//     neurosity.brainwaves("raw").subscribe((data) => {
-        
-//         for (var i = 0; i < data.data.length; i++) {
-//             for (var j = 0; j < data.data[i].length; j++) {
-//                 session_data[i].push(data.data[i][j])
-//             }
-//         }
-
-//         console.log(session_data);
-        
-//     });
-
-//     var exit_checker = setInterval(check_for_exit, 1000);
-
-//     console.log("exiting??")
-// };
-
+require("dotenv").config({path:"./envNeurosity.env"});
 
 
 /**
  * DataHandler object. Needs "await dataHandler.init();" before use!
+ * TODO: make password safe and handle it correctly
  * @class
  */
 class DataHandler {
     #password = ""; // private property
 
     constructor() {
-        this.deviceId = process.env.DEVICE_ID || "";
-        this.email = process.env.EMAIL || "";
+        this.deviceId = process.env.DEVICE_ID || "01a9368c36e800dfbe6fc447f40f8857";
+        this.email = process.env.EMAIL || "tommievanklaveren@gmail.com";
         this.#password = process.env.PASSWORD || "";
-        
         
         this.currentFocus = NaN;
         this.currentCalm = NaN;
@@ -135,3 +86,7 @@ async function testDataHandler() {
 }
 
 testDataHandler();
+
+module.exports = {
+	DataHandler
+}
