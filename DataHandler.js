@@ -1,3 +1,4 @@
+
 const { Neurosity } = require("@neurosity/sdk");
 require("dotenv").config({path:"./envNeurosity.env"});
 
@@ -11,6 +12,8 @@ class DataHandler {
     #password = ""; // private property
 
     constructor() {
+        this.createFakeData = true;
+
         this.deviceId = process.env.DEVICE_ID || "01a9368c36e800dfbe6fc447f40f8857";
         this.email = process.env.EMAIL || "tommievanklaveren@gmail.com";
         this.#password = process.env.PASSWORD || "";
@@ -38,24 +41,46 @@ class DataHandler {
     } // end of constructor
 
     async init() {
-        await this.neurosity
-            .login({
-                email: this.email,
-                password: this.#password
-            })
-            .catch((error) => {
-                console.log(error);
-                throw new Error(error);
-            });
-        console.log("Logged in to Neurosity");
+        try {
+            await this.neurosity
+                .login({
+                    email: this.email,
+                    password: this.#password
+                })
+                .catch((error) => {
+                    console.log(error);
+                    throw new Error(error);
+                });
+            console.log("Logged in to Neurosity");
+            this.loggedIn = true;
+        }
+        catch (e) {
+            console.log("Error in DataHandler.init(): ", e);
+            this.loggedIn = false;
+        }
         
-        this.neurosity.focus().subscribe((focus) => {
-            this.currentFocus = focus.probability;
-        });
+        if (this.loggedIn && !this.createFakeData) {
+            console.log("DataHandler is setting this.currentFocus and this.currentCalm to real data from Neurosity Crown");
+            this.neurosity.focus().subscribe((focus) => {
+                this.currentFocus = focus.probability;
+            });
 
-        this.neurosity.calm().subscribe((calm) => {
-            this.currentCalm = calm.probability;
-        });
+            this.neurosity.calm().subscribe((calm) => {
+                this.currentCalm = calm.probability;
+            });
+        }
+        else if (this.createFakeData) {
+            console.log("Warning: DataHandler is setting this.currentFocus and this.currentCalm to fake (random values)");
+            setInterval(() => {
+                this.currentCalm = Math.random();
+                this.currentFocus = Math.random();
+            }, 1000);
+        }
+        else {
+            console.log("Error: DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
+        }
+
+
 
     }
 
@@ -70,22 +95,21 @@ class DataHandler {
 
 }
 
-module.exports = DataHandler
 
-async function testDataHandler() {
-    // Usage:
-    const dHandler = new DataHandler();
-    await dHandler.init();
+// async function testDataHandler() {
+//     // Usage:
+//     const dHandler = new DataHandler();
+//     await dHandler.init();
 
-    for (let i = 0; i < 300; i++){
-        await new Promise(r => setTimeout(r, 1000));
+//     for (let i = 0; i < 300; i++){
+//         await new Promise(r => setTimeout(r, 1000));
 
-        console.log("calm: ", await dHandler.getCalm());
-        console.log("focus: ", await dHandler.getFocus());
-    }
-}
+//         console.log("calm: ", await dHandler.getCalm());
+//         console.log("focus: ", await dHandler.getFocus());
+//     }
+// }
 
-testDataHandler();
+// testDataHandler();
 
 module.exports = {
 	DataHandler

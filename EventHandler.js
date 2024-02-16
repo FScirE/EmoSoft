@@ -1,17 +1,24 @@
 const vscode = require('vscode')
-const DataHandler = require('./DataHandler')
+const { DataHandler } = require('./DataHandler')
 
 class EventHandler {
     // Initilize variables
     allowNotificationFocus = true 
     allowNotificationCalm = true
-    thresholdFocus = 30
-    thresholdCalm = 60
-    dataHandler = new DataHandler()
+    thresholdFocus = 0.30
+    thresholdCalm = 0.60
+    constructor () {
+        this.dataHandler = new DataHandler()
+    }
+
+    async init() {
+        await this.dataHandler.init();
+    }
 
     // Check focus level and notifies user when focus drops below 30%
     async checkFocus() {
         var focus =  await this.dataHandler.getFocus()
+        console.log("current focus from EventHandler.dataHandler: ", focus);
         if (focus < this.thresholdFocus && this.allowNotificationFocus == true) {
             const text = 'This program is using the neurosity crown to measure '+
             'your live focus level. Your level recently dropped below 30% which might mean you are too '+
@@ -21,7 +28,7 @@ class EventHandler {
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
             this.allowNotificationFocus = false
         }
-        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+5) { //Reset boolean that allows notifications
+        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.05) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
         }
     }
@@ -37,7 +44,7 @@ class EventHandler {
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
             this.allowNotificationCalm = false
         }
-        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+5) { //Reset boolean that allows notifications
+        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.05) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
         }
     }

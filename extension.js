@@ -22,6 +22,7 @@ async function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "emoide" is now active!');
+	vscode.window.showInformationMessage('Hello World from emoide!');
 	
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
@@ -37,11 +38,19 @@ async function activate(context) {
 		vscode.ViewColumn.Beside,
 		{ enableScripts: true }
 	);
+
 	const styleSrc = newItem.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, ...['webview.css']));
 	newItem.webview.html = getWebViewHTML(40, 60, styleSrc)
 	context.subscriptions.push(newItem)
-  
-	vscode.window.showInformationMessage('Hello World from emoide!');
+
+	const eventHandler = new EventHandler();
+	await eventHandler.init();
+
+	for (let i = 0; i < 300; i++){
+		eventHandler.checkCalm();
+		eventHandler.checkFocus();
+        await new Promise(r => setTimeout(r, 1000));
+	}
 
 }
 
