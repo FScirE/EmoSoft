@@ -28,7 +28,7 @@ class EventHandler {
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
             this.allowNotificationFocus = false
         }
-        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.05) { //Reset boolean that allows notifications
+        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
         }
     }
@@ -44,7 +44,7 @@ class EventHandler {
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
             this.allowNotificationCalm = false
         }
-        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.05) { //Reset boolean that allows notifications
+        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
         }
     }
