@@ -12,6 +12,8 @@ const openai = new OpenAI({
 //TODO SET UP TEST CASES USING HTTP FOR TEST OF ESTABLISHED CONNECTION
 
 export async function retrieveResponse(preset, msg) {
+    if (msg.lenght > 750) // test if long msg
+        {return -1;}
     let outputList = [];
     const stream = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",

@@ -42,7 +42,7 @@ class AIhandler {
         // sends a message to the AI with standard message telling the user to calm down. Returns an array contains all words in each slot. 
         this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_CALM_DOWN);
     }
-
+    
     sendMsgToTakeBreak(){
         // sends a message to the AI with standard message telling the user to take a break. Returns an array contains all words in each slot. 
         this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_TAKE_BREAK);
@@ -54,8 +54,7 @@ class AIhandler {
     MESSAGE_CALM_DOWN = "Help a programmer who is not calm to calm down in a friendly manner, but not weird. 2 sentaces. "
     CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
 }
-const ai = new AIhandler;
-ai.sendMsgToAggitatedDev();
+
 
 
 
