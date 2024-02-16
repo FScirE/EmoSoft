@@ -1,15 +1,19 @@
 // import tommyskod
 const vscode = require('vscode')
+import { DataHandler } from './DataHandler'
 
 class EventHandler {
     // Initilize variables
     allowNotificationFocus = true 
     allowNotificationCalm = true
+    thresholdFocus = 30
+    thresholdCalm = 60
+    dataHandler = new DataHandler()
 
     // Check focus level and notifies user when focus drops below 30%
-    checkFocus() {
-        var focus = 50 // Ska vara focus = DataHandler.getFocus
-        if (focus < 30 && this.allowNotificationFocus == true) {
+    async checkFocus() {
+        var focus =  await this.dataHandler.getFocus()
+        if (focus < this.thresholdFocus && this.allowNotificationFocus == true) {
             const text = 'This program is using the neurosity crown to measure '+
             'your live focus level. Your level recently dropped below 30% which might mean you are too '+
             'unfucosed to be productive in your development. Please check the chat for advice on how to '+
@@ -18,14 +22,14 @@ class EventHandler {
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
             this.allowNotificationFocus = false
         }
-        if (this.allowNotificationFocus == false && focus > 40) { //Reset boolean that allows notifications
+        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+5) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
         }
     }
     // Check calmness level and notifies user when calmness drops below 30%
-    checkCalm() {
-        var calm = 50 // Ska vara calm = DataHandler.getCalm
-        if (calm < 60 && this.allowNotificationCalm == true) {
+    async checkCalm() {
+        var calm = await this.dataHandler.getCalm()
+        if (calm < this.thresholdCalm && this.allowNotificationCalm == true) {
             const text = 'This program is using the neurosity crown to measure '+
             'your live calmness level. Your level recently dropped below 30% which might mean you are too '+
             'agitated to be productive in your development. Please check the chat for advice on how to '+
@@ -34,7 +38,7 @@ class EventHandler {
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
             this.allowNotificationCalm = false
         }
-        if (this.allowNotificationCalm == false && calm > 40) { //Reset boolean that allows notifications
+        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+5) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
         }
     }
