@@ -27,7 +27,7 @@ class AIhandler {
         // sends a message and preset to the AI. Returns an array contains all words in each slot. 
         import ('./openai-test.mjs').then(async module => {
             this.output.push(await module.retrieveResponse(preset,msg)); 
-            console.log(this.output);
+            
         });
        
  
@@ -53,7 +53,6 @@ class AIhandler {
     MESSAGE_TAKE_BREAK = "Generate a friendly messsage telling a developer to take a short brake. 2 sentances. "
     MESSAGE_CALM_DOWN = "Help a programmer who is not calm to calm down in a friendly manner, but not weird. 2 sentaces. "
     CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
-
 }
 const ai = new AIhandler;
 ai.sendMsgToAggitatedDev();

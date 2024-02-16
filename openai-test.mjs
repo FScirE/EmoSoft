@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import dotenv from 'dotenv';
 
 dotenv.config({ path: 'ai.env' });
-//TODO set up eviroment variables to hide sensitive information
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
     organization: process.env.OPENAI_ORGANIZATION
@@ -30,3 +30,4 @@ export async function retrieveResponse(preset, msg) {
     
     return outputList;
 }
+
