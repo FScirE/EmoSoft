@@ -3,13 +3,16 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 
+
+const { DataHandler } = require('./DataHandler')
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
+async function activate(context) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
@@ -23,15 +26,23 @@ function activate(context) {
 	//});
 	//context.subscriptions.push(disposable);
 
+
+	this.dataHandler = new DataHandler()
+	await this.dataHandler.init();
+
+
+
 	//create the UI HTML element, will hold AI window and progress bars
+	var webViewIsVisisble = true;
 	var webView = createWebView(context)
 	const statusBarButton = createStatusBarButton()
 	context.subscriptions.push(webView)
 	context.subscriptions.push(statusBarButton)
 	//show button when closed
-	webView.onDidDispose(e => { statusBarButton.show() }) 
+	webView.onDidDispose(e => { webViewIsVisisble = false; statusBarButton.show() }) 
 	//setup button to make UI show up and hide button	
 	context.subscriptions.push(vscode.commands.registerCommand('start.ui', e => {
+		webViewIsVisisble = true;
 		webView = createWebView(context);
 		webView.onDidDispose(e => { statusBarButton.show() }) //show button when closed
 		statusBarButton.hide()
@@ -40,6 +51,13 @@ function activate(context) {
 	//examples of setting progress values
 	//webView.webview.postMessage({variable: 'focus', value: 50})
 	//webView.webview.postMessage({variable: 'calm', value: 50})
+
+	setInterval(async () => {
+		if (webViewIsVisisble) {
+			webView.webview.postMessage({variable: 'focus', value: await this.dataHandler.getFocus() * 100})
+			webView.webview.postMessage({variable: 'calm', value: await this.dataHandler.getCalm() * 100})
+		}
+	}, 50);
 }
 
 // This method is called when your extension is deactivated

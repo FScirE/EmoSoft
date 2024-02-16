@@ -12,7 +12,7 @@ class DataHandler {
     #password = ""; // private property
 
     constructor() {
-        this.createFakeData = true;
+        this.createFakeDataIfNotLoggedIn = true;
 
         this.deviceId = process.env.DEVICE_ID || "01a9368c36e800dfbe6fc447f40f8857";
         this.email = process.env.EMAIL || "tommievanklaveren@gmail.com";
@@ -59,7 +59,7 @@ class DataHandler {
             this.loggedIn = false;
         }
         
-        if (this.loggedIn && !this.createFakeData) {
+        if (this.loggedIn) {
             console.log("DataHandler is setting this.currentFocus and this.currentCalm to real data from Neurosity Crown");
             this.neurosity.focus().subscribe((focus) => {
                 this.currentFocus = focus.probability;
@@ -69,7 +69,7 @@ class DataHandler {
                 this.currentCalm = calm.probability;
             });
         }
-        else if (this.createFakeData) {
+        else if (this.createFakeDataIfNotLoggedIn) {
             console.log("Warning: DataHandler is setting this.currentFocus and this.currentCalm to fake (random values)");
             setInterval(() => {
                 this.currentCalm = Math.random();

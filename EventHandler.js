@@ -1,5 +1,4 @@
 const vscode = require('vscode')
-const { DataHandler } = require('./DataHandler')
 
 class EventHandler {
     // Initilize variables
@@ -8,11 +7,11 @@ class EventHandler {
     thresholdFocus = 0.30
     thresholdCalm = 0.60
     constructor () {
-        this.dataHandler = new DataHandler()
+
     }
 
-    async init() {
-        await this.dataHandler.init();
+    async init(dataHandler) {
+        this.dataHandler = dataHandler;
     }
 
     // Check focus level and notifies user when focus drops below 30%
