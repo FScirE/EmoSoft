@@ -11,8 +11,6 @@ const openai = new OpenAI({
 
 //TODO SET UP TEST CASES USING HTTP FOR TEST OF ESTABLISHED CONNECTION
 
-
-
 export async function retrieveResponse(preset, msg) {
     let outputList = [];
     const stream = await openai.chat.completions.create({
