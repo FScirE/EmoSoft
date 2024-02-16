@@ -1,6 +1,5 @@
-// import tommyskod
 const vscode = require('vscode')
-import { DataHandler } from './DataHandler'
+const DataHandler = require('./DataHandler')
 
 class EventHandler {
     // Initilize variables

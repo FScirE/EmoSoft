@@ -55,7 +55,7 @@ require("dotenv").config();
  * DataHandler object. Needs "await dataHandler.init();" before use!
  * @class
  */
-export class DataHandler {
+class DataHandler {
     #password = ""; // private property
 
     constructor() {
@@ -118,6 +118,8 @@ export class DataHandler {
 
 
 }
+
+module.exports = DataHandler
 
 async function testDataHandler() {
     // Usage:
