@@ -1,9 +1,15 @@
 import OpenAI from "openai";
+import dotenv from 'dotenv';
+dotenv.config();
 //TODO set up eviroment variables to hide sensitive information
 const openai = new OpenAI({
-    apiKey: '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',
-    organization: 'org-1hNgPZv2AosFPeMGTXAgL7dJ'
+    apiKey: process.env.OPENAI_API_KEY,
+    organization: process.env.OPENAI_ORGANIZATION
 })
+
+
+//TODO SET UP TEST CASES USING HTTP FOR TEST OF ESTABLISHED CONNECTION
+
 
 
 export async function retrieveResponse(preset, msg) {
