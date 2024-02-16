@@ -21,13 +21,14 @@ class AIhandler {
     //WORK IN PROGESS,
     retrieveContext(){
         
-    };
+    }
     //Typ klar behövs test
-    sendMsgToAI(preset,msg){
+    async sendMsgToAI(preset,msg){
+        var templist = []
         // sends a message and preset to the AI. Returns an array contains all words in each slot. 
-        import ('./openai-test.mjs').then(async module => {
-            this.output.push(await module.retrieveResponse(preset,msg)); 
-            
+        await import('./openai-test.mjs').then(async module => {
+            await templist.push(await module.retrieveResponse(preset,msg)); 
+            this.output = templist[0];
         });
        
  
@@ -38,9 +39,9 @@ class AIhandler {
         this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_HELP_UNFOCUSED_DEV);
     }
 
-    sendMsgToAggitatedDev(){
+    async sendMsgToAggitatedDev(){
         // sends a message to the AI with standard message telling the user to calm down. Returns an array contains all words in each slot. 
-        this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_CALM_DOWN);
+        await this.sendMsgToAI(this.CONTEXT_HELPADEV, this.MESSAGE_CALM_DOWN);
     }
     
     sendMsgToTakeBreak(){
@@ -55,6 +56,10 @@ class AIhandler {
     CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
 }
 export default AIhandler;
+
+// const ai = new AIhandler
+// await ai.sendMsgToAggitatedDev()
+// console.log(ai.output.join(''))
 
 
 
