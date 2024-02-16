@@ -1,0 +1,55 @@
+@charset "UTF-8";
+body {
+    font-size: 14px;
+    margin: 8px;
+    padding: 0px;
+}
+div {
+    margin: 0px;
+    padding: 6px;
+}
+.wrapper {
+    height: calc(100vh - 28px);
+    display: grid;  
+    padding: 6px;
+    gap: 6px;
+    grid-template-rows: 1fr 9fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "header header"
+        "ai ai"
+        "focus calm";
+}
+.header {
+    text-align: center;
+    grid-area: header;
+    background-color: var(--vscode-editor-background);
+}
+.ai {
+    text-align: center;
+    grid-area: ai;
+    background-color: var(--vscode-editor-background);
+}
+.focus {
+    text-align: center;
+    grid-area: focus;
+    background-color: var(--vscode-editor-background);
+}
+.focus progress {
+    accent-color: #4fc553
+}
+.calm {
+    text-align: center;
+    grid-area: calm;
+    background-color: var(--vscode-editor-background);
+}
+.calm progress {
+    accent-color: #03a9f4;
+}
+p {
+    margin: 6px 2px 2px 2px;
+}
+progress {
+    width: 80%;
+    height: 40%;
+}
