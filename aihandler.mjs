@@ -54,6 +54,7 @@ class AIhandler {
     MESSAGE_CALM_DOWN = "Help a programmer who is not calm to calm down in a friendly manner, but not weird. 2 sentaces. "
     CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
 }
+export default AIhandler;
 
 
 
