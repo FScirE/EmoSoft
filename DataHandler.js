@@ -70,6 +70,8 @@ class DataHandler {
 
 }
 
+module.exports = DataHandler
+
 async function testDataHandler() {
     // Usage:
     const dHandler = new DataHandler();
