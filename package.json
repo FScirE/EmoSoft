@@ -15,7 +15,12 @@
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": []
+    "commands": [
+      { 
+        "title": "Start UI",
+        "command": "start.ui"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
