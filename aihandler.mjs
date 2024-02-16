@@ -4,6 +4,12 @@
 //  * @param {vscode.ExtensionContext} context
 //  */
 
+import dotenv from 'dotenv';
+import OpenAI from 'openai';
+
+dotenv.config();
+
+
 class AIhandler {
     constructor(codeinput, standardinput){
         
@@ -49,6 +55,8 @@ class AIhandler {
     CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones. "
 
 }
+const ai = new AIhandler;
+ai.sendMsgToAggitatedDev();
 
 
 

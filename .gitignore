@@ -3,4 +3,4 @@ node_modules
 *.vsix
 .env
 # dotenv environment file
-.env
+ai.env
