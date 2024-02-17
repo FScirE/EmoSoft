@@ -11,7 +11,7 @@ div {
 }
 .wrapper {
     height: calc(100vh - 20px);
-    display: grid;  
+    display: grid;
     padding: 4px;
     gap: 4px;
     grid-template-rows: 1fr 9fr 1fr;

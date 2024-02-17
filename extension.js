@@ -2,6 +2,7 @@
 
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+const path = require('path')
 
 
 const { DataHandler } = require('./DataHandler')
@@ -30,7 +31,6 @@ async function activate(context) {
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init();
 
-
 	//create the UI HTML element, will hold AI window and progress bars
 	var webViewIsVisisble = true;
 	var webView = createWebView(context)
@@ -56,7 +56,7 @@ async function activate(context) {
 			webView.webview.postMessage({variable: 'focus', value: await this.dataHandler.getFocus() * 100})
 			webView.webview.postMessage({variable: 'calm', value: await this.dataHandler.getCalm() * 100})
 		}
-	}, 50);
+	}, 500);
 }
 
 // This method is called when your extension is deactivated
@@ -85,8 +85,8 @@ function createWebView(context) {
 		{ enableScripts: true }
 	);
 	//set source paths for style and script
-	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, ...['webview.css']));
-	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, ...['webview.js']));
+	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
+	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
 	webView.webview.html = `
 		<!DOCTYPE html>
 		<html lang="en">
