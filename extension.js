@@ -22,14 +22,13 @@ async function activate(context) {
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
 	//let disposable = vscode.commands.registerCommand('emoide.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed	
+		// The code you place here will be executed every time your command is executed
 	//});
 	//context.subscriptions.push(disposable);
 
 
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init();
-
 
 
 	//create the UI HTML element, will hold AI window and progress bars
@@ -39,14 +38,14 @@ async function activate(context) {
 	context.subscriptions.push(webView)
 	context.subscriptions.push(statusBarButton)
 	//show button when closed
-	webView.onDidDispose(e => { webViewIsVisisble = false; statusBarButton.show() }) 
-	//setup button to make UI show up and hide button	
+	webView.onDidDispose(e => { webViewIsVisisble = false; statusBarButton.show() })
+	//setup button to make UI show up and hide button
 	context.subscriptions.push(vscode.commands.registerCommand('start.ui', e => {
 		webViewIsVisisble = true;
 		webView = createWebView(context);
-		webView.onDidDispose(e => { statusBarButton.show() }) //show button when closed
+		webView.onDidDispose(e => { webViewIsVisisble = false; statusBarButton.show() }) //show button when closed
 		statusBarButton.hide()
-	})) 
+	}))
 
 	//examples of setting progress values
 	//webView.webview.postMessage({variable: 'focus', value: 50})
@@ -80,8 +79,8 @@ function createStatusBarButton() {
 
 function createWebView(context) {
 	var webView = vscode.window.createWebviewPanel(
-		'emoide', 
-		'EmoIDE', 
+		'emoide',
+		'EmoIDE',
 		vscode.ViewColumn.Beside,
 		{ enableScripts: true }
 	);
