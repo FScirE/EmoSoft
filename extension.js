@@ -46,6 +46,7 @@ async function activate(context) {
 		if (this.uiHandler.webViewIsVisisble) {
 			this.uiHandler.setCalmProgress(await this.dataHandler.getCalm())
 			this.uiHandler.setFocusProgress(await this.dataHandler.getFocus())
+			this.uiHandler.setNeurosityDataSourceText(this.dataHandler.dataSourceType)
 		}
 	}, 500);
 

@@ -14,7 +14,6 @@ class DataHandler {
 
     constructor() {
         this.createFakeDataIfNotLoggedIn = true;
-
         
         this.recentCalm = [0.5];
         this.recentCalmTimestamps = [Date.now()];
@@ -23,6 +22,7 @@ class DataHandler {
         this.recentFocusTimestamps = [Date.now()];
         this.recentFocusDuration = 20000; // how long to keep values in recent list (ms)
 
+        this.dataSourceType = "none";
 
     } // end of constructor
 
@@ -66,6 +66,9 @@ class DataHandler {
         
         if (this.loggedIn) {
             console.log("DataHandler is setting this.currentFocus and this.currentCalm to real data from Neurosity device");
+
+            this.dataSourceType = "real data from Crown";
+
             this.neurosity.calm().subscribe((calm) => {
                 this.recentCalm.push(calm.probability);
                 this.recentCalmTimestamps.push(Date.now())
@@ -90,6 +93,9 @@ class DataHandler {
         }
         else if (this.createFakeDataIfNotLoggedIn) {
             console.warn("DataHandler is setting this.currentFocus and this.currentCalm to fake (random) values");
+
+            this.dataSourceType = "simulated (fake) data"
+
             setInterval(() => {
                 var fakeCalmValue = this.recentCalm[this.recentCalm.length - 1] + (Math.random() - 0.5);
                 var fakeCalmValue = Math.min(Math.max(fakeCalmValue, 0), 1);
