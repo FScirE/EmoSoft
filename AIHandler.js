@@ -21,7 +21,7 @@ class AIHandler {
         this.codeinput = codeinput;
         this.standardinput = standardinput;
         this.extensionpath = extensionpath
-        this.output = [];
+        this.output = '';
         
     }
     //WORK IN PROGESS,
@@ -34,7 +34,7 @@ class AIHandler {
         // sends a message and preset to the AI. Returns an array contains all words in each slot. 
         await retrieveResponse(preset, msg, this.extensionpath).then(response => {
             templist.push(response);
-            this.output = templist[0];
+            this.output = templist[0].join('');
         });
     };
 
