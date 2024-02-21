@@ -1,17 +1,17 @@
-import OpenAI from "openai";
-import dotenv from 'dotenv';
-
-dotenv.config({ path: 'ai.env' });
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    organization: process.env.OPENAI_ORGANIZATION
-})
-
+const { OpenAI } = require('openai');
+const dotenv = require('dotenv');
+const path = require('path')
 
 //TODO SET UP TEST CASES USING HTTP FOR TEST OF ESTABLISHED CONNECTION
 
-export async function retrieveResponse(preset, msg) {
+async function retrieveResponse(preset, msg, extensionpath) {
+    dotenv.config({ path: path.join(extensionpath, './ai.env') });
+
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+        organization: process.env.OPENAI_ORGANIZATION
+    })
+
     if (msg.lenght > 750) // test if long msg
         {return -1;}
     let outputList = [];
@@ -31,3 +31,6 @@ export async function retrieveResponse(preset, msg) {
     return outputList;
 }
 
+module.exports = {
+    retrieveResponse
+}

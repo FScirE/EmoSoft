@@ -6,7 +6,7 @@ const path = require('path')
 
 
 const { DataHandler } = require('./DataHandler')
-const { AIhandler } = require('./AIHandler')
+const { AIHandler } = require('./AIHandler')
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -59,8 +59,8 @@ async function activate(context) {
 		}
 	}, 500);
 
-	const ai = new AIhandler
-   	ai.sendMsgToAggitatedDev()
+	const ai = new AIHandler('', '', context.extensionPath)
+   	await ai.sendMsgToAggitatedDev()
    	console.log(ai.output.join(''))
 }
 
