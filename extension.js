@@ -7,6 +7,7 @@ const vscode = require('vscode');
 const path = require('path')
 
 const { DataHandler } = require('./DataHandler')
+const { EventHandler } = require('./EventHandler')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
 
@@ -35,6 +36,9 @@ async function activate(context) {
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
+	this.eventHandler = new EventHandler()
+	await this.eventHandler.init(this.dataHandler);
+
 	this.uiHandler = new UIHandler()
 	this.uiHandler.init(context)
 
@@ -46,6 +50,10 @@ async function activate(context) {
 		if (this.uiHandler.webViewIsVisisble) {
 			this.uiHandler.setCalmProgress(await this.dataHandler.getCalm())
 			this.uiHandler.setFocusProgress(await this.dataHandler.getFocus())
+
+			await this.eventHandler.checkCalm();
+			await this.eventHandler.checkFocus();
+
 			this.uiHandler.setNeurosityDataSourceText(this.dataHandler.dataSourceType)
 		}
 	}, 500);

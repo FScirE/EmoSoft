@@ -19,7 +19,6 @@ class EventHandler {
     // Check focus level and notifies user when focus drops below 30%
     async checkFocus() {
         var focus =  await this.dataHandler.getFocus()
-        console.log("current focus from EventHandler.dataHandler: ", focus);
         if (focus < this.thresholdFocus && this.allowNotificationFocus == true) {
             const text = 'This program is using the neurosity crown to measure '+
             'your live focus level. Your level recently dropped below 30% which might mean you are too '+
@@ -57,4 +56,6 @@ class EventHandler {
 
 }
 
-module.exports = EventHandler
+module.exports = {
+    EventHandler
+}
