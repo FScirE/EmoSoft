@@ -23,7 +23,7 @@ export async function retrieveResponse(preset, msg) {
         stream: true,
     });
     for await (const chunk of stream) {
-        var output = chunk.choices[0]?.delta?.content || "";
+        var output = chunk.choices[0].delta.content || "";
         outputList.push(output);
         //process.stdout.write(chunk.choices[0]?.delta?.content || "");
     }
