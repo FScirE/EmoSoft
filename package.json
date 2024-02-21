@@ -9,6 +9,7 @@
   "categories": [
     "Other"
   ],
+  
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -25,6 +26,7 @@
     "lint": "eslint .",
     "pretest": "npm run lint",
     "test": "vscode-test"
+    
   },
   "devDependencies": {
     "@neurosity/sdk": "^6.5.10",
