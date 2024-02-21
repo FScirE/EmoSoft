@@ -25,9 +25,7 @@ async function activate(context) {
 	//let disposable = vscode.commands.registerCommand('emoide.helloWorld', function () {
 		// The code you place here will be executed every time your command is executed
 	//});
-	//context.subscriptions.push(disposable);
-	var ev = new EventHandler()
-	ev.checkFocus()
+	//context.subscriptions.push(disposable)
 
 
 	this.dataHandler = new DataHandler()

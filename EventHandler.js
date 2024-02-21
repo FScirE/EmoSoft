@@ -25,6 +25,7 @@ class EventHandler {
             'regain your focus.'
             vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
+            //sendMessageToUnFocusedDev();
             this.allowNotificationFocus = false
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
@@ -41,6 +42,7 @@ class EventHandler {
             'regain your calmness.'
             vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
+            //SendMessageToAggitatedDev();
             this.allowNotificationCalm = false
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications
@@ -52,12 +54,3 @@ class EventHandler {
 }
 
 module.exports = EventHandler
-
-// While program is running and can send notification (just once)
-// If (Focus < 30)
-// Notify
-// Set allowNotificationFocus = 0
-// If (Calm < 30)
-// Notify
-// Set allowNotificationCalm = 0
-// A la mejor give generic example here
