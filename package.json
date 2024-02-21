@@ -15,7 +15,7 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [
-      { 
+      {
         "title": "Start UI",
         "command": "start.ui"
       }
@@ -37,7 +37,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "dotenv": "^16.4.4",
+    "dotenv": "^16.4.5",
+    "openai": "^4.28.0",
     "vscode": "^1.1.34"
   }
 }
