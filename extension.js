@@ -59,9 +59,9 @@ async function activate(context) {
 		}
 	}, 500);
 
-	const ai = new AIHandler('', '', context.extensionPath)
+	/*const ai = new AIHandler('', '', context.extensionPath)
    	await ai.sendMsgToAggitatedDev()
-   	console.log(ai.output.join(''))
+   	console.log(ai.output.join(''))*/
 }
 
 // This method is called when your extension is deactivated
