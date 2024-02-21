@@ -1,7 +1,7 @@
 const vscode = require('vscode')
 
-class UIhandler{
+class UIHandler{
     
 }
 
-module.exports = UIhandler
+module.exports = UIHandler

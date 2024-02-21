@@ -1,13 +1,16 @@
 const vscode = require('vscode')
+const {AIHandler} = require('./AIHandler')
+const UIHandler = require('./UIHandler')
 
 class EventHandler {
     // Initilize variables
-    allowNotificationFocus = true 
-    allowNotificationCalm = true
-    thresholdFocus = 0.30
-    thresholdCalm = 0.60
-    constructor () {
-
+    constructor (extensionPath) {
+        this.allowNotificationFocus = true
+        this.allowNotificationCalm = true
+        this.thresholdFocus = 0.30
+        this.thresholdCalm = 0.60
+        this.aiHandler = new AIHandler("", "", extensionPath)
+        this.UIHandler = new UIHandler()
     }
 
     async init(dataHandler) {
@@ -25,7 +28,8 @@ class EventHandler {
             'regain your focus.'
             vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
-            //sendMessageToUnFocusedDev();
+            await this.aiHandler.sendMsgToUnfocuesedDev()
+            // Send msg to UI
             this.allowNotificationFocus = false
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
@@ -42,7 +46,8 @@ class EventHandler {
             'regain your calmness.'
             vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
-            //SendMessageToAggitatedDev();
+            await this.aiHandler.sendMsgToAggitatedDev()
+            // Send msg to UI
             this.allowNotificationCalm = false
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications
