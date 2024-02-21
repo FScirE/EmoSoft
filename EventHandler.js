@@ -1,13 +1,15 @@
 const vscode = require('vscode')
+const {AIHandler} = require('./AIHandler')
 
 class EventHandler {
     // Initilize variables
-    allowNotificationFocus = true 
-    allowNotificationCalm = true
-    thresholdFocus = 0.30
-    thresholdCalm = 0.60
-    constructor () {
-
+    constructor (extensionPath, uiHandler) {
+        this.allowNotificationFocus = true
+        this.allowNotificationCalm = true
+        this.thresholdFocus = 0.30
+        this.thresholdCalm = 0.60
+        this.aiHandler = new AIHandler("", "", extensionPath)
+        this.uiHandler = uiHandler
     }
 
     async init(dataHandler) {
@@ -25,6 +27,8 @@ class EventHandler {
             'regain your focus.'
             vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
+            await this.aiHandler.sendMsgToUnfocuesedDev()
+            this.uiHandler.printAIMessage(this.aiHandler.output)
             this.allowNotificationFocus = false
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
@@ -41,6 +45,8 @@ class EventHandler {
             'regain your calmness.'
             vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
+            await this.aiHandler.sendMsgToAggitatedDev()
+            this.uiHandler.printAIMessage(this.aiHandler.output)
             this.allowNotificationCalm = false
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications
@@ -52,12 +58,3 @@ class EventHandler {
 }
 
 module.exports = EventHandler
-
-// While program is running and can send notification (just once)
-// If (Focus < 30)
-// Notify
-// Set allowNotificationFocus = 0
-// If (Calm < 30)
-// Notify
-// Set allowNotificationCalm = 0
-// A la mejor give generic example here
