@@ -22,6 +22,8 @@ function activate(context) {
 		// The code you place here will be executed every time your command is executed	
 	//});
 	//context.subscriptions.push(disposable);
+	var ev = new EventHandler()
+	ev.checkFocus()
 
 	//create the UI HTML element, will hold AI window and progress bars
 	var webView = createWebView(context)
