@@ -1,7 +1,92 @@
 const vscode = require('vscode')
+const path = require('path')
 
-class UIhandler{
-    
+/**
+ * @param {vscode.ExtensionContext} context
+ */
+class UIHandler{
+    init(context) {
+        //create the UI HTML element, will hold AI window and progress bars
+        this.webViewIsVisisble = true;
+        this.webView = createWebView(context)
+        this.statusBarButton = createStatusBarButton()
+        context.subscriptions.push(this.webView)
+        context.subscriptions.push(this.statusBarButton)
+        //show button when closed
+        this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
+        //setup button to make UI show up and hide button
+        context.subscriptions.push(vscode.commands.registerCommand('start.ui', e => {
+            this.webViewIsVisisble = true;
+            this.webView = createWebView(context);
+            this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
+            this.statusBarButton.hide()
+	    }))
+    }
+
+    setFocusProgress(focus) {
+        this.webView.webview.postMessage({variable: 'focus', value: focus * 100})
+    }
+
+    setCalmProgress(calm) {
+        this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
+    }
+
+    printAIMessage(text) {
+        
+    }
 }
 
-module.exports = UIhandler
+function createStatusBarButton() {
+	const statusBarUI = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 1000)
+	statusBarUI.text = "Open UI"
+	statusBarUI.command = 'start.ui';
+	statusBarUI.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground')
+	statusBarUI.color = new vscode.ThemeColor('statusBarItem.warningForeground')
+	statusBarUI.hide()
+	return statusBarUI
+}
+
+function createWebView(context) {
+	var webView = vscode.window.createWebviewPanel(
+		'emoide',
+		'EmoIDE',
+		vscode.ViewColumn.Beside,
+		{ enableScripts: true }
+	);
+	//set source paths for style and script
+	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
+	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
+	webView.webview.html = `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<link rel="stylesheet" type="text/css" href="${styleSrc}">
+		</head>
+		<body>
+			<div class="wrapper">
+				<div class="header">
+					<p>Header</p>
+				</div>
+				<div class="ai">
+					<p>AI</p>
+				</div>
+				<div class="focus">
+					<p>Focus </p>
+					<progress value=0 max=100></progress>
+				</div>
+				<div class="calm">
+					<p>Calm</p>
+					<progress value=0 max=100></progress>
+				</div>
+			</div>
+		</body>
+		</html>
+		<script src="${scriptSrc}"></script>
+	`
+	return webView;
+}
+
+module.exports = {
+    UIHandler
+}
