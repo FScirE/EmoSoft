@@ -16,8 +16,12 @@ class DataHandler {
         this.createFakeDataIfNotLoggedIn = true;
 
         
-        this.currentFocus = NaN;
-        this.currentCalm = NaN;
+        this.recentCalm = [0.5];
+        this.recentCalmTimestamps = [Date.now()];
+        this.recentCalmDuration = 20000; // how long to keep values in recent list (ms)
+        this.recentFocus = [0.5];
+        this.recentFocusTimestamps = [Date.now()];
+        this.recentFocusDuration = 20000; // how long to keep values in recent list (ms)
 
 
     } // end of constructor
@@ -62,19 +66,53 @@ class DataHandler {
         
         if (this.loggedIn) {
             console.log("DataHandler is setting this.currentFocus and this.currentCalm to real data from Neurosity device");
-            this.neurosity.focus().subscribe((focus) => {
-                this.currentFocus = focus.probability;
+            this.neurosity.calm().subscribe((calm) => {
+                this.recentCalm.push(calm.probability);
+                this.recentCalmTimestamps.push(Date.now())
+                
+                if (this.recentCalmTimestamps[0] < Date.now() - this.recentCalmDuration){
+                    this.recentCalm.shift();
+                    this.recentCalmTimestamps.shift();
+                }
+                
             });
 
-            this.neurosity.calm().subscribe((calm) => {
-                this.currentCalm = calm.probability;
+            this.neurosity.focus().subscribe((focus) => {
+                this.recentFocus.push(focus.probability);
+                this.recentFocusTimestamps.push(Date.now())
+                
+                if (this.recentFocusTimestamps[0] < Date.now() - this.recentFocusDuration){
+                    this.recentFocus.shift();
+                    this.recentFocusTimestamps.shift();
+                }
             });
+
         }
         else if (this.createFakeDataIfNotLoggedIn) {
             console.warn("DataHandler is setting this.currentFocus and this.currentCalm to fake (random) values");
             setInterval(() => {
-                this.currentCalm = Math.random();
-                this.currentFocus = Math.random();
+                var fakeCalmValue = this.recentCalm[this.recentCalm.length - 1] + (Math.random() - 0.5);
+                var fakeCalmValue = Math.min(Math.max(fakeCalmValue, 0), 1);
+
+                this.recentCalm.push(fakeCalmValue);
+                this.recentCalmTimestamps.push(Date.now())
+                
+                if (this.recentCalmTimestamps[0] < Date.now() - this.recentCalmDuration){
+                    this.recentCalm.shift();
+                    this.recentCalmTimestamps.shift();
+                }
+
+                
+                var fakeFocusValue = this.recentFocus[this.recentFocus.length - 1] + (Math.random() - 0.5);
+                var fakeFocusValue = Math.min(Math.max(fakeFocusValue, 0), 1);
+
+                this.recentFocus.push(fakeFocusValue);
+                this.recentFocusTimestamps.push(Date.now())
+                
+                if (this.recentFocusTimestamps[0] < Date.now() - this.recentFocusDuration){
+                    this.recentFocus.shift();
+                    this.recentFocusTimestamps.shift();
+                }
             }, 1000);
         }
         else {
@@ -83,13 +121,14 @@ class DataHandler {
 
     } // end of init function
 
-
-    getFocus() { // should probably use an average over a few seconds or smth
-        return this.currentFocus;
-    }
+    
 
     getCalm() {
-        return this.currentCalm;
+        return this.recentCalm.reduce((acc, num) => acc + num, 0) / this.recentCalm.length;
+    }
+
+    getFocus() {
+        return this.recentFocus.reduce((acc, num) => acc + num, 0) / this.recentFocus.length;
     }
 
 
