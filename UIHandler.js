@@ -24,6 +24,7 @@ class UIHandler{
 	    }))
     }
 
+
     setFocusProgress(focus) {
         this.webView.webview.postMessage({variable: 'focus', value: focus * 100})
     }
@@ -31,6 +32,10 @@ class UIHandler{
     setCalmProgress(calm) {
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
+
+	setNeurosityDataSourceText(dataSource){
+		return;//this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
+	}
 
     printAIMessage(text) {
         
@@ -57,9 +62,11 @@ function createWebView(context) {
 	//set source paths for style and script
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
+  
 	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, './webview.html'), 'utf-8')
         .replace('${styleSrc}', styleSrc.toString())
         .replace('${scriptSrc}', scriptSrc.toString())
+  
 	return webView;
 }
 

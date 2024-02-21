@@ -9,6 +9,9 @@ window.addEventListener('message', e => {
         case 'calm':
             setCalmValue(message.value)
             break
+        case "neurosityDataSourceText":
+            document.getElementById("neurosityDataSourceText").textContent = "Neurosity data source: " + message.value;
+            break
     }
 });
 
