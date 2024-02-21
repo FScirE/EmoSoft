@@ -1,5 +1,6 @@
 const vscode = require('vscode')
 const path = require('path')
+const fs = require('fs')
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -33,7 +34,7 @@ class UIHandler{
     }
 
 	setNeurosityDataSourceText(dataSource){
-		this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
+		return;//this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
 	}
 
     printAIMessage(text) {
@@ -61,37 +62,11 @@ function createWebView(context) {
 	//set source paths for style and script
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
-	webView.webview.html = `
-		<!DOCTYPE html>
-		<html lang="en">
-		<head>
-			<meta charset="UTF-8">
-			<link rel="stylesheet" type="text/css" href="${styleSrc}">
-		</head>
-		<body>
-			<div class="wrapper">
-				<div class="header">
-					<p>Header</p>
-				</div>
-				<div class="ai">
-					<p>AI</p>
-				</div>
-				<div class="focus">
-					<p>Focus </p>
-					<progress value=0 max=100></progress>
-				</div>
-				<div class="calm">
-					<p>Calm</p>
-					<progress value=0 max=100></progress>
-				</div>
-				<div class="neurosityDataSource">
-					<p id="neurosityDataSourceText"> Waiting for Neurosity </p>
-				</div>
-			</div>
-		</body>
-		</html>
-		<script src="${scriptSrc}"></script>
-	`
+  
+	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, './webview.html'), 'utf-8')
+        .replace('${styleSrc}', styleSrc.toString())
+        .replace('${scriptSrc}', scriptSrc.toString())
+  
 	return webView;
 }
 
