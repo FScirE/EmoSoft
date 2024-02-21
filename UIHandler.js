@@ -23,6 +23,7 @@ class UIHandler{
 	    }))
     }
 
+
     setFocusProgress(focus) {
         this.webView.webview.postMessage({variable: 'focus', value: focus * 100})
     }
@@ -30,6 +31,10 @@ class UIHandler{
     setCalmProgress(calm) {
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
+
+	setNeurosityDataSourceText(dataSource){
+		this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
+	}
 
     printAIMessage(text) {
         
@@ -78,6 +83,9 @@ function createWebView(context) {
 				<div class="calm">
 					<p>Calm</p>
 					<progress value=0 max=100></progress>
+				</div>
+				<div class="neurosityDataSource">
+					<p id="neurosityDataSourceText"> Waiting for Neurosity </p>
 				</div>
 			</div>
 		</body>
