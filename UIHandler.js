@@ -34,7 +34,7 @@ class UIHandler{
     }
 
 	setNeurosityDataSourceText(dataSource){
-		return;//this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
+		this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
 	}
 
     printAIMessage(text) {
