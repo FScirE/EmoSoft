@@ -1,13 +1,15 @@
 // The module 'vscode' contains the VS Code extensibility API
 
+
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-const path = require('path')
 
+const path = require('path')
 
 const { DataHandler } = require('./DataHandler')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
+
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -27,10 +29,11 @@ async function activate(context) {
 	//let disposable = vscode.commands.registerCommand('emoide.helloWorld', function () {
 		// The code you place here will be executed every time your command is executed
 	//});
-	//context.subscriptions.push(disposable)
+	//context.subscriptions.push(disposable);
+  
 
 	this.dataHandler = new DataHandler()
-	await this.dataHandler.init();
+	await this.dataHandler.init(context.extensionPath);
 
 	this.uiHandler = new UIHandler()
 	this.uiHandler.init(context)
