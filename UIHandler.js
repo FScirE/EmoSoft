@@ -58,8 +58,8 @@ function createWebView(context) {
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
 	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, './webview.html'), 'utf-8')
-        .replace('${styleSrc}', styleSrc.toString())
-        .replace('${scriptSrc}', scriptSrc.toString())
+        .replace('./webview.css', styleSrc.toString())
+        .replace('./webview.js', scriptSrc.toString())
 	return webView;
 }
 

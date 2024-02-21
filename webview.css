@@ -1,25 +1,28 @@
 @charset "UTF-8";
+*{
+    font-family: 'Roboto Mono', sans-serif;
+}
 body {
     font-size: 14px;
-    margin: 6px;
+    margin: 0px;
     padding: 0px;
     background-color: var(--vscode-editor-background);
 }
 div {
     margin: 0px;
-    padding: 4px;
+    padding: 0px;
 }
 .wrapper {
-    height: calc(100vh - 20px);
+    height: calc(100vh - 12px);
     display: grid;
-    padding: 4px;
-    gap: 4px;
+    padding: 0px;
+    gap: 0px;
     grid-template-rows: 1fr 9fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "header header"
         "ai ai"
-        "focus calm";
+        "fc fc";
 }
 .header {
     text-align: center;
@@ -30,18 +33,25 @@ div {
     grid-area: ai;
 }
 .focus {
+    width: 46%;
     text-align: center;
-    grid-area: focus;
 }
 .focus progress {
     accent-color: #4fc553;
 }
 .calm {
+    width: 46%;
     text-align: center;
-    grid-area: calm;
 }
 .calm progress {
     accent-color: #03a9f4;
+}
+#focusandcalm {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    grid-area: fc;
 }
 p {
     margin: 6px 2px 2px 2px;
@@ -49,4 +59,51 @@ p {
 progress {
     width: 80%;
     height: 40%;
+}
+.chatbox {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 95%;
+    display: grid;
+    gap: 0px;
+    grid-template-rows: 6fr 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
+    grid-template-areas:
+        ". textbox ."
+        ". textarea .";
+}
+#textbox {
+    grid-area: textbox;
+}
+.chatbox #textarea {
+    display: inline-flex;  
+    grid-area: textarea;
+}
+.chatbox #textarea textarea {
+    width: 92%;
+    height: auto;
+    padding: 9px;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border: 1px solid black;
+    border-right: none;
+    resize: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    
+}
+.chatbox #textarea textarea:focus {
+    background-color: white;
+    outline: none;
+}
+.chatbox #textarea #sendbutton {
+    width: 8%;
+    height: auto;
+    border-top-right-radius: 11px;
+    border-bottom-right-radius: 11px;
+    border: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.25);
+    
+}
+.chatbox #textarea #sendbutton:hover{
+    background-color: skyblue;
 }
