@@ -1,6 +1,7 @@
 
+
 const { Neurosity } = require("@neurosity/sdk");
-require("dotenv").config({path:"./envNeurosity.env"});
+const path = require('path');
 
 
 /**
@@ -14,53 +15,53 @@ class DataHandler {
     constructor() {
         this.createFakeDataIfNotLoggedIn = true;
 
-        this.deviceId = process.env.DEVICE_ID || "01a9368c36e800dfbe6fc447f40f8857";
-        this.email = process.env.EMAIL || "tommievanklaveren@gmail.com";
-        this.#password = process.env.PASSWORD || "";
         
         this.currentFocus = NaN;
         this.currentCalm = NaN;
-        
-        const verifyEnvs = (email, password, deviceId) => {
-            const invalidEnv = (env) => {
-                return env === "" || env === 0;
-            };
-            if (invalidEnv(email) || invalidEnv(password) || invalidEnv(deviceId)) {
-                console.error("Please verify deviceId, email and password are in .env file, quitting...");
-                process.exit(0);
-            }
-        };
-        
-        verifyEnvs(this.email, this.#password, this.deviceId);
-        console.log(`${this.email} attempting to authenticate to ${this.deviceId}`);
-        
-        this.neurosity = new Neurosity({deviceId: this.deviceId});
 
-        
 
     } // end of constructor
 
-    async init() {
-        try {
+
+    async init(extensionPath) {
+        try { // login and connect to Neurosity device
+            const dotenvRequire = require('dotenv').config({
+                path: path.join(extensionPath, '/envNeurosity.env')
+            }); // may be async? idk, seems to work anyway ¯\_(ツ)_/¯
+            
+            this.deviceId = process.env.DEVICE_ID || "";
+            this.email = process.env.EMAIL || "";
+            this.#password = process.env.PASSWORD || "";
+            
+            const verifyEnvs = (email, password, deviceId) => {
+                const invalidEnv = (env) => {
+                    return env === "" || env === 0;
+                };
+                if (invalidEnv(email) || invalidEnv(password) || invalidEnv(deviceId)) {
+                    console.error("deviceId, email, or password not in envNeurosity.env (incorrectly formatted, or file not found). See 'Readme for Neurosity setup.txt'");
+                }
+            };
+            
+            verifyEnvs(this.email, this.#password, this.deviceId);
+            console.log(`Neurosity email "${this.email}" attempting to authenticate to deviceId "${this.deviceId}"`);
+            
+            this.neurosity = new Neurosity({deviceId: this.deviceId});
+    
             await this.neurosity
                 .login({
                     email: this.email,
                     password: this.#password
                 })
-                .catch((error) => {
-                    console.log(error);
-                    throw new Error(error);
-                });
             console.log("Logged in to Neurosity");
             this.loggedIn = true;
         }
-        catch (e) {
-            console.log("Error in DataHandler.init(): ", e);
+        catch (e) { // login failed
+            console.error("DataHandler.init() Neurosity login: ", e);
             this.loggedIn = false;
         }
         
         if (this.loggedIn) {
-            console.log("DataHandler is setting this.currentFocus and this.currentCalm to real data from Neurosity Crown");
+            console.log("DataHandler is setting this.currentFocus and this.currentCalm to real data from Neurosity device");
             this.neurosity.focus().subscribe((focus) => {
                 this.currentFocus = focus.probability;
             });
@@ -70,46 +71,30 @@ class DataHandler {
             });
         }
         else if (this.createFakeDataIfNotLoggedIn) {
-            console.log("Warning: DataHandler is setting this.currentFocus and this.currentCalm to fake (random values)");
+            console.warn("DataHandler is setting this.currentFocus and this.currentCalm to fake (random) values");
             setInterval(() => {
                 this.currentCalm = Math.random();
                 this.currentFocus = Math.random();
             }, 1000);
         }
         else {
-            console.log("Error: DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
+            console.error("DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
         }
 
+    } // end of init function
 
 
-    }
-
-    async getFocus() { // should probably use an average over a few seconds or smth
+    getFocus() { // should probably use an average over a few seconds or smth
         return this.currentFocus;
     }
 
-    async getCalm() {
+    getCalm() {
         return this.currentCalm;
     }
 
 
 }
 
-
-// async function testDataHandler() {
-//     // Usage:
-//     const dHandler = new DataHandler();
-//     await dHandler.init();
-
-//     for (let i = 0; i < 300; i++){
-//         await new Promise(r => setTimeout(r, 1000));
-
-//         console.log("calm: ", await dHandler.getCalm());
-//         console.log("focus: ", await dHandler.getFocus());
-//     }
-// }
-
-// testDataHandler();
 
 module.exports = {
 	DataHandler
