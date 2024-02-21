@@ -2,11 +2,17 @@ const { OpenAI } = require('openai');
 const dotenv = require('dotenv');
 const path = require('path')
 const MAXLENGHTMSG = 750;
+var aiCalled = false; // saftey mechanism
 
 //TODO SET UP TEST CASES USING HTTP FOR TEST OF ESTABLISHED CONNECTION
 
 async function retrieveResponse(preset, msg, extensionpath) {
     dotenv.config({ path: path.join(extensionpath, './ai.env') });
+    if (aiCalled==true)
+        {
+            console.log("Ai already called.")
+            return -1}
+    aiCalled = true;
 
     const openai = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY,
