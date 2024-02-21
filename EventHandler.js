@@ -1,16 +1,15 @@
 const vscode = require('vscode')
 const {AIHandler} = require('./AIHandler')
-const {UIHandler} = require('./UIHandler')
 
 class EventHandler {
     // Initilize variables
-    constructor (extensionPath) {
+    constructor (extensionPath, uiHandler) {
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
         this.thresholdFocus = 0.30
         this.thresholdCalm = 0.60
         this.aiHandler = new AIHandler("", "", extensionPath)
-        this.uiHandler = new UIHandler()
+        this.uiHandler = uiHandler
     }
 
     async init(dataHandler) {
