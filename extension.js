@@ -1,10 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 
+
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-
-
 const { DataHandler } = require('./DataHandler')
+
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -25,10 +25,11 @@ async function activate(context) {
 		// The code you place here will be executed every time your command is executed	
 	//});
 	//context.subscriptions.push(disposable);
-
+	
+	
 
 	this.dataHandler = new DataHandler()
-	await this.dataHandler.init();
+	await this.dataHandler.init(context.extensionPath);
 
 
 
@@ -86,7 +87,9 @@ function createWebView(context) {
 		{ enableScripts: true }
 	);
 	//set source paths for style and script
+	// @ts-ignore
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, ...['webview.css']));
+	// @ts-ignore
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, ...['webview.js']));
 	webView.webview.html = `
 		<!DOCTYPE html>
