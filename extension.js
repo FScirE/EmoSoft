@@ -37,10 +37,11 @@ async function activate(context) {
 	await this.dataHandler.init(context.extensionPath);
 
 	this.uiHandler = new UIHandler()
-	this.uiHandler.init(context)
 
 	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler)
 	await this.eventHandler.init(this.dataHandler);
+
+	this.uiHandler.init(context, this.eventHandler)
 
 	//examples of setting progress values
 	//webView.webview.postMessage({variable: 'focus', value: 50})

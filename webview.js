@@ -1,6 +1,7 @@
 //functions to change values in UI webview
 
 const MAX_LENGTH = 500
+const vscode = acquireVsCodeApi() //ignore error
 
 var canSendMessage = true
 
@@ -39,6 +40,10 @@ function addUserMessage() {
         <p>${text}</p>
     </div>
     `
+    vscode.postMessage({
+        variable: "user",
+        value: text
+    })
     var innerHTML = document.querySelector("#textbox").innerHTML
     document.querySelector("#textbox").innerHTML = messageHTML + innerHTML
     document.querySelector("textarea").value = ""
@@ -67,5 +72,5 @@ function textareaChanged(element) {
         content = content.substr(0, MAX_LENGTH)
         document.querySelector("textarea").value = content
     }
-    document.querySelector("#counter").textContent = content != "" ? content.length + "/" + MAX_LENGTH : ""
+    document.querySelector("#counter").textContent = content != "" ? content.length + "/" + MAX_LENGTH : " "
 }

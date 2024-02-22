@@ -77,9 +77,14 @@ progress {
         ". amount . "; 
 }
 .chatbox #amount {
+    overflow: hidden;
     text-align: right;
     grid-area: amount;
     font-size: 13px;
+}
+.chatbox #amount p {
+    height: 100%;
+    margin-top: 0;
 }
 .chatbox #textarea {
     display: inline-flex;  

@@ -6,7 +6,7 @@ const fs = require('fs')
  * @param {vscode.ExtensionContext} context
  */
 class UIHandler{
-    init(context) {
+    init(context, eventHandler) {
         //create the UI HTML element, will hold AI window and progress bars
         this.webViewIsVisisble = true;
         this.webView = createWebView(context)
@@ -15,11 +15,14 @@ class UIHandler{
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
+        // Handle messages from the webview
+        eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
-        context.subscriptions.push(vscode.commands.registerCommand('start.ui', e => {
+        context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
             this.webViewIsVisisble = true;
             this.webView = createWebView(context);
-            this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
+            eventHandler.initUIMessage(context)
+            this.webView.onDidDispose(_ => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
             this.statusBarButton.hide()
 	    }))
     }
