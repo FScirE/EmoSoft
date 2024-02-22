@@ -36,11 +36,11 @@ async function activate(context) {
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
-	this.eventHandler = new EventHandler()
-	await this.eventHandler.init(this.dataHandler);
-
 	this.uiHandler = new UIHandler()
 	this.uiHandler.init(context)
+
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler)
+	await this.eventHandler.init(this.dataHandler);
 
 	//examples of setting progress values
 	//webView.webview.postMessage({variable: 'focus', value: 50})
@@ -54,8 +54,8 @@ async function activate(context) {
 			this.uiHandler.setCalmProgress(calm)
 			this.uiHandler.setFocusProgress(focus)
 
-			await this.eventHandler.checkCalm(calm);
-			await this.eventHandler.checkFocus(focus);
+			// await this.eventHandler.checkCalm(calm);
+			// await this.eventHandler.checkFocus(focus);
 		}
 	}, 500);
 

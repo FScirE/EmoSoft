@@ -1,6 +1,8 @@
 @charset "UTF-8";
 *{
     font-family: 'Roboto Mono', sans-serif;
+    letter-spacing: 0.5px;
+    
 }
 body {
     font-size: 14px;
@@ -17,7 +19,7 @@ div {
     display: grid;
     padding: 0px;
     gap: 0px;
-    grid-template-rows: 1fr 9fr 1fr;
+    grid-template-rows: 1fr 10fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "header header"
@@ -29,6 +31,7 @@ div {
     grid-area: header;
 }
 .ai {
+    overflow-y: hidden;
     text-align: center;
     grid-area: ai;
 }
@@ -61,26 +64,29 @@ progress {
     height: 40%;
 }
 .chatbox {
-    background-color: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 20%);
     width: 100%;
-    height: 95%;
+    height: 100%;
     display: grid;
     gap: 0px;
-    grid-template-rows: 6fr 1fr;
+    grid-template-rows: 17fr 3fr 1fr;
     grid-template-columns: 1fr 10fr 1fr;
     grid-template-areas:
         ". textbox ."
-        ". textarea .";
+        ". textarea ."
+        ". amount . "; 
 }
-#textbox {
-    grid-area: textbox;
+.chatbox #amount {
+    text-align: right;
+    grid-area: amount;
+    font-size: 13px;
 }
 .chatbox #textarea {
     display: inline-flex;  
     grid-area: textarea;
 }
 .chatbox #textarea textarea {
-    width: 92%;
+    width: 89%;
     height: auto;
     padding: 9px;
     border-top-left-radius: 11px;
@@ -88,22 +94,97 @@ progress {
     border: 1px solid black;
     border-right: none;
     resize: none;
-    background-color: rgba(0, 0, 0, 0.1);
-    
+    background-color: rgb(65, 65, 65);
+    color: white;
 }
 .chatbox #textarea textarea:focus {
-    background-color: white;
-    outline: none;
+    outline: 1px solid #03a9f4;
 }
 .chatbox #textarea #sendbutton {
-    width: 8%;
+    width: 11%;
     height: auto;
     border-top-right-radius: 11px;
     border-bottom-right-radius: 11px;
     border: 1px solid black;
-    background-color: rgba(0, 0, 0, 0.25);
-    
+    border-left: none;
+    background-color: #03a9f4;
+    resize: both;
+    min-width: fit-content;
+    min-height: fit-content;
 }
 .chatbox #textarea #sendbutton:hover{
-    background-color: skyblue;
+    background-color: #5cc7f8;
 }
+.chatbox #textarea #sendbutton:active{
+    background-color: #4fc553;
+}
+#textbox {
+    font-size: 13px;
+    grid-area: textbox;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    gap: 11px; 
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    scrollbar-width: thin;
+    scroll-margin-left: 2px;
+    margin-bottom: 11px;
+}
+.message {
+    border-radius: 11px;
+    width: 75%;
+    padding: 9px;
+}
+.fa-paper-plane {
+    color: white;
+}
+.left {
+    text-align: left;
+    margin-right: auto;
+    background-color: rgb(65, 65, 65);  
+    color:white;
+}
+.right {   
+    text-align: right;
+    margin-left: auto;  
+    background-color: #03a9f4;
+    color:white;
+}
+.left .fa-robot {  
+    display: block;
+    transform: translate(-8px, -30px);
+    color: grey;
+    
+}
+.right p{
+    text-align: left;
+}
+.loader {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 50px;
+    position: relative;
+    color: #FFF;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+  }
+  
+@keyframes animloader {
+    0% {
+      box-shadow: -38px -6px, -14px 6px,  14px -6px;
+    }
+    33% {
+      box-shadow: -38px 6px, -14px -6px,  14px 6px;
+    }
+    66% {
+      box-shadow: -38px -6px, -14px 6px, 14px -6px;
+    }
+    100% {
+      box-shadow: -38px 6px, -14px -6px, 14px 6px;
+    }
+}
+
+    

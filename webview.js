@@ -1,5 +1,9 @@
 //functions to change values in UI webview
 
+const MAX_LENGTH = 500
+
+var canSendMessage = true
+
 window.addEventListener('message', e => {
     const message = e.data; // The JSON data our extension sent
     switch (message.variable) {
@@ -9,9 +13,9 @@ window.addEventListener('message', e => {
         case 'calm':
             setCalmValue(message.value)
             break
-        case "neurosityDataSourceText":
-            document.getElementById("neurosityDataSourceText").textContent = "Neurosity data source: " + message.value;
-            break
+        case "aimessage":
+            addAIMessage(message.value)
+            break      
     }
 });
 
@@ -23,4 +27,45 @@ function setFocusValue(value) {
 function setCalmValue(value) {
     document.querySelector(".calm").getElementsByTagName("progress")[0].value = value
     document.querySelector(".calm p").textContent = "Calm (" + value.toFixed(0) + "%)"
+}
+
+function addUserMessage() {
+    if (!canSendMessage) return
+    //user message
+    canSendMessage = false
+    const text = document.querySelector("textarea").value
+    const messageHTML = `
+    <div class="message right">
+        <p>${text}</p>
+    </div>
+    `
+    var innerHTML = document.querySelector("#textbox").innerHTML
+    document.querySelector("#textbox").innerHTML = messageHTML + innerHTML
+    document.querySelector("textarea").value = ""
+    textareaChanged()
+    //ai message
+    const aiHTML = `
+    <div class="message left">
+        <p><i class="fa-solid fa-robot fa-2xl"></i><span class="loader"></span></p>
+    </div>
+    `
+    innerHTML = document.querySelector("#textbox").innerHTML
+    document.querySelector("#textbox").innerHTML = aiHTML + innerHTML 
+}
+
+function addAIMessage(text) {
+    canSendMessage = true
+    const lineHTML = `
+    <p><i class="fa-solid fa-robot fa-2xl"></i>${text}</p>
+    `
+    document.getElementsByClassName("left")[0].innerHTML = lineHTML
+}
+
+function textareaChanged(element) {
+    var content = document.querySelector("textarea").value
+    if (content.length > MAX_LENGTH) {
+        content = content.substr(0, MAX_LENGTH)
+        document.querySelector("textarea").value = content
+    }
+    document.querySelector("#counter").textContent = content != "" ? content.length + "/" + MAX_LENGTH : ""
 }
