@@ -17,8 +17,7 @@ class EventHandler {
     }
 
     // Check focus level and notifies user when focus drops below 30%
-    async checkFocus() {
-        var focus =  await this.dataHandler.getFocus()
+    async checkFocus(focus) {
         if (focus < this.thresholdFocus && this.allowNotificationFocus == true) {
             this.allowNotificationFocus = false
             const text = 'This program is using the neurosity crown to measure '+
@@ -35,8 +34,7 @@ class EventHandler {
         }
     }
     // Check calmness level and notifies user when calmness drops below 30%
-    async checkCalm() {
-        var calm = await this.dataHandler.getCalm()
+    async checkCalm(calm) {
         if (calm < this.thresholdCalm && this.allowNotificationCalm == true) {
             this.allowNotificationCalm = false
             const text = 'This program is using the neurosity crown to measure '+

@@ -48,13 +48,14 @@ async function activate(context) {
 
 	setInterval(async () => {
 		if (this.uiHandler.webViewIsVisisble) {
-			this.uiHandler.setCalmProgress(await this.dataHandler.getCalm())
-			this.uiHandler.setFocusProgress(await this.dataHandler.getFocus())
+			var calm = await this.dataHandler.getCalm()
+			var focus = await this.dataHandler.getFocus() 
+			
+			this.uiHandler.setCalmProgress(calm)
+			this.uiHandler.setFocusProgress(focus)
 
-			await this.eventHandler.checkCalm();
-			await this.eventHandler.checkFocus();
-
-			this.uiHandler.setNeurosityDataSourceText(this.dataHandler.dataSourceType)
+			await this.eventHandler.checkCalm(calm);
+			await this.eventHandler.checkFocus(focus);
 		}
 	}, 500);
 
