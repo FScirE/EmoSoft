@@ -24,8 +24,9 @@ class EventHandler {
             'your live focus level. Your level recently dropped below 30% which might mean you are too '+
             'unfucosed to be productive in your development. Please check the chat for advice on how to '+
             'regain your focus.'
-            vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(_=>{
-                vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
+            vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(e=>{ 
+                if (e == 'Show more') {
+                vscode.window.showInformationMessage('Focus', {modal:true, detail:text})}})
             await this.aiHandler.sendMsgToUnfocuesedDev()
             this.uiHandler.printAIMessage(this.aiHandler.output)
         }
@@ -41,8 +42,9 @@ class EventHandler {
             'your live calmness level. Your level recently dropped below 30% which might mean you are too '+
             'agitated to be productive in your development. Please check the chat for advice on how to '+
             'regain your calmness.'
-            vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(_=>{
-                vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
+            vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(e=>{
+                if (e == 'Show more') {
+                vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})}})
             await this.aiHandler.sendMsgToAggitatedDev()
             this.uiHandler.printAIMessage(this.aiHandler.output)
         }
