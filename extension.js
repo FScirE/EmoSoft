@@ -53,8 +53,6 @@ async function activate(context) {
 
 			await this.eventHandler.checkCalm();
 			await this.eventHandler.checkFocus();
-
-			this.uiHandler.setNeurosityDataSourceText(this.dataHandler.dataSourceType)
 		}
 	}, 500);
 
