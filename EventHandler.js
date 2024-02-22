@@ -28,6 +28,7 @@ class EventHandler {
                 if (e == 'Show more') {
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})}})
             await this.aiHandler.sendMsgToUnfocuesedDev()
+            console.log(this.aiHandler.output)
             this.uiHandler.printAIMessage(this.aiHandler.output)
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
@@ -46,6 +47,7 @@ class EventHandler {
                 if (e == 'Show more') {
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})}})
             await this.aiHandler.sendMsgToAggitatedDev()
+            console.log(this.aiHandler.output)
             this.uiHandler.printAIMessage(this.aiHandler.output)
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications

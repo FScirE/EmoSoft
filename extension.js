@@ -24,6 +24,7 @@ async function activate(context) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "emoide" is now active!');
 
+
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
@@ -36,18 +37,18 @@ async function activate(context) {
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
-	this.eventHandler = new EventHandler()
-	await this.eventHandler.init(this.dataHandler);
-
 	this.uiHandler = new UIHandler()
 	this.uiHandler.init(context)
 
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler)
+	await this.eventHandler.init(this.dataHandler);
+	
 	//examples of setting progress values
 	//webView.webview.postMessage({variable: 'focus', value: 50})
 	//webView.webview.postMessage({variable: 'calm', value: 50})
 
 	setInterval(async () => {
-		if (this.uiHandler.webViewIsVisisble) {
+		if (this.uiHandler.webViewIsVisisble) {	
 			var calm = await this.dataHandler.getCalm()
 			var focus = await this.dataHandler.getFocus() 
 			

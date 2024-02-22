@@ -1,5 +1,3 @@
-
-
 const { Neurosity } = require("@neurosity/sdk");
 const path = require('path');
 
