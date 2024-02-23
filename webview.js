@@ -16,7 +16,7 @@ window.addEventListener('message', e => {
             break
         case "airesponse":
             setAIResponse(message.value)
-            break      
+            break 
     }
 });
 
@@ -34,7 +34,8 @@ function addUserMessage() {
     if (!canSendMessage) return
     //user message
     canSendMessage = false
-    const text = document.querySelector("textarea").value
+    const text = document.querySelector("textarea").value.trim()
+    if (text === "") return
     const messageHTML = `
     <div class="message right">
         <p>${text}</p>

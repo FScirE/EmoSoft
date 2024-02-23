@@ -19,6 +19,7 @@ class UIHandler{
         eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
         context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
+            if (this.webViewIsVisisble) return
             this.webViewIsVisisble = true;
             this.webView = createWebView(context);
             eventHandler.initUIMessage(context)
