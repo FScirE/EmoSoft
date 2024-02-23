@@ -14,8 +14,8 @@ window.addEventListener('message', e => {
         case 'calm':
             setCalmValue(message.value)
             break
-        case "aimessage":
-            addAIMessage(message.value)
+        case "airesponse":
+            setAIResponse(message.value)
             break      
     }
 });
@@ -58,7 +58,7 @@ function addUserMessage() {
     document.querySelector("#textbox").innerHTML = aiHTML + innerHTML 
 }
 
-function addAIMessage(text) {
+function setAIResponse(text) {
     canSendMessage = true
     const lineHTML = `
     <p><i class="fa-solid fa-robot fa-2xl"></i>${text}</p>

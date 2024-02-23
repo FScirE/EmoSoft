@@ -162,9 +162,6 @@ progress {
     color: grey;
     
 }
-.right p{
-    text-align: left;
-}
 .loader {
     width: 8px;
     height: 8px;
