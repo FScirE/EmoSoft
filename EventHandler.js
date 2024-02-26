@@ -6,8 +6,8 @@ class EventHandler {
     constructor (extensionPath, uiHandler) {
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
-        this.thresholdFocus = 0.30
-        this.thresholdCalm = 0.30
+        this.thresholdFocus = 0.30 
+        this.thresholdCalm = 0.20
         this.aiHandler = new AIHandler("", "", extensionPath)
         this.uiHandler = uiHandler
     }
@@ -39,7 +39,7 @@ class EventHandler {
         if (focus < this.thresholdFocus && this.allowNotificationFocus == true && !this.uiHandler.messagePending) {
             this.allowNotificationFocus = false
             const text = 'This program is using the neurosity crown to measure '+
-            'your live focus level. Your level recently dropped below 30% which might mean you are too '+
+            'your live focus level. Your focus level recently dropped below 30% which might mean you are too '+
             'unfucosed to be productive in your development. Please check the chat for advice on how to '+
             'regain your focus.'
             vscode.window.showInformationMessage('You seem to be unfocused.', 'Show more').then(e => {
@@ -49,7 +49,7 @@ class EventHandler {
             })
             await this.aiHandler.sendMsgToUnfocusedDev()
             this.uiHandler.printAIMessage(this.aiHandler.output, true)
-            await sleep(10000)
+            await sleep(30000)
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.15) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
@@ -60,7 +60,7 @@ class EventHandler {
         if (calm < this.thresholdCalm && this.allowNotificationCalm == true && !this.uiHandler.messagePending) {
             this.allowNotificationCalm = false
             const text = 'This program is using the neurosity crown to measure '+
-            'your live calmness level. Your level recently dropped below 30% which might mean you are too '+
+            'your live calmness level. Your calmness recently dropped below 20% which might mean you are too '+
             'agitated to be productive in your development. Please check the chat for advice on how to '+
             'regain your calmness.'
             vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(e => {
@@ -70,7 +70,7 @@ class EventHandler {
             })
             await this.aiHandler.sendMsgToAggitatedDev()
             this.uiHandler.printAIMessage(this.aiHandler.output, false)
-            await sleep(10000)
+            await sleep(30000)
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.15) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
