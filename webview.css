@@ -1,52 +1,200 @@
 @charset "UTF-8";
+*{
+    font-family: 'Roboto Mono', sans-serif;
+    letter-spacing: 0.5px;
+    
+}
 body {
     font-size: 14px;
-    margin: 6px;
+    margin: 0px;
     padding: 0px;
     background-color: var(--vscode-editor-background);
 }
 div {
     margin: 0px;
-    padding: 4px;
+    padding: 0px;
+}
+p {
+    margin: 2px;
 }
 .wrapper {
-    height: calc(100vh - 20px);
+    height: calc(100vh - 12px);
     display: grid;
-    padding: 4px;
-    gap: 4px;
-    grid-template-rows: 1fr 9fr 1fr;
+    padding: 0px;
+    gap: 0px;
+    grid-template-rows: 1fr 10fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "header header"
         "ai ai"
-        "focus calm";
+        "fc fc";
 }
 .header {
     text-align: center;
     grid-area: header;
 }
 .ai {
+    overflow-y: hidden;
     text-align: center;
     grid-area: ai;
 }
 .focus {
+    width: 46%;
     text-align: center;
-    grid-area: focus;
 }
 .focus progress {
     accent-color: #4fc553;
 }
 .calm {
+    width: 46%;
     text-align: center;
-    grid-area: calm;
 }
 .calm progress {
     accent-color: #03a9f4;
 }
-p {
-    margin: 6px 2px 2px 2px;
+#focusandcalm {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    grid-area: fc;
 }
 progress {
-    width: 80%;
+    width: 85%;
     height: 40%;
 }
+.chatbox {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 20%);
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 0px;
+    grid-template-rows: 17fr 3fr 1fr;
+    grid-template-columns: 1fr 11fr 1fr;
+    grid-template-areas:
+        ". textbox ."
+        ". textarea ."
+        ". amount . "; 
+}
+.chatbox #amount {
+    overflow: hidden;
+    text-align: right;
+    grid-area: amount;
+    font-size: 13px;
+}
+.chatbox #amount p {
+    height: 100%;
+    margin-top: 0;
+}
+.chatbox #textarea {
+    display: inline-flex;  
+    grid-area: textarea;
+}
+.chatbox #textarea textarea {
+    width: 89%;
+    height: auto;
+    padding: 9px;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border: 1px solid black;
+    border-right: none;
+    resize: none;
+    background-color: rgb(65, 65, 65);
+    color: white;
+}
+.chatbox #textarea textarea:focus {
+    outline: 1px solid #03a9f4;
+}
+.chatbox #textarea #sendbutton {
+    width: 11%;
+    height: auto;
+    border-top-right-radius: 11px;
+    border-bottom-right-radius: 11px;
+    border: 1px solid black;
+    border-left: none;
+    background-color: #03a9f4;
+    resize: both;
+    min-width: fit-content;
+    min-height: fit-content;
+}
+.chatbox #textarea #sendbutton:hover{
+    background-color: #5cc7f8;
+}
+.chatbox #textarea #sendbutton:active{
+    background-color: #4fc553;
+}
+#textbox {
+    font-size: 13px;
+    grid-area: textbox;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    gap: 11px; 
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    scrollbar-width: thin;
+    scroll-margin-left: 2px;
+    margin-bottom: 11px;
+}
+.message {
+    border-radius: 11px;
+    max-width: 70%;
+    width: auto;
+    padding: 9px;
+    overflow-wrap: break-word;
+}
+.fa-paper-plane {
+    color: white;
+}
+.left {
+    text-align: left;
+    margin-right: auto;
+    background-color: rgb(65, 65, 65);  
+    color:white;
+}
+.right {   
+    text-align: right;
+    margin-left: auto;  
+    background-color: #03a9f4;
+    color:white;
+}
+.left .fa-robot {  
+    display: block;
+    transform: translate(-10px, -28px);
+    color: grey; 
+}
+.loader {
+    margin-right: 25px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 50px;
+    position: relative;
+    color: #FFF;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+}
+.focusresponse {
+    box-shadow: 0px 0px 0px 3px #4fc553 inset;
+}
+.calmresponse {
+    box-shadow: 0px 0px 0px 3px #03a9f4 inset;
+}
+  
+@keyframes animloader {
+    0% {
+      box-shadow: -38px -6px, -14px 6px,  14px -6px;
+    }
+    33% {
+      box-shadow: -38px 6px, -14px -6px,  14px 6px;
+    }
+    66% {
+      box-shadow: -38px -6px, -14px 6px, 14px -6px;
+    }
+    100% {
+      box-shadow: -38px 6px, -14px -6px, 14px 6px;
+    }
+}
+
+    

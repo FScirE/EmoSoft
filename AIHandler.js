@@ -6,7 +6,7 @@
 
 const dotenv = require('dotenv');
 /*import OpenAI from 'openai';*/
-const { retrieveResponse } = require('./openai-test');
+const { retrieveResponse } = require('./OpenAIExtension.js');
 
 dotenv.config();
 
@@ -25,9 +25,22 @@ class AIHandler {
         this.output = '';
         
     }
-    //WORK IN PROGESS,
-    retrieveContext(){
-       // later user story
+    //WORK IN PROGESS, no idea if it works tbh......... (stolen from chatgpt)
+    retrieveContext(filePath, lineNumber, contextLines = 5){
+        const fs = require('fs');
+            try {
+                const lines = fs.readFileSync(filePath, 'utf8').split('\n');
+                const startLine = Math.max(0, lineNumber - contextLines - 1);
+                const endLine = Math.min(lines.length, lineNumber + contextLines);
+                return lines.slice(startLine, endLine).map((line, index) => ({
+                    line: startLine + index + 1,
+                    content: line.trim()
+                }));
+            } catch (err) {
+                console.error('Error reading file:', err);
+                return [];
+            }
+        
     }
     //Typ klar behövs test
     async sendMsgToAI(preset,msg){

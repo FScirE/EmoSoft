@@ -7,7 +7,7 @@ class EventHandler {
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
         this.thresholdFocus = 0.30
-        this.thresholdCalm = 0.60
+        this.thresholdCalm = 0.30
         this.aiHandler = new AIHandler("", "", extensionPath)
         this.uiHandler = uiHandler
     }
@@ -16,44 +16,64 @@ class EventHandler {
         this.dataHandler = dataHandler;
     }
 
+    async initUIMessage(context) {
+        this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
+            switch (message.variable) {
+            case 'user':
+                //console.log(message.value);
+                await this.aiHandler.sendMsgToAI("you are a coding assistant, give short responses. ", message.value);
+                var responseFromAi = this.aiHandler.output
+                this.uiHandler.webView.webview.postMessage({
+                    variable: "airesponse",
+                    value: responseFromAi
+                })
+                return;
+            }
+        },
+        undefined,
+        context.subscriptions);
+    }
+
     // Check focus level and notifies user when focus drops below 30%
-    async checkFocus() {
-        var focus =  await this.dataHandler.getFocus()
+    async checkFocus(focus) {
         if (focus < this.thresholdFocus && this.allowNotificationFocus == true) {
             this.allowNotificationFocus = false
             const text = 'This program is using the neurosity crown to measure '+
             'your live focus level. Your level recently dropped below 30% which might mean you are too '+
             'unfucosed to be productive in your development. Please check the chat for advice on how to '+
             'regain your focus.'
-            vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(_=>{
-                vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
+            vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(e => {
+                if (e == "Show more") vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
             await this.aiHandler.sendMsgToUnfocuesedDev()
-            this.uiHandler.printAIMessage(this.aiHandler.output)
+            this.uiHandler.printAIMessage(this.aiHandler.output, true)
+            await sleep(10000)
         }
-        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
+        if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.15) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
         }
     }
     // Check calmness level and notifies user when calmness drops below 30%
-    async checkCalm() {
-        var calm = await this.dataHandler.getCalm()
+    async checkCalm(calm) {
         if (calm < this.thresholdCalm && this.allowNotificationCalm == true) {
             this.allowNotificationCalm = false
             const text = 'This program is using the neurosity crown to measure '+
             'your live calmness level. Your level recently dropped below 30% which might mean you are too '+
             'agitated to be productive in your development. Please check the chat for advice on how to '+
             'regain your calmness.'
-            vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(_=>{
-                vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
+            vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(e => {
+                if (e == "Show more") vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
             await this.aiHandler.sendMsgToAggitatedDev()
-            this.uiHandler.printAIMessage(this.aiHandler.output)
+            this.uiHandler.printAIMessage(this.aiHandler.output, false)
+            await sleep(10000)
         }
-        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications
+        if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.15) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
         }
     }
+}
 
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = {

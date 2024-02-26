@@ -36,26 +36,29 @@ async function activate(context) {
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
-	this.eventHandler = new EventHandler()
+	this.uiHandler = new UIHandler()
+
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler)
 	await this.eventHandler.init(this.dataHandler);
 
-	this.uiHandler = new UIHandler()
-	this.uiHandler.init(context)
+	this.uiHandler.init(context, this.eventHandler)
 
 	//examples of setting progress values
 	//webView.webview.postMessage({variable: 'focus', value: 50})
 	//webView.webview.postMessage({variable: 'calm', value: 50})
 
 	setInterval(async () => {
+		
+		var calm = await this.dataHandler.getCalm()
+		var focus = await this.dataHandler.getFocus() 
+			
 		if (this.uiHandler.webViewIsVisisble) {
-			this.uiHandler.setCalmProgress(await this.dataHandler.getCalm())
-			this.uiHandler.setFocusProgress(await this.dataHandler.getFocus())
-
-			await this.eventHandler.checkCalm();
-			await this.eventHandler.checkFocus();
-
-			this.uiHandler.setNeurosityDataSourceText(this.dataHandler.dataSourceType)
+			this.uiHandler.setCalmProgress(calm)
+			this.uiHandler.setFocusProgress(focus)
 		}
+		
+		//await this.eventHandler.checkCalm(calm);
+		//await this.eventHandler.checkFocus(focus);
 	}, 500);
 
 	//example of sending ai message

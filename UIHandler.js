@@ -6,7 +6,7 @@ const fs = require('fs')
  * @param {vscode.ExtensionContext} context
  */
 class UIHandler{
-    init(context) {
+    init(context, eventHandler) {
         //create the UI HTML element, will hold AI window and progress bars
         this.webViewIsVisisble = true;
         this.webView = createWebView(context)
@@ -15,15 +15,18 @@ class UIHandler{
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
+        // Handle messages from the webview
+        eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
-        context.subscriptions.push(vscode.commands.registerCommand('start.ui', e => {
+        context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
+            if (this.webViewIsVisisble) return
             this.webViewIsVisisble = true;
             this.webView = createWebView(context);
-            this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
+            eventHandler.initUIMessage(context)
+            this.webView.onDidDispose(_ => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
             this.statusBarButton.hide()
 	    }))
     }
-
 
     setFocusProgress(focus) {
         this.webView.webview.postMessage({variable: 'focus', value: focus * 100})
@@ -33,12 +36,14 @@ class UIHandler{
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
 
-	setNeurosityDataSourceText(dataSource){
-		this.webView.webview.postMessage({variable: 'neurosityDataSourceText', value: dataSource})
-	}
-
-    printAIMessage(text) {
-        
+    printAIMessage(text, isFocus) {
+        if (isFocus) {
+            this.webView.webview.postMessage({
+                variable: 'aimessage', 
+                value: text, 
+                type: isFocus ? 'focus' : 'calm' 
+            })
+        }
     }
 }
 
@@ -62,11 +67,9 @@ function createWebView(context) {
 	//set source paths for style and script
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
-  
 	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, './webview.html'), 'utf-8')
-        .replace('${styleSrc}', styleSrc.toString())
-        .replace('${scriptSrc}', scriptSrc.toString())
-  
+        .replace('./webview.css', styleSrc.toString())
+        .replace('./webview.js', scriptSrc.toString())
 	return webView;
 }
 
