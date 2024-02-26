@@ -48,16 +48,17 @@ async function activate(context) {
 	//webView.webview.postMessage({variable: 'calm', value: 50})
 
 	setInterval(async () => {
-		if (this.uiHandler.webViewIsVisisble) {
-			var calm = await this.dataHandler.getCalm()
-			var focus = await this.dataHandler.getFocus() 
+		
+		var calm = await this.dataHandler.getCalm()
+		var focus = await this.dataHandler.getFocus() 
 			
+		if (this.uiHandler.webViewIsVisisble) {
 			this.uiHandler.setCalmProgress(calm)
 			this.uiHandler.setFocusProgress(focus)
-
-			// await this.eventHandler.checkCalm(calm);
-			// await this.eventHandler.checkFocus(focus);
 		}
+		
+		// await this.eventHandler.checkCalm(calm);
+		// await this.eventHandler.checkFocus(focus);
 	}, 500);
 
 	//example of sending ai message
