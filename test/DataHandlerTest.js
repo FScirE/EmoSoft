@@ -1,3 +1,12 @@
+
+
+
+
+// This file is a WIP and ironically untested, just pretend it doesn't exist until Tommie fixes it
+
+
+
+
 const assert = require('assert');
 
 const vscode = require('vscode');
@@ -16,8 +25,6 @@ async function RunWithTimeout(func, milliseconds){
 }
 
 async function RunDataHandlerTests (duration) {
-
-
 	var initTimeout = 5000;
 	var getTimeout = 2000;
 
