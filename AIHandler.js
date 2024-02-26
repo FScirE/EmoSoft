@@ -51,7 +51,7 @@ class AIHandler {
             this.output = templist[0].join('');
         });
     };
-    async sendMsgToUnfocuesedDev(){
+    async sendMsgToUnfocusedDev(){
         // sends a message to the AI with standard message telling the user to focus. Returns an array contains all words in each slot. 
         await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_HELP_UNFOCUSED_DEV);
     }
