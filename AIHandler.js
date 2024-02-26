@@ -6,7 +6,7 @@
 
 const dotenv = require('dotenv');
 /*import OpenAI from 'openai';*/
-const { retrieveResponse } = require('./openai-test');
+const { retrieveResponse } = require('./OpenAIExtension.js');
 
 dotenv.config();
 
