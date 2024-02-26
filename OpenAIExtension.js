@@ -8,12 +8,9 @@ const MAXLENGHTMSG = 750;
 
 async function retrieveResponse(preset, msg, extensionpath) {
     dotenv.config({ path: path.join(extensionpath, './ai.env') });
-    if (msg == null)
-    {   console.log("\n No input message. \n")
-        return -1}
     /*if (aiCalled==true)
         {
-            console.log("\n Ai already called. \n")
+            console.log("Ai already called. Saftey mechanism invoked.")
             return -1}
     aiCalled = true;*/
 

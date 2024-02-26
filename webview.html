@@ -11,15 +11,30 @@
         <div class="header">
             <h1>EMO IDE</h1>
         </div>
-        <div class="ai">
-            
+        <div class="ai">           
             <div class="chatbox">
                 <div id="textbox">
-        
+                    <div class="message right">
+                        <p>This is another message from the user</p>
+                    </div>
+                    <div class="message left">                
+                        <p><i class="fa-solid fa-robot fa-2xl"></i><span class="loader"></span></p>                       
+                    </div> 
+                    <div class="message right">
+                        <p>This is a message from the user</p>
+                    </div>
+                    <div class="message left">
+                        <p><i class="fa-solid fa-robot fa-2xl"></i>This is a response from the AI chatbot</p>
+                    </div>
                 </div>
                 <div id="textarea">
-                    <textarea data-vscode-context='{"webviewSection": "editor", "preventDefaultContextMenuItems": true}'></textarea>
-                    <button id="sendbutton"><i class="fa-solid fa-paper-plane fa-lg"></i></button>
+                    <textarea data-vscode-context='{"webviewSection": "editor", "preventDefaultContextMenuItems": true}' 
+                        oninput="textareaChanged(this)" 
+                        onchange="textareaChanged(this)"></textarea>
+                    <button id="sendbutton" onclick="addUserMessage()"><i class="fa-solid fa-paper-plane fa-lg"></i></button>
+                </div>
+                <div id="amount">
+                    <p id="counter"> </p>
                 </div>
             </div>
         </div>
