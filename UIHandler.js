@@ -36,14 +36,16 @@ class UIHandler{
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
 
-    printAIMessage(text, isFocus) {
-        if (isFocus) {
-            this.webView.webview.postMessage({
-                variable: 'aimessage', 
-                value: text, 
-                type: isFocus ? 'focus' : 'calm' 
-            })
+    async printAIMessage(text, isFocus) {
+        while (!this.webViewIsVisisble) {
+            await sleep(100)
         }
+        this.webView.webview.postMessage({
+            variable: 'aimessage', 
+            value: text, 
+            type: isFocus ? 'focus' : 'calm' 
+        })
+        this.messagePending = false;
     }
 }
 
@@ -71,6 +73,10 @@ function createWebView(context) {
         .replace('./webview.css', styleSrc.toString())
         .replace('./webview.js', scriptSrc.toString())
 	return webView;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = {
