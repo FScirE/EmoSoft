@@ -36,8 +36,14 @@ class UIHandler{
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
 
-    printAIMessage(text) {
-        
+    printAIMessage(text, isFocus) {
+        if (isFocus) {
+            this.webView.webview.postMessage({
+                variable: 'aimessage', 
+                value: text, 
+                type: isFocus ? 'focus' : 'calm' 
+            })
+        }
     }
 }
 

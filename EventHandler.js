@@ -45,7 +45,7 @@ class EventHandler {
             vscode.window.showInformationMessage('You seem to be unfucosed.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Focus', {modal:true, detail:text})})
             await this.aiHandler.sendMsgToUnfocuesedDev()
-            this.uiHandler.printAIMessage(this.aiHandler.output)
+            this.uiHandler.printAIMessage(this.aiHandler.output, true)
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.1) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
@@ -62,7 +62,7 @@ class EventHandler {
             vscode.window.showInformationMessage('You seem to be agitated.', 'Show more').then(_=>{
                 vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})})
             await this.aiHandler.sendMsgToAggitatedDev()
-            this.uiHandler.printAIMessage(this.aiHandler.output)
+            this.uiHandler.printAIMessage(this.aiHandler.output, false)
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.1) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true

@@ -174,7 +174,13 @@ progress {
     color: #FFF;
     box-sizing: border-box;
     animation: animloader 1s linear infinite alternate;
-  }
+}
+.focusresponse {
+    box-shadow: 0px 0px 0px 3px #4fc553 inset;
+}
+.calmresponse {
+    box-shadow: 0px 0px 0px 3px #03a9f4 inset;
+}
   
 @keyframes animloader {
     0% {

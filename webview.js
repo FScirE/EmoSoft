@@ -17,6 +17,9 @@ window.addEventListener('message', e => {
         case "airesponse":
             setAIResponse(message.value)
             break 
+        case "aimessage":
+            addAIMessage(message.value, message.type)
+            break
     }
 });
 
@@ -65,6 +68,16 @@ function setAIResponse(text) {
     <p><i class="fa-solid fa-robot fa-2xl"></i>${text}</p>
     `
     document.getElementsByClassName("left")[0].innerHTML = lineHTML
+}
+
+function addAIMessage(text, type) {
+    const messageHTML = `
+    <div class="message left ${type}response">
+        <p>${text}</p>
+    </div>
+    `
+    const innerHTML = document.querySelector("#textbox").innerHTML
+    document.querySelector("#textbox").innerHTML = messageHTML + innerHTML
 }
 
 function textareaChanged(element) {
