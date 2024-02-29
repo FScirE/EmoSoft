@@ -6,11 +6,11 @@ class EventHandler {
     constructor (extensionPath, uiHandler) {
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
-        
-        this.thresholdFocus = 0.30 
+
+        this.thresholdFocus = 0.30
         this.thresholdCalm = 0.20
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
-        
+
         this.uiHandler = uiHandler
     }
 
@@ -51,7 +51,7 @@ class EventHandler {
             })
             await this.aiHandler.sendMsgToUnfocusedDev()
             this.uiHandler.printAIMessage(this.aiHandler.output, true)
-            await sleep(30000)
+            await sleep(60)
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus+0.15) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
@@ -72,7 +72,7 @@ class EventHandler {
             })
             await this.aiHandler.sendMsgToAggitatedDev()
             this.uiHandler.printAIMessage(this.aiHandler.output, false)
-            await sleep(30000)
+            await sleep(60)
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm+0.15) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
@@ -80,8 +80,8 @@ class EventHandler {
     }
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function sleep(s) {
+    return new Promise(resolve => setTimeout(resolve, s*1000));
 }
 
 module.exports = {
