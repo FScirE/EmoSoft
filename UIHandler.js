@@ -37,6 +37,7 @@ class UIHandler{
     }
 
     async printAIMessage(text, isFocus) {
+        this.messagePending = true;
         while (!this.webViewIsVisisble) {
             await sleep(100)
         }

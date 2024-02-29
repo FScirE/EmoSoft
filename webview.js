@@ -5,24 +5,6 @@ const vscode = acquireVsCodeApi() //ignore error
 
 var canSendMessage = true
 
-window.addEventListener('message', e => {
-    const message = e.data; // The JSON data our extension sent
-    switch (message.variable) {
-        case 'focus':
-            setFocusValue(message.value)
-            break
-        case 'calm':
-            setCalmValue(message.value)
-            break
-        case "airesponse":
-            setAIResponse(message.value)
-            break 
-        case "aimessage":
-            addAIMessage(message.value, message.type)
-            break
-    }
-});
-
 function setFocusValue(value) {
     document.querySelector(".focus").getElementsByTagName("progress")[0].value = value
     document.querySelector(".focus p").textContent = "Focus (" + value.toFixed(0) + "%)"
@@ -83,8 +65,33 @@ function addAIMessage(text, type) {
 function textareaChanged(element) {
     var content = document.querySelector("textarea").value
     if (content.length > MAX_LENGTH) {
-        content = content.substr(0, MAX_LENGTH)
+        content = content.substring(0, MAX_LENGTH)
         document.querySelector("textarea").value = content
     }
     document.querySelector("#counter").textContent = content != "" ? content.length + "/" + MAX_LENGTH : " "
 }
+
+window.addEventListener('message', e => {
+    const message = e.data; // The JSON data our extension sent
+    switch (message.variable) {
+        case 'focus':
+            setFocusValue(message.value)
+            break
+        case 'calm':
+            setCalmValue(message.value)
+            break
+        case "airesponse":
+            setAIResponse(message.value)
+            break 
+        case "aimessage":
+            addAIMessage(message.value, message.type)
+            break
+    }
+})
+
+document.querySelector("textarea").addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+        addUserMessage()
+        e.preventDefault()
+    }
+})
