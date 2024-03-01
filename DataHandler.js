@@ -27,6 +27,9 @@ class DataHandler {
 
     async init(extensionPath) {
         try { // login and connect to Neurosity device
+
+            // console.log("extensionPath is ", extensionPath) // debugging test/DataHandlerTest.js
+
             const dotenvRequire = require('dotenv').config({
                 path: path.join(extensionPath, '/envNeurosity.env')
             }); // may be async? idk, seems to work anyway ¯\_(ツ)_/¯
@@ -40,7 +43,7 @@ class DataHandler {
                     return env === "" || env === 0;
                 };
                 if (invalidEnv(email) || invalidEnv(password) || invalidEnv(deviceId)) {
-                    console.error("deviceId, email, or password not in envNeurosity.env (incorrectly formatted, or file not found). See 'Readme for Neurosity setup.txt'");
+                    throw new Error("deviceId, email, or password not in envNeurosity.env (incorrectly formatted, or file not found). See 'Readme for Neurosity setup.txt'");
                 }
             };
             
@@ -48,7 +51,8 @@ class DataHandler {
             console.log(`Neurosity email "${this.email}" attempting to authenticate to deviceId "${this.deviceId}"`);
             
             this.neurosity = new Neurosity({deviceId: this.deviceId});
-    
+            
+            
             await this.neurosity
                 .login({
                     email: this.email,
@@ -58,6 +62,7 @@ class DataHandler {
             this.loggedIn = true;
         }
         catch (e) { // login failed
+            console.log("'this' is ", this);
             console.error("DataHandler.init() Neurosity login: ", e);
             this.loggedIn = false;
         }
@@ -87,6 +92,26 @@ class DataHandler {
                     this.recentFocusTimestamps.shift();
                 }
             });
+
+
+            // this.neurosity.accelerometer().subscribe((accelerometer) => {
+
+            //     console.log(accelerometer);
+                    // {acceleration: 1.01, inclination: -97.13, orientation: -1, pitch: -2.5, roll: -20.43, …}
+                    // expanded in debug console:
+                    // acceleration:1.01
+                    // inclination:-97.13
+                    // orientation:-1
+                    // pitch:-2.5
+                    // roll:-20.43
+                    // timestamp:1709302962333
+                    // x:-0.04
+                    // y:-0.35
+                    // z:-0.94
+
+            // })
+
+
 
         }
         else if (this.createFakeDataIfNotLoggedIn) {

@@ -43,9 +43,10 @@ async function activate(context) {
 
 	this.uiHandler.init(context, this.eventHandler)
 
-	//examples of setting progress values
-	//webView.webview.postMessage({variable: 'focus', value: 50})
-	//webView.webview.postMessage({variable: 'calm', value: 50})
+
+	
+
+
 
 	setInterval(async () => {	
 		var calm = await this.dataHandler.getCalm()
@@ -55,9 +56,19 @@ async function activate(context) {
 			this.uiHandler.setCalmProgress(calm)
 			this.uiHandler.setFocusProgress(focus)
 		}
+
+		// use calm to create a two-digit hexadecimal string for the red channel
+		let newRed = Math.floor(Math.max(0, Math.min(255 * (calm), 255))).toString(16).padStart(2, '0')
+
+		// use focus to create a two-digit hexadecimal string for the blue channel
+		let newBlue = Math.floor(Math.max(0, Math.min(255 * (1 - focus), 255))).toString(16).padStart(2, '0')
+
+		let newColor = "#" + newRed + "00" + newBlue;
+		// await this.uiHandler.setStatusBarBackgroundColor(newColor);
+		await this.uiHandler.causeCancer(newColor);
 		
-		//await this.eventHandler.checkCalm(calm);
-		//await this.eventHandler.checkFocus(focus);
+		// await this.eventHandler.checkCalm(calm);
+		// await this.eventHandler.checkFocus(focus);
 	}, 500);
 
 	//example of sending ai message
