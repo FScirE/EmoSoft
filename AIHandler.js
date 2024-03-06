@@ -23,7 +23,7 @@ class AIHandler {
         this.standardinput = standardinput;
         this.extensionpath = extensionpath;
         this.output = '';
-        this.previousmsg = '';
+        this.aipreviousmsg = '';
         
     }
     //WORK IN PROGESS, no idea if it works tbh......... (stolen from chatgpt)
@@ -47,15 +47,15 @@ class AIHandler {
     async sendMsgToAI(preset,msg, chatactive){
         var templist = []
         if (chatactive == true){
-            preset += ",This is your previous message: " + this.previousmsg
+            preset += ",This is your previous message: " + this.aipreviousmsg
         }
         // sends a message and preset to the AI. Returns an array contains all words in each slot. 
         await retrieveResponse(preset, msg, this.extensionpath).then(response => {
             templist.push(response);
             this.output = templist[0].join('');
             if (chatactive == true) {
-                this.previousmsg = this.output;
-                console.log("Previous message:", this.previousmsg);
+                this.aipreviousmsg = this.output;
+                console.log("Previous message:", this.aipreviousmsg);
             }
             
         });
