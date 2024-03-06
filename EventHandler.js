@@ -23,7 +23,7 @@ class EventHandler {
             switch (message.variable) {
             case 'user':
                 //console.log(message.value);
-                await this.aiHandler.sendMsgToAI("you are a coding assistant, give short responses.", message.value, true);
+                await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
                 var responseFromAi = this.aiHandler.output
                 this.uiHandler.webView.webview.postMessage({
                     variable: "airesponse",
@@ -49,7 +49,7 @@ class EventHandler {
                     vscode.window.showInformationMessage('Focus', {modal:true, detail:text})
                 }
             })
-            await this.aiHandler.sendMsgToUnfocusedDev()
+            await this.aiHandler.sendMsgToUnfocusedDev(focus)
             this.uiHandler.printAIMessage(this.aiHandler.output, true)
             await sleep(60)
         }
@@ -70,7 +70,7 @@ class EventHandler {
                     vscode.window.showInformationMessage('Calmness', {modal:true, detail:text})
                 }
             })
-            await this.aiHandler.sendMsgToAggitatedDev()
+            await this.aiHandler.sendMsgToAggitatedDev(calm)
             this.uiHandler.printAIMessage(this.aiHandler.output, false)
             await sleep(60)
         }
