@@ -21,8 +21,9 @@ class AIHandler {
         
         this.codeinput = codeinput;
         this.standardinput = standardinput;
-        this.extensionpath = extensionpath
+        this.extensionpath = extensionpath;
         this.output = '';
+        this.previousmsg = '';
         
     }
     //WORK IN PROGESS, no idea if it works tbh......... (stolen from chatgpt)
@@ -43,25 +44,33 @@ class AIHandler {
         
     }
     //Typ klar behövs test
-    async sendMsgToAI(preset,msg){
+    async sendMsgToAI(preset,msg, chatactive){
         var templist = []
+        if (chatactive == true){
+            preset += ",This is your previous message: " + this.previousmsg
+        }
         // sends a message and preset to the AI. Returns an array contains all words in each slot. 
         await retrieveResponse(preset, msg, this.extensionpath).then(response => {
             templist.push(response);
             this.output = templist[0].join('');
+            if (chatactive == true) {
+                this.previousmsg = this.output;
+                console.log("Previous message:", this.previousmsg);
+            }
+            
         });
     };
     async sendMsgToUnfocusedDev(){
         // sends a message to the AI with standard message telling the user to focus. Returns an array contains all words in each slot. 
-        await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_HELP_UNFOCUSED_DEV);
+        await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_HELP_UNFOCUSED_DEV, false);
     }
     async sendMsgToAggitatedDev(){
         // sends a message to the AI with standard message telling the user to calm down. Returns an array contains all words in each slot. 
-        await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_CALM_DOWN);
+        await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_CALM_DOWN, false);
     }  
     async sendMsgToTakeBreak(){
         // sends a message to the AI with standard message telling the user to take a break. Returns an array contains all words in each slot. 
-        await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_TAKE_BREAK);
+        await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_TAKE_BREAK, false);
     }
 }
 

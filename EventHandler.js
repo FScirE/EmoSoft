@@ -23,7 +23,7 @@ class EventHandler {
             switch (message.variable) {
             case 'user':
                 //console.log(message.value);
-                await this.aiHandler.sendMsgToAI("you are a coding assistant, give short responses. ", message.value);
+                await this.aiHandler.sendMsgToAI("you are a coding assistant, give short responses.", message.value, true);
                 var responseFromAi = this.aiHandler.output
                 this.uiHandler.webView.webview.postMessage({
                     variable: "airesponse",
