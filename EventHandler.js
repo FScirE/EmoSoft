@@ -27,7 +27,7 @@ class EventHandler {
                     var responseFromAi = this.aiHandler.output
                     this.uiHandler.webView.webview.postMessage({
                         variable: "airesponse",
-                        value: respon
+                        value: responseFromAi
                     })
                     return;
             }
