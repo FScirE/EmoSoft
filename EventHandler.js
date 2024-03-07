@@ -8,7 +8,7 @@ class EventHandler {
         this.allowNotificationCalm = true
 
         this.thresholdFocus = 0.30
-        this.thresholdCalm = 0.80
+        this.thresholdCalm = 0.20
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
 
         this.uiHandler = uiHandler
