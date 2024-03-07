@@ -49,7 +49,13 @@ async function activate(context) {
 	//webView.webview.postMessage({variable: 'calm', value: 50})
 
 	this.eyetracker = new EyeTracker()
-	var current = 0 //test
+
+	//test --------------------------------
+	var current = 0
+	const decorationType = vscode.window.createTextEditorDecorationType({
+		backgroundColor: 'green'
+	})
+	//-------------------------------------
 
 	setInterval(async () => {
 		var calm = await this.dataHandler.getCalm()
@@ -66,8 +72,7 @@ async function activate(context) {
 		console.log("X: " + this.eyetracker.getX())
 		console.log("Y: " + this.eyetracker.getY() + "\n")
 
-		//test code ---------------------------
-
+		//test --------------------------------
 		var editor = vscode.window.visibleTextEditors[0]
 		if (editor != undefined) {
 			var line = editor.document.lineAt(current)
@@ -77,22 +82,19 @@ async function activate(context) {
 			else if (this.eyetracker.getY() < 0.1 && current > 0)
 				current--
 
-			var start = new vscode.Position(current, 0);
-			var end = new vscode.Position(current, line.text.length);
-			var range = new vscode.Range(start, end);
+			if (!line.isEmptyOrWhitespace) {
+				var start = new vscode.Position(current, 0);
+				var end = new vscode.Position(current, line.text.length);
+				var range = new vscode.Range(start, end);
 
-			const decorationType = vscode.window.createTextEditorDecorationType({
-				backgroundColor: 'green'
-			})
-			editor.setDecorations(decorationType, null) //remove old
-			editor.setDecorations(decorationType, [range])
-
-			console.log(current)
+				editor.setDecorations(decorationType, [range])
+			}
 		}
 		//x:0.23 explorer/editor
 		//x:0.73 editor/extension
 		//y:0.10 head/editor
 		//y:0.60 editor/terminal
+		//----------------------------------------
 
 	}, 500);
 
