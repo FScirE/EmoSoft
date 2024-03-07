@@ -11,8 +11,8 @@ const { retrieveResponse } = require('./OpenAIExtension.js');
 dotenv.config();
 
 // Constants, Standard messages to promt against chatGPT
-const MESSAGE_HELP_UNFOCUSED_DEV = "Help a programmer who is at a certain focus level to become more focused. Give 3 example of what he can do to become more focused with two sentances. You must use the focus level in your message once";
-const MESSAGE_TAKE_BREAK = "Generate a friendly messsage telling a developer to take a short brake. 2 sentances. ";
+const MESSAGE_HELP_UNFOCUSED_DEV = "Help a programmer who is at a certain focus level to become more focused. Give one example of what he can do to become more focused with two sentances. You must use the focus level in your message once";
+const MESSAGE_TAKE_BREAK = "Generate a friendly messsage telling a developer to take a short brake. in 2 sentances. ";
 const MESSAGE_CALM_DOWN = "Help a programmer who is at a certain calm level to calm down in a friendly manner, but not weird. in 2 sentaces. You must use the calm level in your message once";
 const CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones.";
 
@@ -26,7 +26,7 @@ class AIHandler {
         this.aipreviousmsg = '';
         
     }
-    //WORK IN PROGESS, no idea if it works tbh......... (stolen from chatgpt)
+
     retrieveContext(filePath, lineNumber, contextLines = 5){
         const fs = require('fs');
             try {

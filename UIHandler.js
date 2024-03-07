@@ -8,6 +8,7 @@ const fs = require('fs')
 class UIHandler{
     init(context, eventHandler) {
         //create the UI HTML element, will hold AI window and progress bars
+        this.messagePending = false
         this.webViewIsVisisble = true;
         this.webView = createWebView(context)
         this.statusBarButton = createStatusBarButton()
