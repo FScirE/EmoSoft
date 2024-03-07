@@ -11,6 +11,7 @@ const { EventHandler } = require('./EventHandler')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
 
+const { EyeTracker } = require('./Eyetracker')
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -47,6 +48,9 @@ async function activate(context) {
 	//webView.webview.postMessage({variable: 'focus', value: 50})
 	//webView.webview.postMessage({variable: 'calm', value: 50})
 
+	this.eyetracker = new EyeTracker()
+	var current = 0 //test
+
 	setInterval(async () => {
 		var calm = await this.dataHandler.getCalm()
 		var focus = await this.dataHandler.getFocus()
@@ -56,9 +60,43 @@ async function activate(context) {
 			this.uiHandler.setFocusProgress(focus)
 		}
 
-		await this.eventHandler.checkCalm(calm);
-		await this.eventHandler.checkFocus(focus);
+		//await this.eventHandler.checkCalm(calm);
+		//await this.eventHandler.checkFocus(focus);
+
+		console.log("X: " + this.eyetracker.getX())
+		console.log("Y: " + this.eyetracker.getY() + "\n")
+
+		//test code ---------------------------
+
+		var editor = vscode.window.visibleTextEditors[0]
+		if (editor != undefined) {
+			var line = editor.document.lineAt(current)
+
+			if (this.eyetracker.getY() > 0.9 && current < editor.document.lineCount)
+				current++
+			else if (this.eyetracker.getY() < 0.1 && current > 0)
+				current--
+
+			var start = new vscode.Position(current, 0);
+			var end = new vscode.Position(current, line.text.length);
+			var range = new vscode.Range(start, end);
+
+			const decorationType = vscode.window.createTextEditorDecorationType({
+				backgroundColor: 'green'
+			})
+			editor.setDecorations(decorationType, null) //remove old
+			editor.setDecorations(decorationType, [range])
+
+			console.log(current)
+		}
+		//x:0.23 explorer/editor
+		//x:0.73 editor/extension
+		//y:0.10 head/editor
+		//y:0.60 editor/terminal
+
 	}, 500);
+
+	vscode.window.activeTextEditor
 
 	//example of sending ai message
 	/*const ai = new AIHandler('', '', context.extensionPath)
