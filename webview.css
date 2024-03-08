@@ -37,6 +37,9 @@ code{
 .header {
     text-align: center;
     grid-area: header;
+    justify-content: space-between;
+    align-items: center;
+    
 }
 .ai {
     overflow-y: hidden;
@@ -213,4 +216,30 @@ progress {
     100% {
       box-shadow: -38px 6px, -14px -6px, 14px 6px;
     }
+}
+
+/*Record to evaluate*/
+.recordbox{
+    min-height: 28px;
+    min-width: 135px;
+    border-radius: 10px;
+    float: right;
+    margin-right: 60px;
+    margin-bottom: 10px;
+    border-width: 1px;
+    text-align: center;
+
+}
+.recordbox.recordboxstart{
+    background-color: #03a9f4;
+}
+.recordbox.recordboxstart:hover{
+    background-color: #5cc7f8;
+}
+
+.recordbox.recordboxend{
+    background-color: red;
+}
+.recordbox.recordboxend:hover{
+    background-color: rgb(203, 2, 2);
 }

@@ -95,3 +95,27 @@ document.querySelector("textarea").addEventListener("keydown", e => {
         e.preventDefault()
     }
 })
+
+
+
+function record(button){
+    if (button.classList.contains('recordboxstart')) {
+        button.classList.remove('recordboxstart');
+        button.classList.add('recordboxend');
+        button.textContent = 'End session';
+    } else {
+        button.classList.remove('recordboxend');
+        button.classList.add('recordboxstart');
+        button.textContent = 'Start session';
+    }
+
+    // Additional logic based on the button click can go here
+    if (button.classList.contains('Rec')) {
+
+    } else {
+    
+    }
+}
+
+
+
