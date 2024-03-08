@@ -1,6 +1,7 @@
 //functions to change values in UI webview
 
 const MAX_LENGTH = 500
+// @ts-ignore
 const vscode = acquireVsCodeApi() //ignore error
 
 var canSendMessage = true

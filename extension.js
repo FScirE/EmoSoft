@@ -36,7 +36,7 @@ async function activate(context) {
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
-	this.uiHandler = new UIHandler()
+	this.uiHandler = new UIHandler(context)
 
 	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler)
 	await this.eventHandler.init(this.dataHandler);
@@ -45,7 +45,7 @@ async function activate(context) {
 
 
 	
-
+	
 
 
 	setInterval(async () => {	
@@ -58,14 +58,13 @@ async function activate(context) {
 		}
 
 		// use calm to create a two-digit hexadecimal string for the red channel
-		let newRed = Math.floor(Math.max(0, Math.min(255 * (calm), 255))).toString(16).padStart(2, '0')
+		let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
 
-		// use focus to create a two-digit hexadecimal string for the blue channel
-		let newBlue = Math.floor(Math.max(0, Math.min(255 * (1 - focus), 255))).toString(16).padStart(2, '0')
+		let newBlue = Math.floor(Math.max(0, Math.min(255 * focus, 255))).toString(16).padStart(2, '0')
 
 		let newColor = "#" + newRed + "00" + newBlue;
-		// await this.uiHandler.setStatusBarBackgroundColor(newColor);
-		await this.uiHandler.causeCancer(newColor);
+		await this.uiHandler.setStatusBarBackgroundColor(newColor);
+		// await this.uiHandler.causeCancer(newColor);
 		
 		// await this.eventHandler.checkCalm(calm);
 		// await this.eventHandler.checkFocus(focus);

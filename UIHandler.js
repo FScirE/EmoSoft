@@ -6,7 +6,7 @@ const fs = require('fs')
  * @param {vscode.ExtensionContext} context
  */
 class UIHandler{
-    init(context, eventHandler) {
+    constructor (context) {
         //create the UI HTML element, will hold AI window and progress bars
         this.webViewIsVisisble = true;
         this.webView = createWebView(context)
@@ -15,6 +15,10 @@ class UIHandler{
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
+        
+    }
+    
+    init(context, eventHandler) {
         // Handle messages from the webview
         eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
@@ -53,12 +57,15 @@ class UIHandler{
         })
         this.messagePending = false;
     }
+
+
 }
 
 
 /** Sets the color of the status bar background, 
  * by changing the .vscode/settings.json file **in the current project folder of the vscode instance with the extension running**.
  * It doesn't seem viable to programmatically change the global setting :(
+ * Also it removes any existing colorCustomisation settings bcuz of bug
  * @param {String} color
  */
 async function setStatusBarBackgroundColor(color) {
