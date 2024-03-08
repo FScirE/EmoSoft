@@ -31,7 +31,7 @@ async function activate(context) {
 		// The code you place here will be executed every time your command is executed
 	//});
 	//context.subscriptions.push(disposable);
-  
+
 
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
@@ -48,15 +48,16 @@ async function activate(context) {
 	
 
 
-	setInterval(async () => {	
+	setInterval(async () => {
 		var calm = await this.dataHandler.getCalm()
-		var focus = await this.dataHandler.getFocus() 
-			
+		var focus = await this.dataHandler.getFocus()
+
 		if (this.uiHandler.webViewIsVisisble) {
 			this.uiHandler.setCalmProgress(calm)
 			this.uiHandler.setFocusProgress(focus)
 		}
 
+    
 		// use calm to create a two-digit hexadecimal string for the red channel
 		let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
 
@@ -68,6 +69,7 @@ async function activate(context) {
 		
 		// await this.eventHandler.checkCalm(calm);
 		// await this.eventHandler.checkFocus(focus);
+    
 	}, 500);
 
 	//example of sending ai message

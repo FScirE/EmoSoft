@@ -50,7 +50,7 @@ function setAIResponse(text) {
     const lineHTML = `
     <p><i class="fa-solid fa-robot fa-2xl"></i>${text}</p>
     `
-    document.getElementsByClassName("left")[0].innerHTML = lineHTML
+    document.querySelectorAll(".left:not(.calmresponse, .focusresponse)")[0].innerHTML = lineHTML
 }
 
 function addAIMessage(text, type) {

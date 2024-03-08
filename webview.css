@@ -18,6 +18,9 @@ p {
     margin: 2px;
 }
 
+code{
+    color: red;
+}
 /*Main areas*/
 .wrapper {
     height: calc(100vh - 12px);
