@@ -160,6 +160,28 @@ class DataHandler {
         return this.recentFocus.reduce((acc, num) => acc + num, 0) / this.recentFocus.length;
     }
 
+    async recordSessionFocus() {
+        var valuesFocus = [];
+        var isRecording = true;
+
+        while (isRecording) {
+            valuesFocus.push(this.getFocus());
+            // isRecording = max_function();
+        }
+
+        return valuesFocus;
+    }
+    
+    async recordSessionCalm() {
+        var valuesCalm = []; 
+        var isRecording = true
+
+        while (isRecording) {
+            valuesCalm.push(this.getCalm());
+            // isRecording = max_function();
+        }
+    }
+
 
 }
 
