@@ -113,7 +113,7 @@ function record(button){
     var isRecording = false
 
     // Additional logic based on the button click can go here
-    if (button.classList.contains('Rec')) {
+    if (button.classList.contains('recordboxend')) {
         isRecording = true;
     } else {
         isRecording = false;

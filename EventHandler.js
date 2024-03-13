@@ -33,12 +33,22 @@ class EventHandler {
 
             case 'recording':
                 if (message.value == true) {
-                    //DUPE FUNCTION
+                    this.dataHandler.isRecording = true;
+                    await this.dataHandler.recordSession();
                 }
                 else{
-                    //DUPE FUNCTION
+                    this.dataHandler.isRecording = false;
                 }
                 return;
+                case 'user':
+                    //console.log(message.value);
+                    await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
+                    var responseFromAi = this.aiHandler.output
+                    this.uiHandler.webView.webview.postMessage({
+                        variable: "airesponse",
+                        value: responseFromAi
+                    })
+                    return;
             }
             
             
@@ -94,7 +104,6 @@ class EventHandler {
         }
     }
 }
-
 
 function sleep(s) {
     return new Promise(resolve => setTimeout(resolve, s * 1000));

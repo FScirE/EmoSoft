@@ -1,3 +1,5 @@
+//import { sleep } from "openai/core.mjs";
+
 const { Neurosity } = require("@neurosity/sdk");
 const path = require('path');
 
@@ -8,11 +10,17 @@ const path = require('path');
  * @class
  */
 class DataHandler {
+    
     #password = ""; // private property
 
     constructor() {
         this.createFakeDataIfNotLoggedIn = true;
-        
+
+        // Evaluate session
+        this.isRecording = false;
+        this.focusValuesSession = []
+        this.calmValuesSession = []
+        //-------------------------//
         this.recentCalm = [0.5];
         this.recentCalmTimestamps = [Date.now()];
         this.recentCalmDuration = 20000; // how long to keep values in recent list (ms)
@@ -160,29 +168,18 @@ class DataHandler {
         return this.recentFocus.reduce((acc, num) => acc + num, 0) / this.recentFocus.length;
     }
 
-    async recordSessionFocus() {
-        var valuesFocus = [];
-        var isRecording = true;
-
-        while (isRecording) {
-            valuesFocus.push(this.getFocus());
-            // isRecording = max_function();
-        }
-
-        return valuesFocus;
-    }
-    
-    async recordSessionCalm() {
-        var valuesCalm = []; 
-        var isRecording = true
-
-        while (isRecording) {
-            valuesCalm.push(this.getCalm());
-            // isRecording = max_function();
-        }
+    sleep(s) {
+        return new Promise(resolve => setTimeout(resolve, s * 1000));
     }
 
-
+    async recordSession() {
+        while (this.isRecording) {
+            this.focusValuesSession.push(this.getFocus());
+            this.calmValuesSession.push(this.getCalm());
+            await this.sleep(10);
+        } 
+        return;
+    }
 }
 
 
