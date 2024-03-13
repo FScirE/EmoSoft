@@ -6,7 +6,7 @@ const fs = require('fs')
  * @param {vscode.ExtensionContext} context
  */
 class UIHandler{
-    init(context, eventHandler) {
+    constructor (context) {
         //create the UI HTML element, will hold AI window and progress bars
         this.messagePending = false
         this.webViewIsVisisble = true;
@@ -16,6 +16,10 @@ class UIHandler{
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
+        
+    }
+    
+    init(context, eventHandler) {
         // Handle messages from the webview
         eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
@@ -37,6 +41,11 @@ class UIHandler{
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
 
+    // this is maybe not the cleanest way to do this, 
+    //    but this sets UIHandler.funcname to give the function that is outside the class in this file
+    setStatusBarBackgroundColor = setStatusBarBackgroundColor;
+    causeCancer = causeCancer;
+
     async printAIMessage(text, isFocus) {
         this.messagePending = true;
         while (!this.webViewIsVisisble) {
@@ -49,7 +58,62 @@ class UIHandler{
         })
         this.messagePending = false;
     }
+
+
 }
+
+
+/** Sets the color of the status bar background, 
+ * by changing the .vscode/settings.json file **in the current project folder of the vscode instance with the extension running**.
+ * It doesn't seem viable to programmatically change the global setting :(
+ * Also it removes any existing colorCustomisation settings bcuz of bug
+ * @param {String} color
+ */
+async function setStatusBarBackgroundColor(color) {
+    var configuration = await vscode.workspace.getConfiguration();
+
+    var newColorCustomization = {
+        "statusBar.background":  color
+    };
+
+    var existingColorCustomizations = configuration.get("workbench.colorCustomizations");
+    var updatedColorCustomizations = existingColorCustomizations ? {
+        ...existingColorCustomizations,
+        ...newColorCustomization
+    } : newColorCustomization;
+
+    await configuration.update("workbench.colorCustomizations", updatedColorCustomizations);
+}
+
+/**
+ * Gives the user cancer of the specified color.
+ * @param {String} color 
+ */
+async function causeCancer(color) {
+    
+    var configuration = await vscode.workspace.getConfiguration();
+
+    var newColorCustomization = {
+        "editor.background": color,
+        "activityBar.background": color,
+        "sideBar.background": color,
+        "terminal.background": color,
+        "problemsPanel.background": color,
+        "output.background": color,
+        "debugConsole.background": color,
+        "ports.background": color
+    };
+
+    var existingColorCustomizations = configuration.get("workbench.colorCustomizations");
+    var updatedColorCustomizations = existingColorCustomizations ? {
+        ...existingColorCustomizations,
+        ...newColorCustomization
+    } : newColorCustomization;
+
+    await configuration.update("workbench.colorCustomizations", updatedColorCustomizations);
+}
+
+
 
 function createStatusBarButton() {
 	const statusBarUI = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 1000)
