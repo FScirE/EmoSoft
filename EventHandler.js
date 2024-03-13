@@ -21,7 +21,6 @@ class EventHandler {
     async initUIMessage(context) {
         this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
             switch (message.variable) {
-<<<<<<< HEAD
             case 'user':
                 //console.log(message.value);
                 await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
@@ -40,17 +39,6 @@ class EventHandler {
                     //DUPE FUNCTION
                 }
                 return;
-=======
-                case 'user':
-                    //console.log(message.value);
-                    await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
-                    var responseFromAi = this.aiHandler.output
-                    this.uiHandler.webView.webview.postMessage({
-                        variable: "airesponse",
-                        value: responseFromAi
-                    })
-                    return;
->>>>>>> Oliver
             }
             
             
