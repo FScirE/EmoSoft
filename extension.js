@@ -1,5 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 
+//TESTING
+const EDITOR_START = 0.12 //editor start
+const EDITOR_END = 0.73 //editor end
+
 
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
@@ -51,7 +55,6 @@ async function activate(context) {
 	this.eyetracker = new EyeTracker()
 
 	//test --------------------------------
-	var current = 0
 	const decorationType = vscode.window.createTextEditorDecorationType({
 		backgroundColor: 'green'
 	})
@@ -74,26 +77,36 @@ async function activate(context) {
 
 		//test --------------------------------
 		var editor = vscode.window.visibleTextEditors[0]
-		if (editor != undefined) {
-			var line = editor.document.lineAt(current)
+		var decorationRange = []
 
-			if (this.eyetracker.getY() > 0.9 && current < editor.document.lineCount)
-				current++
-			else if (this.eyetracker.getY() < 0.1 && current > 0)
-				current--
+		if (editor != undefined) {	
+			var y = this.eyetracker.getY()
+			if (y >= EDITOR_START && y <= EDITOR_END) {
 
-			if (!line.isEmptyOrWhitespace) {
-				var start = new vscode.Position(current, 0);
-				var end = new vscode.Position(current, line.text.length);
-				var range = new vscode.Range(start, end);
+				var currentRange = editor.visibleRanges
 
-				editor.setDecorations(decorationType, [range])
+				var current = Math.round(((y - EDITOR_START) * 29) / (EDITOR_END - EDITOR_START)) //assume 30 lines				
+				var lineNumber = currentRange[0].start.line + current - 1 //-1 calibration
+				var line = editor.document.lineAt(lineNumber)
+				
+				if (!line.isEmptyOrWhitespace) {
+					var start = new vscode.Position(lineNumber - 1, 0);
+					var end = new vscode.Position(lineNumber + 1, line.text.length);
+					var range = new vscode.Range(start, end);
+
+					decorationRange = [range]
+				}
 			}
+			editor.setDecorations(decorationType, decorationRange)
 		}
 		//x:0.23 explorer/editor
 		//x:0.73 editor/extension
 		//y:0.10 head/editor
 		//y:0.60 editor/terminal
+
+		//y:0.1076 editor start
+		//y:0.7333 editor end
+		//assume 30 lines visible
 		//----------------------------------------
 
 	}, 500);

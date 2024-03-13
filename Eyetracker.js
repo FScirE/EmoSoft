@@ -2,7 +2,7 @@
 const net = require('net')
 var DOMParser = require('xmldom').DOMParser;
 
-const MAX_LENGTH = 30
+const MAX_LENGTH = 60
 
 class EyeTracker {
     constructor() {
@@ -11,7 +11,7 @@ class EyeTracker {
         this.Y = [0.0]
 
         // Connect to the server
-        this.socket.connect(4242, '172.19.80.1', () => {
+        this.socket.connect(4242, '172.26.0.1', () => {
             console.log('Connected to EyeTracker server');
             
             // Sending initial command after the connection is established
