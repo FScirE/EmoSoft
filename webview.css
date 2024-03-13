@@ -224,17 +224,18 @@ progress {
     min-width: 135px;
     border-radius: 10px;
     float: right;
-    margin-right: 60px;
+    margin-right: calc(100vw / 13);
     margin-bottom: 10px;
     border-width: 1px;
     text-align: center;
+    color: white;
 
 }
 .recordbox.recordboxstart{
-    background-color: #03a9f4;
+    background-color: rgb(65, 65, 65);;
 }
 .recordbox.recordboxstart:hover{
-    background-color: #5cc7f8;
+    background-color: rgb(63, 63, 63);
 }
 
 .recordbox.recordboxend{

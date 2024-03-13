@@ -30,7 +30,18 @@ class EventHandler {
                     value: responseFromAi
                 })
                 return;
+
+            case 'recording':
+                if (message.value == true) {
+                    //DUPE FUNCTION
+                }
+                else{
+                    //DUPE FUNCTION
+                }
+                return;
             }
+            
+            
         },
         undefined,
         context.subscriptions);
@@ -81,6 +92,7 @@ class EventHandler {
         }
     }
 }
+
 
 function sleep(s) {
     return new Promise(resolve => setTimeout(resolve, s*1000));

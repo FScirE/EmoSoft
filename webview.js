@@ -109,12 +109,18 @@ function record(button){
         button.textContent = 'Start session';
     }
 
+    var isRecording = false
+
     // Additional logic based on the button click can go here
     if (button.classList.contains('Rec')) {
-
+        isRecording = true;
     } else {
-    
+        isRecording = false;
     }
+    vscode.postMessage({
+        variable: "recording",
+        value: isRecording
+    })
 }
 
 
