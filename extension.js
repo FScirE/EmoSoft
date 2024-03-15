@@ -1,8 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 
 //TESTING
-const EDITOR_START = 0.12 //editor start
-const EDITOR_END = 0.73 //editor end
+const EDITOR_START_Y = 0.107
+const EDITOR_END_Y = 0.733
+const EDITOR_START_X = 0.135
+const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 
 
 // Import the module and reference it with the alias vscode in your code below
@@ -56,7 +58,7 @@ async function activate(context) {
 
 	//test --------------------------------
 	const decorationType = vscode.window.createTextEditorDecorationType({
-		backgroundColor: 'green'
+		backgroundColor: 'rgba(125, 125, 125, 0.3)'
 	})
 	//-------------------------------------
 
@@ -81,12 +83,13 @@ async function activate(context) {
 
 		if (editor != undefined) {	
 			var y = this.eyetracker.getY()
-			if (y >= EDITOR_START && y <= EDITOR_END) {
+			var x = this.eyetracker.getX()
+			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
 
-				var current = Math.round(((y - EDITOR_START) * 29) / (EDITOR_END - EDITOR_START)) //assume 30 lines				
-				var lineNumber = currentRange[0].start.line + current - 1 //-1 calibration
+				var current = Math.floor(((y - EDITOR_START_Y) * 30) / (EDITOR_END_Y - EDITOR_START_Y)) //assume 30 lines				
+				var lineNumber = currentRange[0].start.line + current
 				var line = editor.document.lineAt(lineNumber)
 				
 				if (!line.isEmptyOrWhitespace) {
