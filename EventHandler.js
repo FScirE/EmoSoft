@@ -1,16 +1,21 @@
 const vscode = require('vscode')
 const { AIHandler } = require('./AIHandler')
+const { Evaluate } = require('./Evaluate')
 
 class EventHandler {
     // Initilize variables
     constructor(extensionPath, uiHandler) {
+        // Makes sure user doesn't gets spammed with notifications
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
 
+        // Thresholds for when a user should get notifications. Goal is to add the ability for the user to manually change these later
         this.thresholdFocus = 0.30
         this.thresholdCalm = 0.20
-        this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
 
+        // Create AIHandler and uihandler for chat and Evaluate object for the evaluate session feature
+        this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
+        this.evaluate = new Evaluate();
         this.uiHandler = uiHandler
     }
 
@@ -38,10 +43,12 @@ class EventHandler {
                 }
                 else{
                     this.dataHandler.isRecording = false;
-                    /*this.uiHandler.webView.webView.postMessage({
+                    this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
+                    this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
+                    this.uiHandler.webView.webView.postMessage({
                         variable: "values",
-                        value: [this.dataHandler.focusValuesSession, this.dataHandler.calmValuesSession]
-                    })*/
+                        value: [this.evaluate.focusValues, this.evaluate.calmValues]
+                    })
                     console.log("AM iahAHfhai")
                     vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(e => {
                         if (e == 'Yes') {
