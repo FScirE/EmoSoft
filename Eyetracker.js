@@ -1,14 +1,18 @@
 
 const net = require('net')
+const { exec } = require('child_process')
 var DOMParser = require('xmldom').DOMParser;
 
 const MAX_LENGTH = 60
 
 class EyeTracker {
-    constructor() {
+    constructor(path) {
         this.socket = new net.Socket();
+        this.path = path
         this.X = [0.0]
         this.Y = [0.0]
+        this.long_X = []
+        this.long_Y = []
 
         // Connect to the server
         this.socket.connect(4242, '192.168.105.230', () => {
@@ -25,8 +29,14 @@ class EyeTracker {
             const parsedXml = new DOMParser().parseFromString(data.toString(), 'text/xml')
             const record = parsedXml.getElementsByTagName('REC')[0]
 
-            this.X.push(parseFloat(record.getAttribute('FPOGX')))
-            this.Y.push(parseFloat(record.getAttribute('FPOGY')))
+            var newX = parseFloat(record.getAttribute('FPOGX'))
+            var newY = parseFloat(record.getAttribute('FPOGY'))
+            this.X.push(newX)
+            this.Y.push(newY)
+            if (newX >= 0 && newX < 1 && newY >= 0 && newY < 1) {
+                this.long_X.push(newX)
+                this.long_Y.push(newY)
+            }
 
             if (this.X.length > MAX_LENGTH)
                 this.X.shift()
@@ -49,6 +59,10 @@ class EyeTracker {
 
     getY() {
         return this.Y.reduce((a, b) => a + b, 0) / this.Y.length
+    }
+
+    generateHeatMap() {
+        exec(`python heatmapGenerator.py ${this.long_X.toString()} ${this.long_Y.toString()}`, {cwd: this.path})
     }
 }
 

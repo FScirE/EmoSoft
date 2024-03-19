@@ -54,7 +54,7 @@ async function activate(context) {
 	//webView.webview.postMessage({variable: 'focus', value: 50})
 	//webView.webview.postMessage({variable: 'calm', value: 50})
 
-	this.eyetracker = new EyeTracker()
+	this.eyetracker = new EyeTracker(context.extensionPath)
 
 	//test --------------------------------
 	const decorationType = vscode.window.createTextEditorDecorationType({
@@ -74,8 +74,8 @@ async function activate(context) {
 		//await this.eventHandler.checkCalm(calm);
 		//await this.eventHandler.checkFocus(focus);
 
-		console.log("X: " + this.eyetracker.getX())
-		console.log("Y: " + this.eyetracker.getY() + "\n")
+		//console.log("X: " + this.eyetracker.getX())
+		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		//test --------------------------------
 		var editor = vscode.window.visibleTextEditors[0]
