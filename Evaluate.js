@@ -33,11 +33,15 @@ class Evaluate {
     }
     
     setResponse(question, number) {
-        var response = {question, number}
+        var response = {question, number};
         this.responses.push(response);
     }
 
     saveEvaluationToFile() {
-        
+
     }
 }
+
+module.exports = {
+    Evaluate
+};
