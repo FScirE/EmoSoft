@@ -125,4 +125,21 @@ function record(button){
 }
 
 
+function saveEvaluateResponses() {
+    const radioButtonGroups = [ document.getElementsByName("q1rating"),
+                                document.getElementsByName("q2rating"),
+                                document.getElementsByName("q3rating")]
+    
+    const responses = ["-1", "-1", "-1"]
+    
+    for (var group = 0; group < radioButtonGroups.length; group++) 
+        for (var button = 0; button < radioButtonGroups[group].length; button++) 
+            if (radioButtonGroups[group][button].checked) 
+                responses[group] = radioButtonGroups[group][button].value
+    
 
+    vscode.postMessage({
+        variable: "evaluateResponses",
+        value: responses
+    })
+}

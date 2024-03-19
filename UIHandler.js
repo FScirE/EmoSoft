@@ -16,7 +16,7 @@ class UIHandler{
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
-        
+        this.context = context;
     }
     
     init(context, eventHandler) {
@@ -59,6 +59,32 @@ class UIHandler{
         this.messagePending = false;
     }
 
+
+    async switchToPage(page) {
+        if (page == "evaluate") {
+            if (this.webViewIsVisisble)
+                this.webView.dispose()
+
+            var newWebView = vscode.window.createWebviewPanel(
+                'emoide',
+                'EmoIDE',
+                vscode.ViewColumn.Beside,
+                { enableScripts: true }
+            );
+
+            //set source paths for style and script
+            const styleSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './webview.css'])));
+            const scriptSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './webview.js'])));
+            newWebView.webview.html = fs.readFileSync(path.join(this.context.extensionPath, './evaluate.html'), 'utf-8')
+                .replace('./webview.css', styleSrc.toString())
+                .replace('./webview.js', scriptSrc.toString())
+                
+            this.evaluateWebView = newWebView
+            this.context.subscriptions.push(this.evaluateWebView)
+            
+            //this.evaluateWebView.onDidDispose(e => {  })
+        }
+    }
 
 }
 

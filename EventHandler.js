@@ -42,26 +42,39 @@ class EventHandler {
                         variable: "values",
                         value: [this.dataHandler.focusValuesSession, this.dataHandler.calmValuesSession]
                     })*/
-                    console.log("AM iahAHfhai")
+                    console.log("AM iahAHfhai (am having stronk call a consolebulance)")
                     vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(e => {
                         if (e == 'Yes') {
-                            console.log("Yes")
+                            console.log("Yes to evaluate")
+                            this.uiHandler.switchToPage("evaluate");
                         }
                         if (e == 'No') {
-                            console.log("No")
+                            console.log("No to evaluate")
                         }
                     })
                 }
                 return;
-                case 'user':
-                    //console.log(message.value);
-                    await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
-                    var responseFromAi = this.aiHandler.output
-                    this.uiHandler.webView.webview.postMessage({
-                        variable: "airesponse",
-                        value: responseFromAi
-                    })
-                    return;
+            case 'user':
+                //console.log(message.value);
+                await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
+                var responseFromAi = this.aiHandler.output
+                this.uiHandler.webView.webview.postMessage({
+                    variable: "airesponse",
+                    value: responseFromAi
+                })
+                return;
+            }
+            
+            
+        },
+            undefined,
+            context.subscriptions);
+
+        this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
+            switch (message.variable) {
+            case 'evaluateResponses':
+                console.log("evaluate responses: ", message.value);
+                return;
             }
             
             
