@@ -173,10 +173,15 @@ class DataHandler {
     }
 
     async recordSession() {
+        var s = 0;
+        const interval = 10;
         while (this.isRecording) {
-            this.focusValuesSession.push(this.getFocus());
-            this.calmValuesSession.push(this.getCalm());
-            await this.sleep(10);
+            var currentFocus = {x: s, y:this.getFocus()};
+            var currentCalm = {x: s, y:this.getCalm()};
+            this.focusValuesSession.push(currentFocus);
+            this.calmValuesSession.push(currentCalm);
+            s += 10;
+            await this.sleep(interval);
         } 
         return;
     }
