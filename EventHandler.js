@@ -38,6 +38,19 @@ class EventHandler {
                 }
                 else{
                     this.dataHandler.isRecording = false;
+                    /*this.uiHandler.webView.webView.postMessage({
+                        variable: "values",
+                        value: [this.dataHandler.focusValuesSession, this.dataHandler.calmValuesSession]
+                    })*/
+                    console.log("AM iahAHfhai")
+                    vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(e => {
+                        if (e == 'Yes') {
+                            console.log("Yes")
+                        }
+                        if (e == 'No') {
+                            console.log("No")
+                        }
+                    })
                 }
                 return;
                 case 'user':

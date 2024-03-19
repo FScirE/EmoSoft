@@ -244,3 +244,18 @@ progress {
 .recordbox.recordboxend:hover{
     background-color: rgb(203, 2, 2);
 }
+/*--------------------Evaluate----------------------------*/
+.graph{
+    background-color: red;
+    width: auto;
+    height: auto;
+}
+#chartContainer{
+    width: 50%;
+    height: 370px;
+   
+}
+#chartContainer canvas{
+    border-radius: 11px;
+    
+}
