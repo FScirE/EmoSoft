@@ -58,7 +58,7 @@ async function activate(context) {
 
 	//test --------------------------------
 	const decorationType = vscode.window.createTextEditorDecorationType({
-		backgroundColor: 'rgba(125, 125, 125, 0.3)'
+		backgroundColor: 'rgba(200, 200, 200, 0.3)'
 	})
 	//-------------------------------------
 
