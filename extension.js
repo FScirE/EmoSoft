@@ -58,19 +58,26 @@ async function activate(context) {
 		}
 
     
-		// use calm to create a two-digit hexadecimal string for the red channel
-		let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
+		if (isWorkspaceOpen()) {
+			// use calm to create a two-digit hexadecimal string for the red channel
+			let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
 
-		let newBlue = Math.floor(Math.max(0, Math.min(255 * focus, 255))).toString(16).padStart(2, '0')
+			let newBlue = Math.floor(Math.max(0, Math.min(255 * focus, 255))).toString(16).padStart(2, '0')
 
-		let newColor = "#" + newRed + "00" + newBlue;
-		await this.uiHandler.setStatusBarBackgroundColor(newColor);
-		// await this.uiHandler.causeCancer(newColor);
+			let newColor = "#" + newRed + "00" + newBlue;
+			await this.uiHandler.setStatusBarBackgroundColor(newColor);
+			// await this.uiHandler.causeCancer(newColor);
+		}
 		
 		// await this.eventHandler.checkCalm(calm);
-		// await this.eventHandler.checkFocus(focus);
+		// await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
     
 	}, 500);
+
+	function isWorkspaceOpen() {
+		return (vscode.workspace.workspaceFolders && 
+			vscode.workspace.workspaceFolders.length > 0);
+	  }
 
 	//example of sending ai message
 	/*const ai = new AIHandler('', '', context.extensionPath)

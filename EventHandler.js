@@ -1,16 +1,21 @@
 const vscode = require('vscode')
 const { AIHandler } = require('./AIHandler')
+const { Evaluate } = require('./Evaluate')
 
 class EventHandler {
     // Initilize variables
     constructor(extensionPath, uiHandler) {
+        // Makes sure user doesn't gets spammed with notifications
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
 
+        // Thresholds for when a user should get notifications. Goal is to add the ability for the user to manually change these later
         this.thresholdFocus = 0.30
         this.thresholdCalm = 0.20
-        this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
 
+        // Create AIHandler and uihandler for chat and Evaluate object for the evaluate session feature
+        this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
+        this.evaluate = new Evaluate();
         this.uiHandler = uiHandler
     }
 
@@ -19,7 +24,8 @@ class EventHandler {
     }
 
     async initUIMessage(context) {
-        this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
+        
+        await this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
             switch (message.variable) {
             case 'user':
                 //console.log(message.value);
@@ -36,22 +42,27 @@ class EventHandler {
                     this.dataHandler.isRecording = true;
                     await this.dataHandler.recordSession();
                 }
-                else{
+                else {
+                    console.log(this.dataHandler.focusValuesSession);
                     this.dataHandler.isRecording = false;
-                    /*this.uiHandler.webView.webView.postMessage({
-                        variable: "values",
-                        value: [this.dataHandler.focusValuesSession, this.dataHandler.calmValuesSession]
-                    })*/
-                    console.log("AM iahAHfhai (am having stronk call a consolebulance)")
-                    vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(e => {
+                    this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
+                    this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
+
+                    vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(async e => {
                         if (e == 'Yes') {
                             console.log("Yes to evaluate")
-                            this.uiHandler.switchToPage("evaluate");
+                            await this.uiHandler.switchToPage("evaluate");
+                            
+                            this.uiHandler.evaluateWebView.webview.postMessage({
+                                variable: "values",
+                                value: [this.evaluate.focusValues, this.evaluate.calmValues]
+                            })
                         }
                         if (e == 'No') {
                             console.log("No to evaluate")
                         }
                     })
+                    
                 }
                 return;
             case 'user':
@@ -69,19 +80,24 @@ class EventHandler {
         },
             undefined,
             context.subscriptions);
-
-        this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
-            switch (message.variable) {
-            case 'evaluateResponses':
-                console.log("evaluate responses: ", message.value);
-                return;
-            }
-            
-            
-        },
-            undefined,
-            context.subscriptions);
+        
     }
+
+    async initEvaluateReceiveMessage(context) {
+        this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
+        switch (message.variable) {
+        case 'evaluateResponses':
+            console.log("evaluate responses: ", message.value);
+            this.uiHandler.evaluateWebView.dispose();
+            return;
+        }
+        
+    },
+        this,
+        context.subscriptions);
+    }
+
+    
 
     // Check focus level and notifies user when focus drops below 30%
     async checkFocus(focus) {
@@ -100,7 +116,7 @@ class EventHandler {
             }
             await this.aiHandler.sendMsgToUnfocusedDev(focus)
             this.uiHandler.printAIMessage(this.aiHandler.output, true)
-            await sleep(120)
+            await sleepSeconds(120)
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus + 0.15) { //Reset boolean that allows notifications
             this.allowNotificationFocus = true
@@ -123,7 +139,7 @@ class EventHandler {
             }
             await this.aiHandler.sendMsgToAggitatedDev(calm)
             this.uiHandler.printAIMessage(this.aiHandler.output, false)
-            await sleep(120)
+            await sleepSeconds(120)
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm + 0.15) { //Reset boolean that allows notifications
             this.allowNotificationCalm = true
@@ -131,7 +147,8 @@ class EventHandler {
     }
 }
 
-function sleep(s) {
+
+function sleepSeconds(s) {
     return new Promise(resolve => setTimeout(resolve, s * 1000));
 }
 

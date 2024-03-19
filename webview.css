@@ -268,8 +268,9 @@ progress {
     height: auto;
 
     align-self: center;
-    
+    position: relative;
     margin: 10px auto;
+    
 }
 #questionContainer .question{
     border-radius: 8px;
@@ -279,15 +280,24 @@ progress {
     margin: 0 auto;
     margin-bottom: 11px;
     text-align: center;
+    font-size: large;
+    
     color: #FFF;
 }
 .rating {
     display: flex;
-    
     justify-content: center;
-    margin-top: 8%;
+    margin-top: 3%;
+    align-self: center;
+    position: relative;
+    
     
 }
+.question .labelContainer label {
+    padding-top: 10px; /* Adjust the padding-top value to move the label text down */
+    display: inline-block;
+}
+
 .rating input {
     display: none; /* Hide the radio buttons */
 }
@@ -302,11 +312,39 @@ progress {
     line-height: 30px;
     
     
+    
+    
 }
+
 .rating input[type="radio"]:checked + label {
     background-color: #03a9f4; 
     font-weight: bold; 
 }
 .rating label:hover {
     background-color: #03a9f4; 
+}
+@media (max-width: 768px) {
+    .rating label {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+    }
+}
+/*--------------------------------*/
+.submitBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Add padding for better spacing */
+}
+.submitBtn #submitEvaluationBtn{
+    color: white;
+    background-color: rgb(50, 55, 58);
+    border-radius: 8px;
+    width: 180px;
+    height: 40px;
+    font-size: 16px;
+}
+.submitBtn #submitEvaluationBtn:hover{
+    background-color: #03a9f4
 }

@@ -21,7 +21,8 @@ class UIHandler{
     
     init(context, eventHandler) {
         // Handle messages from the webview
-        eventHandler.initUIMessage(context)
+        this.eventHandler = eventHandler
+        this.eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
         context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
             if (this.webViewIsVisisble) return
@@ -74,15 +75,17 @@ class UIHandler{
 
             //set source paths for style and script
             const styleSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './webview.css'])));
-            const scriptSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './webview.js'])));
+            const scriptSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './evaluateWebView.js'])));
             newWebView.webview.html = fs.readFileSync(path.join(this.context.extensionPath, './evaluate.html'), 'utf-8')
                 .replace('./webview.css', styleSrc.toString())
-                .replace('./webview.js', scriptSrc.toString())
-                
+                .replace('./evaluateWebView.js', scriptSrc.toString())
+            
             this.evaluateWebView = newWebView
             this.context.subscriptions.push(this.evaluateWebView)
             
             //this.evaluateWebView.onDidDispose(e => {  })
+            
+            this.eventHandler.initEvaluateReceiveMessage(this.context)
         }
     }
 
@@ -166,6 +169,7 @@ function createWebView(context) {
         .replace('./webview.js', scriptSrc.toString())
 	return webView;
 }
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

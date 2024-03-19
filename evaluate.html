@@ -4,98 +4,20 @@
     <link rel="stylesheet" type="text/css" href="./webview.css">
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/dde14a7a2f.js" crossorigin="anonymous"></script>
-<script>
-window.onload = function () {
-	var focusValues = []
-	var calmValues = []
 
-window.addEventListener("message", e => {
-	const message = e.data; // The JSON data our extension sent
-    switch (message.variable) {
-		case "values":
-			focuesValues = message.value[0]
-			calmValues = message.value[1]
-			break
-	}
-})
-
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	zoomEnabled: true,
-	theme: "dark2",
-	title: {
-		text: "Session"
-	},
-	axisX: {
-		title: "Time",
-		valueFormatString: "####",
-		interval: 2
-	},
-	axisY: {
-		logarithmic: true, //change it to false
-		
-		titleFontColor: "#6D78AD",
-		lineColor: "#6D78AD",
-		gridThickness: 0,
-		lineThickness: 1,
-		labelFormatter: addSymbols
-	},
-	axisY2: {
-		
-		titleFontColor: "#51CDA0",
-		logarithmic: false, //change it to true
-		lineColor: "#51CDA0",
-		gridThickness: 0,
-		lineThickness: 1,
-		labelFormatter: addSymbols
-	},
-	legend: {
-		verticalAlign: "top",
-		fontSize: 16,
-		dockInsidePlotArea: true
-	},
-	data: [{
-		type: "line",
-		xValueFormatString: "####",
-		showInLegend: true,
-		name: "Calm",
-		dataPoints: calmValues
-	},
-	{
-		type: "line",
-		xValueFormatString: "####",
-		axisYType: "secondary",
-		showInLegend: true,
-		name: "Focus",
-		dataPoints: focusValues
-	}]
-});
-chart.render();
-
-function addSymbols(e) {
-	var suffixes = ["", "K", "M", "B", "T"];
-
-	var order = Math.max(Math.floor(Math.log(Math.abs(e.value)) / Math.log(1000)), 0);
-	if(order > suffixes.length - 1)
-		order = suffixes.length - 1;
-
-	var suffix = suffixes[order];
-	return CanvasJS.formatNumber(e.value / Math.pow(1000, order), "#,##0.##") + suffix;
-}
-
-}
-</script>
 </head>
 <body>
+
 <h1 class="header">Evaluate session</h1>
 
 <div id="chartContainer">
-    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </div>
 <div id="questionContainer">
 	<div class="question">
-		
-        <label for="q1">Question 1: How much work did you expect to finish this session</label>
+		<div class="labelContainer">
+            <label for="q1">Question 1: How much work did you expect to finish this session</label>
+        </div>    
             <div class="rating">
                 <input type="radio" id="q1star1" name="q1rating" value="1"><label data-value="1" for="q1star1">1</label>
                 <input type="radio" id="q1star2" name="q1rating" value="2"><label data-value="2" for="q1star2">2</label>
@@ -106,18 +28,22 @@ function addSymbols(e) {
 		</label>
 	</div>
 	<div class="question">
-		<label for="q2">Question 2: How much work did you manage to finish during this session</label>
+        <div class="labelContainer">
+		    <label for="q2">Question 2: How much work did you manage to finish during this session</label>
+        </div>   
             <div class="rating">
-                <input type="radio" id="q2star1" name="q2rating" value="1"><label data-value="1" for="q2star1">1</label>
-                <input type="radio" id="q2star2" name="q2rating" value="2"><label data-value="2" for="q2star2">2</label>
-                <input type="radio" id="q2star3" name="q2rating" value="3"><label data-value="3" for="q2star3">3</label>
-                <input type="radio" id="q2star4" name="q2rating" value="4"><label data-value="4" for="q2star4">4</label>
-                <input type="radio" id="q2star5" name="q2rating" value="5"><label data-value="5" for="q2star5">5</label>
+                    <input type="radio" id="q2star1" name="q2rating" value="1"><label data-value="1" for="q2star1">1</label>
+                    <input type="radio" id="q2star2" name="q2rating" value="2"><label data-value="2" for="q2star2">2</label>
+                    <input type="radio" id="q2star3" name="q2rating" value="3"><label data-value="3" for="q2star3">3</label>
+                    <input type="radio" id="q2star4" name="q2rating" value="4"><label data-value="4" for="q2star4">4</label>
+                    <input type="radio" id="q2star5" name="q2rating" value="5"><label data-value="5" for="q2star5">5</label>
             </div>
-		
 	</div>
+    
 	<div class="question">
-		<label for="q3">Question 3: How accurate do you feel the calm and focus levels were in this session</label>
+        <div class="labelContainer">
+		    <label for="q3">Question 3: How accurate do you feel the calm and focus levels were in this session</label>
+        </div>
             <div class="rating">
                 <input type="radio" id="q3star1" name="q3rating" value="1"><label data-value="1" for="q3star1">1</label>
                 <input type="radio" id="q3star2" name="q3rating" value="2"><label data-value="2" for="q3star2">2</label>
@@ -127,8 +53,10 @@ function addSymbols(e) {
 			</div>
 		
 	</div>
-	
-	
+	<div class="submitBtn">
+	    <button id="submitEvaluationBtn" onclick="saveEvaluateResponses()">Save Evaluation</button>
+    </div>
 </div>
 </body>
 </html>
+<script src="./evaluateWebView.js"></script>

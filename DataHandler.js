@@ -168,7 +168,7 @@ class DataHandler {
         return this.recentFocus.reduce((acc, num) => acc + num, 0) / this.recentFocus.length;
     }
 
-    sleep(s) {
+    sleepSeconds(s) {
         return new Promise(resolve => setTimeout(resolve, s * 1000));
     }
 
@@ -176,12 +176,12 @@ class DataHandler {
         var s = 0;
         const interval = 10;
         while (this.isRecording) {
-            var currentFocus = {x: s, y:this.getFocus()};
-            var currentCalm = {x: s, y:this.getCalm()};
+            var currentFocus = {x: s, y:Math.round(this.getFocus()*100)};
+            var currentCalm = {x: s, y:Math.round(this.getCalm()*100)};
             this.focusValuesSession.push(currentFocus);
             this.calmValuesSession.push(currentCalm);
-            s += 10;
-            await this.sleep(interval);
+            s += interval;
+            await this.sleepSeconds(interval);
         } 
         return;
     }
