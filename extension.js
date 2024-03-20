@@ -111,10 +111,9 @@ async function activate(context) {
 			let newColor = "#" + newRed + "00" + newBlue;
 			await this.uiHandler.setStatusBarBackgroundColor(newColor);
 			// await this.uiHandler.causeCancer(newColor);
-		}
-
-		// await this.eventHandler.checkCalm(calm);
-		// await this.eventHandler.checkFocus(focus);
+		
+		  // await this.eventHandler.checkCalm(calm);
+		  // await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
     
 	}, 500);
 
@@ -124,6 +123,9 @@ async function activate(context) {
 			vscode.workspace.workspaceFolders.length > 0);
 	  }
 	  
+		return (vscode.workspace.workspaceFolders && 
+			vscode.workspace.workspaceFolders.length > 0);
+	  }
 
 	//example of sending ai message
 	/*const ai = new AIHandler('', '', context.extensionPath)

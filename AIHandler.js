@@ -1,4 +1,3 @@
-
 // const vscode = require('vscode');
 // /**
 //  * @param {vscode.ExtensionContext} context
@@ -27,7 +26,7 @@ class AIHandler {
         
     }
 
-    retrieveContext(filePath, lineNumber, contextLines = 5){
+    /*retrieveContext(filePath, lineNumber, contextLines = 5){
         const fs = require('fs');
             try {
                 const lines = fs.readFileSync(filePath, 'utf8').split('\n');
@@ -42,7 +41,7 @@ class AIHandler {
                 return [];
             }
         
-    }
+    }*/
     //Typ klar behövs test
     async sendMsgToAI(preset, msg, chatactive){
         var templist = []
