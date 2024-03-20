@@ -1,5 +1,6 @@
 //functions to change values in UI webview
 
+
 const MAX_LENGTH = 500
 // @ts-ignore
 const vscode = acquireVsCodeApi() //ignore error
@@ -96,3 +97,33 @@ document.querySelector("textarea").addEventListener("keydown", e => {
         e.preventDefault()
     }
 })
+
+
+
+function record(button){
+    if (button.classList.contains('recordboxstart')) {
+        button.classList.remove('recordboxstart');
+        button.classList.add('recordboxend');
+        button.textContent = 'End session';
+    } else {
+        button.classList.remove('recordboxend');
+        button.classList.add('recordboxstart');
+        button.textContent = 'Start session';
+    }
+
+    var isRecording = false
+
+    // Additional logic based on the button click can go here
+    if (button.classList.contains('recordboxend')) {
+        isRecording = true;
+    } else {
+        isRecording = false;
+    }
+    vscode.postMessage({
+        variable: "recording",
+        value: isRecording
+    })
+}
+
+
+

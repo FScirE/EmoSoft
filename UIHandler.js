@@ -16,12 +16,13 @@ class UIHandler{
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
-        
+        this.context = context;
     }
     
     init(context, eventHandler) {
         // Handle messages from the webview
-        eventHandler.initUIMessage(context)
+        this.eventHandler = eventHandler
+        this.eventHandler.initUIMessage(context)
         //setup button to make UI show up and hide button
         context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
             if (this.webViewIsVisisble) return
@@ -59,6 +60,34 @@ class UIHandler{
         this.messagePending = false;
     }
 
+
+    async switchToPage(page) {
+        if (page == "evaluate") {
+            if (this.webViewIsVisisble)
+                this.webView.dispose()
+
+            var newWebView = vscode.window.createWebviewPanel(
+                'emoide',
+                'EmoIDE',
+                vscode.ViewColumn.Beside,
+                { enableScripts: true }
+            );
+
+            //set source paths for style and script
+            const styleSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './webview.css'])));
+            const scriptSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './evaluateWebView.js'])));
+            newWebView.webview.html = fs.readFileSync(path.join(this.context.extensionPath, './evaluate.html'), 'utf-8')
+                .replace('./webview.css', styleSrc.toString())
+                .replace('./evaluateWebView.js', scriptSrc.toString())
+            
+            this.evaluateWebView = newWebView
+            this.context.subscriptions.push(this.evaluateWebView)
+            
+            //this.evaluateWebView.onDidDispose(e => {  })
+            
+            this.eventHandler.initEvaluateReceiveMessage(this.context)
+        }
+    }
 
 }
 
@@ -140,6 +169,7 @@ function createWebView(context) {
         .replace('./webview.js', scriptSrc.toString())
 	return webView;
 }
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
