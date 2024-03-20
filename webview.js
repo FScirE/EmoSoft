@@ -88,6 +88,9 @@ window.addEventListener('message', e => {
         case "aimessage":
             addAIMessage(message.value, message.type)
             break
+        case "recording":
+            setRecordingButton(message.value)
+            break
     }
 })
 
@@ -98,7 +101,14 @@ document.querySelector("textarea").addEventListener("keydown", e => {
     }
 })
 
-
+function setRecordingButton(recording) {
+    if (recording) {
+        var button = document.querySelector('.recordboxstart')
+        button.classList.remove('recordboxstart')
+        button.classList.add('recordboxend')
+        button.textContent = 'End session';
+    }
+}
 
 function record(button){
     if (button.classList.contains('recordboxstart')) {
