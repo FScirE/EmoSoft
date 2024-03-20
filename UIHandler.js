@@ -7,6 +7,9 @@ const fs = require('fs')
  */
 class UIHandler{
     constructor (context) {
+
+        // Cleanup suggestion: run 'start.ui' on startup to avoid code duplication
+
         //create the UI HTML element, will hold AI window and progress bars
         this.messagePending = false
         this.webViewIsVisisble = true;

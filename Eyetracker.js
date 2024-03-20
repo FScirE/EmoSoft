@@ -80,10 +80,10 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {	
-			//var y = this.getY()
-			//var x = this.getX()
-            var y = 0.12
-            var x = 0.21
+			var y = this.getY()
+			var x = this.getX()
+            //var y = 0.12
+            //var x = 0.21
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges

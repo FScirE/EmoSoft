@@ -70,7 +70,6 @@ class DataHandler {
             this.loggedIn = true;
         }
         catch (e) { // login failed
-            console.log("'this' is ", this);
             console.error("DataHandler.init() Neurosity login: ", e);
             this.loggedIn = false;
         }
