@@ -239,10 +239,10 @@ progress {
 }
 
 .recordbox.recordboxend{
-    background-color: red;
+    background-color: rgb(203, 2, 2);
 }
 .recordbox.recordboxend:hover{
-    background-color: rgb(203, 2, 2);
+    background-color: red;
 }
 /*--------------------Evaluate----------------------------*/
 .graph{
