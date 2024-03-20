@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "chart.js": "^4.4.2",
+    "child_process": "^1.0.2",
     "dotenv": "^16.4.5",
     "net": "^1.0.2",
     "openai": "^4.28.4",

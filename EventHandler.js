@@ -87,6 +87,8 @@ class EventHandler {
         switch (message.variable) {
         case 'evaluateResponses':
             console.log("evaluate responses: ", message.value);
+            this.evaluate.responses = message.value;
+            this.evaluate.saveEvaluationToFile();
             this.uiHandler.evaluateWebView.dispose();
             return;
         }
