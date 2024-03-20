@@ -8,6 +8,7 @@ const path = require('path')
 
 const { DataHandler } = require('./DataHandler')
 const { EventHandler } = require('./EventHandler')
+const { EyeTracker } = require('./Eyetracker')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
 
@@ -33,6 +34,8 @@ async function activate(context) {
 	//context.subscriptions.push(disposable);
 
 
+	this.eyetracker = new EyeTracker(context.extensionPath)
+
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
@@ -44,10 +47,6 @@ async function activate(context) {
 	this.uiHandler.init(context, this.eventHandler)
 
 
-	
-	
-
-
 	setInterval(async () => {
 		var calm = await this.dataHandler.getCalm()
 		var focus = await this.dataHandler.getFocus()
@@ -56,7 +55,6 @@ async function activate(context) {
 			this.uiHandler.setCalmProgress(calm)
 			this.uiHandler.setFocusProgress(focus)
 		}
-
     
 		// use calm to create a two-digit hexadecimal string for the red channel
 		let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
@@ -67,8 +65,10 @@ async function activate(context) {
 		await this.uiHandler.setStatusBarBackgroundColor(newColor);
 		// await this.uiHandler.causeCancer(newColor);
 		
-		// await this.eventHandler.checkCalm(calm);
-		// await this.eventHandler.checkFocus(focus);
+		await this.eventHandler.checkCalm(calm);
+		await this.eventHandler.checkFocus(focus);
+
+		this.eyetracker.getSetLinesInFocus()
     
 	}, 500);
 
