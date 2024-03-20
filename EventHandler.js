@@ -51,6 +51,7 @@ class EventHandler {
                         if (e == 'Yes') {
                             console.log("Yes to evaluate")
                             await this.uiHandler.switchToPage("evaluate");
+                            //this.evaluate.saveEvaluationToFile();
                             
                             this.uiHandler.evaluateWebView.webview.postMessage({
                                 variable: "values",
