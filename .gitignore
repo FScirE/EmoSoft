@@ -3,6 +3,7 @@ node_modules
 *.vsix
 .env
 *.env
+.txt
 # just to be on the safe side ig
 envNeurosity.env
 settings.json

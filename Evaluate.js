@@ -9,12 +9,12 @@ class Evaluate {
 
         // Questions
         this.responses = [];
-        this.question1 = "Hello";
-        this.question2 = "Hello";
-        this.question3 = "Hello";
+        this.question1 = "How much work did you expect to finish this session?";
+        this.question2 = "How much work did you manage to finish during this session?";
+        this.question3 = "How accurate do you feel the calm and focus levels were in this session?";
         
         // Saving
-        this.filename = 'evaluations.txt';
+        this.filename = './evaluations.txt';
         this.evalID = '#none' // Should later be able to enter by user (I think)
     }
 
@@ -64,7 +64,7 @@ class Evaluate {
                 }
             });
         });
-
+        console.log(process.cwd());
         // The data that shall be written
         const dataList = []; 
         dataList.push(this.evalID); // ID
@@ -72,15 +72,17 @@ class Evaluate {
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
         var dateStringFormatted = "Date: " + dateString; // Format date string
         dataList.push(dateStringFormatted);
+        dataList.push("Focus:");
         // String for all focus values with time stamps
-        var focusString = ""
         for (let i = 0; i < this.focusValues.length; i++) {
-            
+            var str = "x: " + this.focusValues[i].x + ", y: " + this.focusValues[i].y;
+            dataList.push(str);
         }
+        dataList.push("Calm:")
         // String for all calm values with time stamps
-        var calmString = ""
         for (let i = 0; i < this.calmValues.length; i++) {
-
+            var str = "x: " + this.calmValues[i].x + ", y: " + this.calmValues[i].y;
+            dataList.push(str);
         }
         // Questions with answers
         dataList.push(this.question1);
@@ -90,15 +92,17 @@ class Evaluate {
         dataList.push(this.question3);
         dataList.push(this.responses[2]);
 
+        // Split for next eval
+        dataList.push("------------------------------------------------")
+
         // Iterate through the list and append each element to the file with a newline character
         dataList.forEach(data => {
-            fs.appendFile(this.filename, data + '\n', (err) => {
-                if (err) {
-                    console.error('Error appending to file:', err);
-                    return;
-                }
+            try {
+                fs.appendFileSync(this.filename, data + '\n');
                 console.log(`Data "${data}" appended to file successfully!`);
-            });
+            } catch (err) {
+                console.error('Error appending to file:', err);
+            }
         });
     }
 }
