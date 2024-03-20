@@ -4,7 +4,7 @@ const { Evaluate } = require('./Evaluate')
 
 class EventHandler {
     // Initilize variables
-    constructor(extensionPath, uiHandler) {
+    constructor(extensionPath, uiHandler, eyetracker) {
         // Makes sure user doesn't gets spammed with notifications
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
@@ -17,6 +17,7 @@ class EventHandler {
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
         this.evaluate = new Evaluate();
         this.uiHandler = uiHandler
+        this.eyetracker = eyetracker
     }
 
     async init(dataHandler) {
@@ -40,10 +41,12 @@ class EventHandler {
             case 'recording':
                 if (message.value == true) {
                     this.dataHandler.isRecording = true;
+                    this.eyetracker.recordingStart()
                     await this.dataHandler.recordSession();
                 }
                 else {
                     this.dataHandler.isRecording = false;
+                    this.eyetracker.recordingEnd()
                     this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
                     this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
 
