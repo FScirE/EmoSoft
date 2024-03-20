@@ -9,9 +9,9 @@ class Evaluate {
 
         // Questions
         this.responses = [];
-        this.question1 = "Hello";
-        this.question2 = "Hello";
-        this.question3 = "Hello";
+        this.question1 = "How much work did you expect to finish this session?";
+        this.question2 = "How much work did you manage to finish during this session?";
+        this.question3 = "How accurate do you feel the calm and focus levels were in this session?";
         
         // Saving
         this.filename = 'evaluations.txt';
@@ -73,14 +73,14 @@ class Evaluate {
         var dateStringFormatted = "Date: " + dateString; // Format date string
         dataList.push(dateStringFormatted);
         // String for all focus values with time stamps
-        var focusString = ""
         for (let i = 0; i < this.focusValues.length; i++) {
-            
+            var str = "x: " + this.focusValues[i].x + ", y: " + this.focusValues[i].y;
+            dataList.push(str);
         }
         // String for all calm values with time stamps
-        var calmString = ""
         for (let i = 0; i < this.calmValues.length; i++) {
-
+            var str = "x: " + this.calmValues[i].x + ", y: " + this.calmValues[i].y;
+            dataList.push(str);
         }
         // Questions with answers
         dataList.push(this.question1);
