@@ -7,8 +7,18 @@ import sys
 GRID_WIDTH = 48
 GRID_HEIGHT = 27
 
-x_arr = list(map(float, sys.argv[1].split(',')))
-y_arr = list(map(float, sys.argv[2].split(',')))
+def read_file(path):
+    """reads file contents"""
+    file = open(path, 'r')
+    text = file.read()
+    file.close()
+    return text
+
+this_cwd = sys.argv[1] #cwd
+#this_cwd = 'c:\\Users\\maxco\\OneDrive\\Dokument\\GitHub\\EmoSoft'
+
+x_arr = list(map(float, read_file(this_cwd + '\\xValues.txt').split(','))) 
+y_arr = list(map(float, read_file(this_cwd + '\\yValues.txt').split(',')))
 #x_arr = [random.random() for _ in range(10000)] # test
 #y_arr = [random.random() for _ in range(10000)] # test
 # 1 ruta är 1/48 bred och 1/27 hög
@@ -35,3 +45,4 @@ def generate_heatmap(x_in, y_in):
     plt.savefig("heatmap.jpg")
 
 generate_heatmap(x_arr, y_arr)
+exit(0)
