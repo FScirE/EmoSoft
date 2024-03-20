@@ -25,7 +25,7 @@ class EyeTracker {
         this.long_Y = []
 
         // Connect to the server
-        this.socket.connect(4242, '192.168.105.230', () => {
+        this.socket.connect(4242, '172.30.112.1', () => {
             console.log('Connected to EyeTracker server');
             
             // Sending initial command after the connection is established
