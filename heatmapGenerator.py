@@ -12,9 +12,16 @@ def read_file(path):
     file = open(path, 'r')
     text = file.read()
     file.close()
+    if text == '':
+        return '0'
     return text
 
-this_cwd = sys.argv[1] #cwd
+#get cwd from all arguments
+this_cwd = ''
+for arg in sys.argv[1:]:
+    this_cwd += arg + ' '
+this_cwd = this_cwd.rstrip()
+
 #this_cwd = 'c:\\Users\\maxco\\OneDrive\\Dokument\\GitHub\\EmoSoft'
 
 x_arr = list(map(float, read_file(this_cwd + '\\xValues.txt').split(','))) 
