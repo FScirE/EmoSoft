@@ -33,6 +33,50 @@ async function activate(context) {
 	//context.subscriptions.push(disposable);
 
 
+
+
+
+
+	
+	async function closeEmptyTabs(recursionCount = 0) {
+		const tabArray = vscode.window.tabGroups.all;
+		
+		console.log("Looking for empty tabs to close. This function has ran recursively this many times: ", recursionCount)
+
+		for (let groupIndex = tabArray.length - 1; groupIndex >= 0; groupIndex--) {
+			var group = tabArray[groupIndex];
+			
+		  	// for (let i = group.tabs.length - 1; i >= 0; i--) {
+			// 	const tab = group.tabs[i];
+				
+			// 	// Check if the tab label is empty (usually shows VS Code logo)
+			// 	// if (tab.label === '') {
+			// 	// 	console.log("closing empty tab: ", tab)
+			// 	// 	// note: this command probably doesn't actually exist lol
+			// 	// 	await vscode.commands.executeCommand('workbench.action.closeEditorsInGroup', i);
+			// 	// }
+			// }
+			
+			if (group.tabs.length === 0) {
+				console.log("Closing empty tab group:", group);
+				
+				try {
+  					await vscode.window.tabGroups.close(tabArray[groupIndex]);
+				}
+				finally {
+					// Recursion is necessary because removing a tabgroup messes with the array
+					if (recursionCount < 100)
+						closeEmptyTabs(recursionCount + 1);
+					return;
+				}
+			}
+		}
+	}
+	  
+	await closeEmptyTabs();
+
+
+
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
 
@@ -47,8 +91,8 @@ async function activate(context) {
 	
 	
 
+	var setCalmFocusAndStatusBars = setInterval(async () => {
 
-	setInterval(async () => {
 		var calm = await this.dataHandler.getCalm()
 		var focus = await this.dataHandler.getFocus()
 
@@ -67,14 +111,18 @@ async function activate(context) {
 			let newColor = "#" + newRed + "00" + newBlue;
 			await this.uiHandler.setStatusBarBackgroundColor(newColor);
 			// await this.uiHandler.causeCancer(newColor);
-		}
 		
-		// await this.eventHandler.checkCalm(calm);
-		// await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
+		  // await this.eventHandler.checkCalm(calm);
+		  // await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
     
 	}, 500);
 
 	function isWorkspaceOpen() {
+		
+		return (vscode.workspace.workspaceFolders && 
+			vscode.workspace.workspaceFolders.length > 0);
+	  }
+	  
 		return (vscode.workspace.workspaceFolders && 
 			vscode.workspace.workspaceFolders.length > 0);
 	  }
@@ -83,10 +131,13 @@ async function activate(context) {
 	/*const ai = new AIHandler('', '', context.extensionPath)
    	await ai.sendMsgToAggitatedDev()
    	console.log(ai.output)*/
+
 }
 
 // This method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() {
+	
+}
 
 module.exports = {
 	activate,
