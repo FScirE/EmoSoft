@@ -43,7 +43,6 @@ class EventHandler {
                     await this.dataHandler.recordSession();
                 }
                 else {
-                    console.log(this.dataHandler.focusValuesSession);
                     this.dataHandler.isRecording = false;
                     this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
                     this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);

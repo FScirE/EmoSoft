@@ -175,6 +175,8 @@ class DataHandler {
     async recordSession() {
         var s = 0;
         const interval = 10;
+        this.focusValuesSession = [];
+        this.calmValuesSession = [];
         while (this.isRecording) {
             var currentFocus = {x: s, y:Math.round(this.getFocus()*100)};
             var currentCalm = {x: s, y:Math.round(this.getCalm()*100)};

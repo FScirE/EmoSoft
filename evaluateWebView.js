@@ -25,6 +25,19 @@ window.onload = function () {
 
 
 function createChart() {
+	// Calculate the range of x-values
+    let minX = Math.min(...focusValues.map(point => point.x));
+    let maxX = Math.max(...focusValues.map(point => point.x));
+    
+    // Calculate the interval
+    let interval = (maxX - minX) / 9; // Divide by 9 to get 10 intervals
+    
+    // Generate x-values with even interval
+    let xValues = [];
+    for (let i = 0; i <= 9; i++) {
+        xValues.push(minX + i * interval);
+    }
+
 	var chart = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
 		zoomEnabled: true,
@@ -35,7 +48,8 @@ function createChart() {
 		axisX: {
 			title: "Time",
 			valueFormatString: "####",
-			interval: 10
+			interval: interval,
+			tickValues: xValues
 		},
 		axisY: {
 			logarithmic: false, //change it to false
