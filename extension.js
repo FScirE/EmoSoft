@@ -8,6 +8,7 @@ const path = require('path')
 
 const { DataHandler } = require('./DataHandler')
 const { EventHandler } = require('./EventHandler')
+const { EyeTracker } = require('./Eyetracker')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
 
@@ -31,18 +32,11 @@ async function activate(context) {
 		// The code you place here will be executed every time your command is executed
 	//});
 	//context.subscriptions.push(disposable);
-
-
-
-
-
-
 	
 	async function closeEmptyTabs(recursionCount = 0) {
 		const tabArray = vscode.window.tabGroups.all;
 		
 		console.log("Looking for empty tabs to close. This function has ran recursively this many times: ", recursionCount)
-
 		for (let groupIndex = tabArray.length - 1; groupIndex >= 0; groupIndex--) {
 			var group = tabArray[groupIndex];
 			
@@ -75,7 +69,8 @@ async function activate(context) {
 	  
 	await closeEmptyTabs();
 
-
+	//initializations
+	this.eyetracker = new EyeTracker(context.extensionPath)
 
 	this.dataHandler = new DataHandler()
 	await this.dataHandler.init(context.extensionPath);
@@ -87,10 +82,7 @@ async function activate(context) {
 
 	this.uiHandler.init(context, this.eventHandler)
 
-
-	
-	
-
+	//main loop
 	var setCalmFocusAndStatusBars = setInterval(async () => {
 
 		var calm = await this.dataHandler.getCalm()
@@ -100,32 +92,27 @@ async function activate(context) {
 			this.uiHandler.setCalmProgress(calm)
 			this.uiHandler.setFocusProgress(focus)
 		}
-
     
 		if (isWorkspaceOpen()) {
 			// use calm to create a two-digit hexadecimal string for the red channel
 			let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
-
 			let newBlue = Math.floor(Math.max(0, Math.min(255 * focus, 255))).toString(16).padStart(2, '0')
-
 			let newColor = "#" + newRed + "00" + newBlue;
 			await this.uiHandler.setStatusBarBackgroundColor(newColor);
 			// await this.uiHandler.causeCancer(newColor);
+		}
 		
-		  // await this.eventHandler.checkCalm(calm);
-		  // await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
+		await this.eventHandler.checkCalm(calm);
+		await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
+
+		this.eyetracker.getSetLinesInFocus()
     
 	}, 500);
 
-	function isWorkspaceOpen() {
-		
+	function isWorkspaceOpen() {	
 		return (vscode.workspace.workspaceFolders && 
 			vscode.workspace.workspaceFolders.length > 0);
-	  }
-	  
-		return (vscode.workspace.workspaceFolders && 
-			vscode.workspace.workspaceFolders.length > 0);
-	  }
+	}
 
 	//example of sending ai message
 	/*const ai = new AIHandler('', '', context.extensionPath)
