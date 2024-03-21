@@ -4,6 +4,9 @@ node_modules
 .env
 *.env
 .txt
+*.txt
+*.jpg
+.jpg
 # just to be on the safe side ig
 envNeurosity.env
 settings.json

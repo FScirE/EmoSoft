@@ -235,7 +235,7 @@ progress {
     background-color: rgb(65, 65, 65);
 }
 .recordbox.recordboxstart:hover{
-    background-color: rgb(63, 63, 63);
+    background-color: rgb(80, 80, 80);
 }
 
 .recordbox.recordboxend{
@@ -306,7 +306,7 @@ progress {
     width: 30px;
     height: 30px;
     border-radius: 50%; 
-    background-color: rgb(63, 63, 63);
+    background-color: rgb(65, 65, 65);
     cursor: pointer;
     text-align: center;
     line-height: 30px;
@@ -319,7 +319,7 @@ progress {
     font-weight: bold; 
 }
 .rating label:hover {
-    background-color: rgb(70, 70, 70); 
+    background-color: rgb(80, 80, 80); 
     transform: scale(1.2);
 }
 @media (max-width: 768px) {

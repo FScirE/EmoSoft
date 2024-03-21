@@ -34,6 +34,10 @@ class UIHandler{
             eventHandler.initUIMessage(context)
             this.webView.onDidDispose(_ => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
             this.statusBarButton.hide()
+            this.webView.webview.postMessage({
+                variable: "recording",
+                value: eventHandler.dataHandler.isRecording
+            })
 	    }))
     }
 

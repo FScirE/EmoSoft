@@ -23,7 +23,6 @@ window.onload = function () {
 })
 
 
-
 function createChart() {
 	// Calculate the range of x-values
     let minX = Math.min(...focusValues.map(point => point.x));
