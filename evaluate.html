@@ -14,7 +14,25 @@
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </div>
 <div id="questionContainer">
+    
+    <div class="question">
+        <label for="q1">Question 1</label>
+        <div class="slider-container">
+            <input type="range" min="0" max="100" value="0" id="focusSlider">
+            <div class="slider-value" id="focusValue">0</div>
+        </div>
+    </div>
+    
+    <div class="question">
+        <label for="q2">Question 2</label>
+        <div class="slider-container">
+            <input type="range" min="0" max="100" value="0" id="calmSlider">
+            <div class="slider-value" id="calmValue">0</div>
+        </div>
+    </div>
+        
 	<div class="question">
+        
 		<div class="labelContainer">
             <label for="q1">Question 1: How much work did you expect to finish this session?</label>
         </div>    
@@ -44,6 +62,7 @@
         <div class="labelContainer">
 		    <label for="q3">Question 3: How accurate do you feel the calm and focus levels were in this session?</label>
         </div>
+            
             <div class="rating">
                 <input type="radio" id="q3star1" name="q3rating" value="1"><label data-value="1" for="q3star1">1</label>
                 <input type="radio" id="q3star2" name="q3rating" value="2"><label data-value="2" for="q3star2">2</label>

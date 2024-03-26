@@ -41,37 +41,33 @@ function createChart() {
 		animationEnabled: true,
 		zoomEnabled: true,
 		theme: "dark2",
-		title: {
-			text: "Session"
-		},
+		//title: {
+			//text: "Session"
+		//},
 		axisX: {
-			title: "Time",
+			title: "Time (s)",
 			valueFormatString: "####",
 			interval: interval,
-			tickValues: xValues
+			tickValues: xValues,
+			titleFontSize: 16,
+			minimum: 0
 		},
 		axisY: {
 			logarithmic: false, //change it to false
-			
-			titleFontColor: "#4fc553",
-			lineColor: "#4fc553",
+			title: "Focus & Calm",
+			titleFontSize: 16,
 			gridThickness: 0,
 			lineThickness: 1,
-			labelFormatter: addSymbols
-		},
-		axisY2: {
-			
-			titleFontColor: "#03a9f4",
-			logarithmic: false, //change it to true
-			lineColor: "#03a9f4",
-			gridThickness: 0,
-			lineThickness: 1,
-			labelFormatter: addSymbols
+			labelFormatter: addSymbols,
+			suffix: "%",
+			includeZero: true,
+			maximum: 110
 		},
 		legend: {
 			verticalAlign: "top",
 			fontSize: 16,
-			dockInsidePlotArea: true
+			dockInsidePlotArea: true,
+			y: -5
 		},
 		data: [{
 			type: "line",
@@ -86,7 +82,6 @@ function createChart() {
 			type: "line",
 			color: "#03a9f4",
 			xValueFormatString: "####",
-			axisYType: "secondary",
 			showInLegend: true,
 			name: "Calm (%)",
 			dataPoints: calmValues
@@ -109,7 +104,9 @@ function addSymbols(e) {
 }
 
 function saveEvaluateResponses() {
-    const radioButtonGroups = [ document.getElementsByName("q1rating"),
+    const radioButtonGroups = [ document.getElementById("focusValue"),
+								document.getElementById("calmValue"),
+								document.getElementsByName("q1rating"),
                                 document.getElementsByName("q2rating"),
                                 document.getElementsByName("q3rating")]
     
@@ -126,3 +123,21 @@ function saveEvaluateResponses() {
         value: responses
     })
 }
+
+const focusSlider = document.getElementById("focusSlider");
+const focusOutput = document.getElementById("focusValue");
+
+focusOutput.innerHTML = focusSlider.value;
+
+focusSlider.oninput = function() {
+	focusOutput.innerHTML = this.value;
+};
+const calmSlider = document.getElementById("calmSlider");
+const calmOutput = document.getElementById("calmValue");
+
+calmOutput.innerHTML = calmSlider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+calmSlider.oninput = function() {
+    calmOutput.innerHTML = this.value;
+};
