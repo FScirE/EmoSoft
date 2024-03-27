@@ -1,26 +1,31 @@
-import * as vscode from 'vscode';
+const fs = require('fs');
 
 class Settings {
-    constructor(){
-        this.config = vscode.workspace.getConfiguration('emoide');
+    constructor() {
+        // Read package.json file
+        const packageJSON = fs.readFileSync('./package.json', 'utf-8');
+        const packageData = JSON.parse(packageJSON);
+
+        // Extract configuration options
+        this.configOptions = packageData.contributes.configuration.properties.emoide;
     }
 
-    get notificationsEnable(){
-        return this.config.get('emoide.notifications.allowNotification', true); 
-    }
-    get notificationsFocusThreshHold(){
-        return this.config.get('emoide.notifications.thresholdNotificationFocus', 30) / 10;
-    
-    }
-    get notificationCalmThreshHold(){
-        return this.config.get('emoide.notifications.thresholdNotificationCalm', 20) / 10;
-    }
-    
-
-    get sessionMaxLength(){
-        return this.config.get('emoide.session', 30); 
+    // Getter method for notifications configuration option
+    get notificationsEnabled() {
+        return this.configOptions.notifications.default;
     }
 
+    // Getter method for thresholdFocus configuration option
+    get thresholdFocus() {
+        return this.configOptions.thresholdFocus.default;
+    }
+
+    // Getter method for thresholdCalm configuration option
+    get thresholdCalm() {
+        return this.configOptions.thresholdCalm.default;
+    }
+
+    // Define getter methods for other configuration options as needed
 }
 
 module.exports = {
