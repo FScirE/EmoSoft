@@ -37,6 +37,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "canvasjs": "^1.8.3",
     "chart.js": "^4.4.2",
     "child_process": "^1.0.2",
     "dotenv": "^16.4.5",

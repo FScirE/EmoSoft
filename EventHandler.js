@@ -1,3 +1,4 @@
+
 const vscode = require('vscode')
 const { AIHandler } = require('./AIHandler')
 const { Evaluate } = require('./Evaluate')
@@ -18,6 +19,9 @@ class EventHandler {
         this.evaluate = new Evaluate();
         this.uiHandler = uiHandler
         this.eyetracker = eyetracker
+
+        // Mark when generated
+        this.generated = false
     }
 
     async init(dataHandler) {
@@ -28,54 +32,69 @@ class EventHandler {
         
         await this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
             switch (message.variable) {
-            case 'user':
-                //console.log(message.value);
-                await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
-                var responseFromAi = this.aiHandler.output
-                this.uiHandler.webView.webview.postMessage({
-                    variable: "airesponse",
-                    value: responseFromAi
-                })
-                return;
-
-            case 'recording':
-                if (message.value == true) {
-                    this.dataHandler.isRecording = true;
-                    this.eyetracker.recordingStart()
-                    await this.dataHandler.recordSession();
-                }
-                else {
-                    this.dataHandler.isRecording = false;
-                    this.eyetracker.recordingEnd()
-                    this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
-                    this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
-
-                    vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(async e => {
-                        if (e == 'Yes') {
-                            console.log("Yes to evaluate")
-                            await this.uiHandler.switchToPage("evaluate");
-                            
-                            this.uiHandler.evaluateWebView.webview.postMessage({
-                                variable: "values",
-                                value: [this.evaluate.focusValues, this.evaluate.calmValues]
-                            })
-                        }
-                        if (e == 'No') {
-                            console.log("No to evaluate")
-                        }
+                case 'user':
+                    //console.log(message.value);
+                    await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
+                    var responseFromAi = this.aiHandler.output
+                    this.uiHandler.webView.webview.postMessage({
+                        variable: "airesponse",
+                        value: responseFromAi
                     })
-                    
-                }
-                return;
-            case 'user':
-                //console.log(message.value);
-                await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
-                var responseFromAi = this.aiHandler.output
-                this.uiHandler.webView.webview.postMessage({
-                    variable: "airesponse",
-                    value: responseFromAi
-                })
-                return;
+                    return;
+
+                case 'recording':
+                    if (message.value == true) {
+                        this.dataHandler.isRecording = true;
+                        this.eyetracker.recordingStart()
+                        await this.dataHandler.recordSession();
+                    }
+                    else {
+                        this.dataHandler.isRecording = false;
+                        this.eyetracker.recordingEnd()
+                        this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
+                        this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
+
+                        vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(async e => {
+                            if (e == 'Yes') {
+                                console.log("Yes to evaluate")
+                                this.generated = false
+
+                                vscode.window.withProgress({
+                                    location: vscode.ProgressLocation.Notification,
+                                    cancellable: false
+                                }, async (progress, _) => {
+                                    progress.report({message: 'Generating evaluation data...'})
+                                    while(!this.generated) {
+                                        await sleepSeconds(0.2)
+                                    }
+                                })                         
+
+                                await this.uiHandler.switchToEvaluatePage();
+                                await this.initEvaluateReceiveMessage(context);
+
+                                await this.eyetracker.generateHeatmap()
+
+                                this.uiHandler.evaluateWebView.webview.postMessage({
+                                    variable: "values",
+                                    value: [this.evaluate.focusValues, this.evaluate.calmValues]
+                                })
+                            }
+                            if (e == 'No') {
+                                console.log("No to evaluate")
+                            }
+                        })
+                        
+                    }
+                    return;
+                case 'user':
+                    //console.log(message.value);
+                    await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
+                    var responseFromAi = this.aiHandler.output
+                    this.uiHandler.webView.webview.postMessage({
+                        variable: "airesponse",
+                        value: responseFromAi
+                    })
+                    return;
             }
             
             
@@ -88,14 +107,17 @@ class EventHandler {
     async initEvaluateReceiveMessage(context) {
         this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
         switch (message.variable) {
-        case 'evaluateResponses':
-            console.log("evaluate responses: ", message.value);
-            this.evaluate.responses = message.value;
-            this.evaluate.saveEvaluationToFile();
-            this.uiHandler.evaluateWebView.dispose();
-            return;
+            case 'evaluateResponses':
+                console.log("evaluate responses: ", message.value);
+                this.evaluate.responses = message.value;
+                this.evaluate.saveEvaluationToFile();
+                this.uiHandler.evaluateWebView.dispose();
+                return;
+            case 'finished':
+                console.log(message.value)
+                this.generated = true
+                return;
         }
-        
     },
         this,
         context.subscriptions);

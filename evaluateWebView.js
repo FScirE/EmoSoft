@@ -3,25 +3,12 @@
 
 // @ts-ignore
 const vscode = acquireVsCodeApi() //ignore error
-
-window.onload = function () {
 	
-	var focusValues = []
-	var calmValues = []
+var focusValues = []
+var calmValues = []
 
-	window.addEventListener("message", e => {
-		const message = e.data; // The JSON data our extension sent
-		
-		switch (message.variable) {
-			case "values":
-				
-				focusValues = message.value[0]
-				calmValues = message.value[1]
-				createChart()
-				break
-	}
-})
-
+//KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
+document.querySelector('body').style.visibility = 'hidden'
 
 function createChart() {
 	// Calculate the range of x-values
@@ -88,6 +75,11 @@ function createChart() {
 		}]
 	});
 	chart.render();
+	document.querySelector('body').style.visibility = 'visible'
+	vscode.postMessage({
+		variable: 'finished',
+		value: `Chart generated`
+	})
 }
 
 function addSymbols(e) {
@@ -99,8 +91,6 @@ function addSymbols(e) {
 
 	var suffix = suffixes[order];
 	return CanvasJS.formatNumber(e.value / Math.pow(1000, order), "#,##0.##") + suffix;
-}
-
 }
 
 function saveEvaluateResponses() {
@@ -141,3 +131,15 @@ calmOutput.innerHTML = calmSlider.value; // Display the default slider value
 calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
+
+window.addEventListener("message", e => {
+	const message = e.data; // The JSON data our extension sent
+	
+	switch (message.variable) {
+		case "values":			
+			focusValues = message.value[0]
+			calmValues = message.value[1]
+			createChart()
+			break
+	}
+})

@@ -127,9 +127,12 @@ class EyeTracker {
     }
     recordingEnd() {
         this.recording = false
+    }
+    
+    generateHeatmap() {
         fs.writeFileSync(this.path + '\\xValues.txt', this.long_X.toString())
         fs.writeFileSync(this.path + '\\yValues.txt', this.long_Y.toString())
-        execSync(`python heatmapGenerator.py ${this.path}`, { cwd: this.path }) //generate heatmap
+        execSync(`python heatmapGenerator.py ${this.path}`, { cwd: this.path })
     }
 
     calibrate() {
