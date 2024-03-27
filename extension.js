@@ -11,6 +11,7 @@ const { EventHandler } = require('./EventHandler')
 const { EyeTracker } = require('./Eyetracker')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
+const { Settings } = require('./settings.js')
 
 
 // This method is called when your extension is activated
@@ -70,17 +71,18 @@ async function activate(context) {
 	await closeEmptyTabs();
 
 	//initializations
-	this.eyetracker = new EyeTracker(context.extensionPath)
+	this.settings = new Settings();
+	this.eyetracker = new EyeTracker(context.extensionPath, this.settings);
 
-	this.dataHandler = new DataHandler()
+	this.dataHandler = new DataHandler(this.settings);
 	await this.dataHandler.init(context.extensionPath);
 
-	this.uiHandler = new UIHandler(context)
+	this.uiHandler = new UIHandler(context, this.settings);
 
-	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker)
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, this.settings);
 	await this.eventHandler.init(this.dataHandler);
 
-	this.uiHandler.init(context, this.eventHandler)
+	this.uiHandler.init(context, this.eventHandler);
 
 	//main loop
 	var setCalmFocusAndStatusBars = setInterval(async () => {

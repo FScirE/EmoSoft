@@ -33,12 +33,12 @@
           "description": "Calm threshold for notifications",
           "default": 20
         },
-        "emoide.session": {
+        "emoide.sessionLength": {
           "type":"integer",
           "description": "Max allowed length of a session (minutes)",
           "default": 30
         },
-        "emoide.eye-tracker": {
+        "emoide.eyeTracker": {
           "type":"string",
           "description": "IP address for the Eye-tracker",
           "default": "None"

@@ -6,7 +6,7 @@ const fs = require('fs')
  * @param {vscode.ExtensionContext} context
  */
 class UIHandler{
-    constructor (context) {
+    constructor (context, settings) {
 
         // Cleanup suggestion: run 'start.ui' on startup to avoid code duplication
 
