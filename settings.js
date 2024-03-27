@@ -20,7 +20,7 @@ class Settings {
         return this.config.get('thresholdCalm');
     }
 
-    // Getter method for thresholdCalm configuration option
+    // Getter method for thresholdCalm configuration option (minutes)
     get sessionLength() {
         return this.config.get('sessionLength');
     }
@@ -47,12 +47,21 @@ class Settings {
 
     // Getter method for focus color configuration option
     get focusColor() {
-        return this.config.get('focusColor');
+        return this.formattedRGB(this.config.get('focusColor'));
     }
 
     // Getter method for calm color configuration option
     get calmColor() {
-        return this.config.get('calmColor');
+        return this.formattedRGB(this.config.get('calmColor'));
+    }
+
+    // function to format RGB
+    formattedRGB(color) {
+        const nums = color.split(',').map(num => parseInt(num.trim()));
+        const [x, y, z] = nums;
+        const RGB = { x, y, z };
+    
+        return RGB;
     }
 }
 
