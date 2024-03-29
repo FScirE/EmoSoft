@@ -89,9 +89,7 @@ class Evaluate {
         }
         // Questions with answers
         // console.log('Responses in evaluate.js', this.responses) Responses innehåller array med 5 element
-        console.log(this.responses)
         dataList.push(this.question1);
-        console.log(this.responses[3]);
         dataList.push(this.responses[3]);
         dataList.push(this.question2);
         dataList.push(this.responses[4]);
