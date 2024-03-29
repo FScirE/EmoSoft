@@ -94,9 +94,11 @@ function addSymbols(e) {
 }
 
 function saveEvaluateResponses() {
-    const radioButtonGroups = [ document.getElementById("focusValue"),
-								document.getElementById("calmValue"),
-								document.getElementsByName("q1rating"),
+
+	const focusSliderValue = document.getElementById("focusSlider").value;
+    const calmSliderValue = document.getElementById("calmSlider").value;
+
+    const radioButtonGroups = [	document.getElementsByName("q1rating"),
                                 document.getElementsByName("q2rating"),
                                 document.getElementsByName("q3rating")]
     
@@ -106,7 +108,10 @@ function saveEvaluateResponses() {
         for (var button = 0; button < radioButtonGroups[group].length; button++) 
             if (radioButtonGroups[group][button].checked) 
                 responses[group] = radioButtonGroups[group][button].value
-    
+	
+	responses.push(focusSliderValue)
+	responses.push(calmSliderValue)
+    console.log(responses);
 
     vscode.postMessage({
         variable: "evaluateResponses",
