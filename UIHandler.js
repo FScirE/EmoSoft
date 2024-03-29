@@ -74,8 +74,8 @@ class UIHandler{
     async updateFocusCalmBarColors(focus, calm) {
         //#4fc553 focus
         //#03a9f4 calm
-        this.focusBar.color = `rgba(79, 197, 83, ${focus})`
-        this.calmBar.color = `rgba(3, 169, 244, ${calm})`
+        this.focusBar.color = `rgba(70, ${focus*255}, 0, 1)`
+        this.calmBar.color = `rgba(40, 0, ${calm*255}, 1)`
     }
 }
 
@@ -108,9 +108,11 @@ function createWebView(context, html, style, script) {
 	//set source paths for style and script
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${style}.css`])));
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${script}.js`])));
+    const heatmapSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './heatmap.png']))); //for evaluation
 	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, `./${html}.html`), 'utf-8')
         .replace(`./${style}.css`, styleSrc.toString())
         .replace(`./${script}.js`, scriptSrc.toString())
+        .replace('./heatmap.png', heatmapSrc.toString())
 	return webView;
 }
 

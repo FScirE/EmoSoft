@@ -74,6 +74,7 @@ class EventHandler {
 
                                 await this.eyetracker.generateHeatmap()
 
+                                await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
@@ -131,9 +132,9 @@ class EventHandler {
             this.allowNotificationFocus = false
             await this.aiHandler.sendMsgToUnfocusedDev(focus)
             this.uiHandler.printAIMessage(this.aiHandler.output, true)
-            await sleepSeconds(120)
         }
         if (this.allowNotificationFocus == false && focus > this.thresholdFocus + 0.15) { //Reset boolean that allows notifications
+            await sleepSeconds(120)
             this.allowNotificationFocus = true
         }
     }
@@ -143,9 +144,9 @@ class EventHandler {
             this.allowNotificationCalm = false
             await this.aiHandler.sendMsgToAggitatedDev(calm)
             this.uiHandler.printAIMessage(this.aiHandler.output, false)
-            await sleepSeconds(120)
         }
         if (this.allowNotificationCalm == false && calm > this.thresholdCalm + 0.15) { //Reset boolean that allows notifications
+            await sleepSeconds(120)
             this.allowNotificationCalm = true
         }
     }

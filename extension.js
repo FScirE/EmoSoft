@@ -89,8 +89,8 @@ async function activate(context) {
 		var focus = await this.dataHandler.getFocus()
 
 		if (this.uiHandler.webViewIsVisisble) {
-			this.uiHandler.setCalmProgress(calm)
-			this.uiHandler.setFocusProgress(focus)
+			await this.uiHandler.setCalmProgress(calm)
+			await this.uiHandler.setFocusProgress(focus)
 		}
 
 		await this.uiHandler.updateFocusCalmBarColors(focus, calm);
@@ -98,7 +98,7 @@ async function activate(context) {
 		await this.eventHandler.checkCalm(calm);
 		await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
 
-		this.eyetracker.getSetLinesInFocus()
+		await this.eyetracker.getSetLinesInFocus()
     
 	}, 500);
 
