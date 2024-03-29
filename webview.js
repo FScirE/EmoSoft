@@ -129,6 +129,7 @@ function record(button){
     } else {
         isRecording = false;
     }
+
     vscode.postMessage({
         variable: "recording",
         value: isRecording

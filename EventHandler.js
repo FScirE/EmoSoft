@@ -43,6 +43,9 @@ class EventHandler {
             case 'recording':
                 if (message.value == true) {
                     this.dataHandler.isRecording = true;
+                    var startTime = new Date();
+                    await this.calculateTime(startTime);
+                    console.log(this.calculateTime());
                     this.eyetracker.recordingStart()
                     await this.dataHandler.recordSession();
                 }
@@ -103,6 +106,14 @@ class EventHandler {
         context.subscriptions);
     }
 
+    // Record how long a session has been going
+    async calculateTime(startTime) {
+        var startTimeSeconds = startTime.getSeconds();
+        var endTime = new Date();
+        var endTimeSeconds = endTime.getSeconds();
+        var time = endTimeSeconds - startTimeSeconds;
+        return time.toString();
+    }
     
 
     // Check focus level and notifies user when focus drops below threshold
