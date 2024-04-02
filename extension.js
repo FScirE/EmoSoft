@@ -116,6 +116,11 @@ async function activate(context) {
 			vscode.workspace.workspaceFolders.length > 0);
 	}
 
+	let disposable = vscode.commands.registerCommand('emoide.setCrownPassword', async () => {
+        await this.settings.getCrownPassword();
+    });
+
+	context.subscriptions.push(disposable);
 	//example of sending ai message
 	/*const ai = new AIHandler('', '', context.extensionPath)
    	await ai.sendMsgToAggitatedDev()

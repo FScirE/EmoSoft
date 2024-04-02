@@ -2,7 +2,7 @@ const vscode = require('vscode');
 
 class Settings {
     constructor() {
-        this.config = vscode.workspace.getConfiguration('emoide')
+        this.config = vscode.workspace.getConfiguration('emoide');
     }
 
     // Getter method for notifications configuration option
@@ -35,11 +35,6 @@ class Settings {
         return this.config.get('crownEmail');
     }
 
-    // Getter method for crown Password configuration option
-    get crownPassword() {
-        return this.config.get('crownPassword');
-    }
-
     // Getter method for crown device ID configuration option
     get crownDeviceID() {
         return this.config.get('crownDeviceID');
@@ -55,16 +50,25 @@ class Settings {
         return this.formattedRGB(this.config.get('calmColor'));
     }
 
-    // function to format RGB
+    // Function to format RGB
     formattedRGB(color) {
         const nums = color.split(',').map(num => parseInt(num.trim()));
         const [x, y, z] = nums;
         const RGB = { x, y, z };
-    
+
         return RGB;
     }
+
+    async getCrownPassword() {
+        const password = await vscode.window.showInputBox({
+            placeHolder: 'Enter your Crown password',
+            password: true // This hides the input text
+        });
+        return password; //NEEDS TO BE DIRECTLY LINKED TO THE ENV
+    }
+
 }
 
 module.exports = {
     Settings
-}
+};

@@ -49,9 +49,11 @@
           "default": "None"
         },
         "emoide.crownPassword": {
-          "type":"string",
+          "type":"null",
           "description": "Password for Neurosity",
-          "default": "None"
+          "default": null,
+          "scope": "workspace",
+          "markdownDescription": "[Set Crown Password](command:emoide.setCrownPassword)"
         },
         "emoide.crownDeviceID": {
           "type":"string",
