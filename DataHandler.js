@@ -13,7 +13,7 @@ class DataHandler {
     
     #password = ""; // private property
 
-    constructor() {
+    constructor(settings) {
         this.createFakeDataIfNotLoggedIn = true;
 
         // Evaluate session

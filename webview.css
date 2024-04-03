@@ -280,7 +280,7 @@ progress {
     margin: 0 auto;
     margin-bottom: 11px;
     text-align: center;
-    font-size: large;
+    font-size: 16px;
     
     color: #FFF;
 }
@@ -346,4 +346,40 @@ progress {
 }
 .submitBtn #submitEvaluationBtn:hover{
     background-color: #03a9f4
+}
+/*------------------Slider-------------*/
+.slider-container {
+    width: 80%;
+    margin: 50px auto;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: rgb(80, 80, 80);
+    outline: none;
+    margin: 15px 0;
+}
+.slider-container #focusSlider[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4fc553;
+    cursor: pointer;
+}
+.slider-container #calmSlider[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #03a9f4;
+    cursor: pointer;
+}
+
+.slider-value {
+    text-align: center;
 }
