@@ -39,7 +39,14 @@ class DataHandler {
             this.neurosity.disconnect();
         }
         catch (e) {
-
+            console.log(e);
+        }
+        try
+        {
+            clearInterval(this.fakeDataIntervalHandler);
+        }
+        catch (e) {
+            console.log(e);
         }
         this.neurosity = null;
     }
@@ -136,7 +143,7 @@ class DataHandler {
 
             this.dataSourceType = "simulated (fake) data"
 
-            var fakeDataHandler = setInterval(() => {
+            this.fakeDataIntervalHandler = setInterval(() => {
                 var fakeCalmValue = this.recentCalm[this.recentCalm.length - 1] + (Math.random() - 0.5);
                 var fakeCalmValue = Math.min(Math.max(fakeCalmValue, 0), 1);
 
