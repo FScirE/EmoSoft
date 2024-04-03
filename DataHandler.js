@@ -32,6 +32,18 @@ class DataHandler {
 
     } // end of constructor
 
+    async uninit() {
+        this.dataSourceType = "none";
+        try
+        {
+            this.neurosity.disconnect();
+        }
+        catch (e) {
+
+        }
+
+    }
+
 
     async init(extensionPath) {
         try { // login and connect to Neurosity device
@@ -126,7 +138,7 @@ class DataHandler {
 
             this.dataSourceType = "simulated (fake) data"
 
-            setInterval(() => {
+            var fakeDataHandler = setInterval(() => {
                 var fakeCalmValue = this.recentCalm[this.recentCalm.length - 1] + (Math.random() - 0.5);
                 var fakeCalmValue = Math.min(Math.max(fakeCalmValue, 0), 1);
 
