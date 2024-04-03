@@ -16,7 +16,7 @@ def read_file(path):
         return '0'
     return text
 
-#get cwd from all arguments
+#get cwd from all arguments, fixed to work with space in folder names
 this_cwd = ''
 for arg in sys.argv[1:]:
     this_cwd += arg + ' '
