@@ -48,13 +48,6 @@
           "description": "Email for Neurosity",
           "default": "None"
         },
-        "emoide.crownPassword": {
-          "type":"null",
-          "description": "Password for Neurosity",
-          "default": null,
-          "scope": "workspace",
-          "markdownDescription": "[Set Crown Password](command:emoide.setCrownPassword)"
-        },
         "emoide.crownDeviceID": {
           "type":"string",
           "description": "Device ID for Neurosity",
