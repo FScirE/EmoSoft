@@ -7,6 +7,7 @@ class Settings {
         this.extensionPath = extensionPath
         this.config = vscode.workspace.getConfiguration('emoide');
         this.listenForConfigChanges();
+        this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
     }
 
     // Getter method for notifications configuration option
@@ -119,6 +120,7 @@ class Settings {
                 const newDeviceID = this.config.get('crownDeviceID');
                 console.log('crownDeviceID changed to:', newDeviceID);
                 await this.createEnvFile('envNeurosity.env');
+                await this.reinitDataHandlerCallback();
             }
     
             if (event.affectsConfiguration('emoide.crownEmail')) {
@@ -126,6 +128,7 @@ class Settings {
                 const newEmail = this.config.get('crownEmail');
                 console.log('crownEmail changed to:', newEmail);
                 await this.createEnvFile('envNeurosity.env');
+                await this.reinitDataHandlerCallback();
             }
         });
     }

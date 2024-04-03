@@ -41,14 +41,12 @@ class DataHandler {
         catch (e) {
 
         }
-
+        this.neurosity = null;
     }
 
 
     async init(extensionPath) {
         try { // login and connect to Neurosity device
-
-            // console.log("extensionPath is ", extensionPath) // debugging test/DataHandlerTest.js
 
             const dotenvRequire = require('dotenv').config({
                 path: path.join(extensionPath, '/envNeurosity.env')
