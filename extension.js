@@ -71,15 +71,16 @@ async function activate(context) {
 	await closeEmptyTabs();
 
 	//initializations
-	this.settings = new Settings();
-	this.eyetracker = new EyeTracker(context.extensionPath, this.settings);
+	const settings = new Settings(context.extensionPath);
+	
+	this.eyetracker = new EyeTracker(context.extensionPath, settings);
 
-	this.dataHandler = new DataHandler(this.settings);
+	this.dataHandler = new DataHandler(settings);
 	await this.dataHandler.init(context.extensionPath);
 
-	this.uiHandler = new UIHandler(context, this.settings);
+	this.uiHandler = new UIHandler(context, settings);
 
-	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, this.settings);
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, settings);
 	await this.eventHandler.init(this.dataHandler);
 
 	this.uiHandler.init(context, this.eventHandler);
