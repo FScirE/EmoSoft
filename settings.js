@@ -68,7 +68,6 @@ class Settings {
             placeHolder: 'Enter your Crown password',
             password: true // This hides the input text
         });
-        console.log('crownPassword:', password);
         return password; //NEEDS TO BE DIRECTLY LINKED TO THE ENV
     }
 
