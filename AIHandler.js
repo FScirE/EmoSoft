@@ -67,9 +67,9 @@ class AIHandler {
     async sendMsgToUnfocusedDev(focus){
         focus *= 100;
         focus = focus.toFixed(0);
-        console.log(focus);
+        // console.log(focus);
         focus = "This is the focus level in percent:  " + focus.toString() + "%. ";
-        console.log(focus);
+        // console.log(focus);
         // sends a message to the AI with standard message telling the user to focus. 
         await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_HELP_UNFOCUSED_DEV + focus, false);
     }
@@ -78,7 +78,7 @@ class AIHandler {
         calm *= 100;
         calm = calm.toFixed(0);
         calm = "This is the calm level in percent:  " + calm.toString() + "%. ";
-        console.log(calm);
+        // console.log(calm);
         await this.sendMsgToAI(CONTEXT_HELPADEV , MESSAGE_CALM_DOWN + calm, false);
     }  
     async sendMsgToTakeBreak(){

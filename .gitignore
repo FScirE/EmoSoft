@@ -10,3 +10,5 @@ node_modules
 # just to be on the safe side ig
 envNeurosity.env
 settings.json
+
+package.json
