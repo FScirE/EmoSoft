@@ -3,25 +3,12 @@
 
 // @ts-ignore
 const vscode = acquireVsCodeApi() //ignore error
-
-window.onload = function () {
 	
-	var focusValues = []
-	var calmValues = []
+var focusValues = []
+var calmValues = []
 
-	window.addEventListener("message", e => {
-		const message = e.data; // The JSON data our extension sent
-		
-		switch (message.variable) {
-			case "values":
-				
-				focusValues = message.value[0]
-				calmValues = message.value[1]
-				createChart()
-				break
-	}
-})
-
+//KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
+document.querySelector('body').style.visibility = 'hidden'
 
 function createChart() {
 	// Calculate the range of x-values
@@ -88,6 +75,11 @@ function createChart() {
 		}]
 	});
 	chart.render();
+	document.querySelector('body').style.visibility = 'visible'
+	vscode.postMessage({
+		variable: 'finished',
+		value: `Chart generated`
+	})
 }
 
 function addSymbols(e) {
@@ -101,22 +93,25 @@ function addSymbols(e) {
 	return CanvasJS.formatNumber(e.value / Math.pow(1000, order), "#,##0.##") + suffix;
 }
 
-}
-
 function saveEvaluateResponses() {
-    const radioButtonGroups = [ document.getElementById("focusValue"),
-								document.getElementById("calmValue"),
-								document.getElementsByName("q1rating"),
+
+	const focusSliderValue = document.getElementById("focusSlider").value;
+    const calmSliderValue = document.getElementById("calmSlider").value;
+
+    const radioButtonGroups = [	document.getElementsByName("q1rating"),
                                 document.getElementsByName("q2rating"),
                                 document.getElementsByName("q3rating")]
     
-    const responses = ["-1", "-1", "-1"]
+    var responses = []
     
     for (var group = 0; group < radioButtonGroups.length; group++) 
         for (var button = 0; button < radioButtonGroups[group].length; button++) 
             if (radioButtonGroups[group][button].checked) 
                 responses[group] = radioButtonGroups[group][button].value
-    
+	
+	responses.push(focusSliderValue)
+	responses.push(calmSliderValue)
+    console.log(responses);
 
     vscode.postMessage({
         variable: "evaluateResponses",
@@ -141,3 +136,15 @@ calmOutput.innerHTML = calmSlider.value; // Display the default slider value
 calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
+
+window.addEventListener("message", e => {
+	const message = e.data; // The JSON data our extension sent
+	
+	switch (message.variable) {
+		case "values":			
+			focusValues = message.value[0]
+			calmValues = message.value[1]
+			createChart()
+			break
+	}
+})

@@ -5,12 +5,13 @@ const { execSync } = require('child_process')
 var DOMParser = require('xmldom').DOMParser;
 const fs = require('fs')
 
-const MAX_LENGTH = 60
+const MAX_LENGTH = 30
 
 const EDITOR_START_Y = 0.107
 const EDITOR_END_Y = 0.733
 const EDITOR_START_X = 0.135
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
+var timeOut = false;
 
 const decorationType = vscode.window.createTextEditorDecorationType({
     backgroundColor: 'rgba(200, 200, 200, 0.3)'
@@ -26,6 +27,9 @@ class EyeTracker {
         this.long_Y = []
         this.recording = false
         this.settings = settings;
+
+        //UNDER IS THE IP ADRESS USE IT
+        //this.settings.eyeIP
 
         // Connect to the server
         this.socket.connect(4242, this.settings.eyeTracker, () => {
@@ -47,9 +51,10 @@ class EyeTracker {
             var newY = parseFloat(record.getAttribute('FPOGY'))
             this.X.push(newX)
             this.Y.push(newY)
-            if (this.recording && newX >= 0 && newX < 1 && newY >= 0 && newY < 1) {
-                this.long_X.push(newX) //ADDS VALUES TOO OFTEN, FIX
+            if (!timeOut && this.recording && newX >= 0 && newX < 1 && newY >= 0 && newY < 1) {
+                this.long_X.push(newX)
                 this.long_Y.push(newY)
+                timeOutMutex(100)
             }
 
             if (this.X.length > MAX_LENGTH)
@@ -128,9 +133,12 @@ class EyeTracker {
     }
     recordingEnd() {
         this.recording = false
+    }
+    
+    generateHeatmap() {
         fs.writeFileSync(this.path + '\\xValues.txt', this.long_X.toString())
         fs.writeFileSync(this.path + '\\yValues.txt', this.long_Y.toString())
-        execSync(`python heatmapGenerator.py ${this.path}`, { cwd: this.path }) //generate heatmap
+        execSync(`python heatmapGenerator.py ${this.path}`, { cwd: this.path })
     }
 
     calibrate() {
@@ -141,6 +149,16 @@ class EyeTracker {
         //wait for calibrate to send finish message ------
         this.socket.write('<SET ID="CALIBRATE_SHOW" VALUE="0" />\r\n')
     }
+}
+
+function timeOutMutex(time) {
+    timeOut = true
+    sleep(time)
+    timeOut = false
+}
+
+function sleep(ms) {
+    var _ = new Promise(resolve => setTimeout(resolve, ms)).then(() => {return});
 }
 
 module.exports = {

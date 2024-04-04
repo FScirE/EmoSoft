@@ -4,8 +4,13 @@ const path = require('path');
 
 class Settings {
     constructor(extensionPath) {
+        console.log('Constructing Settings...')
         this.extensionPath = extensionPath
         this.config = vscode.workspace.getConfiguration('emoide');
+        this.allownotifications = this.config.get('notifications');
+        this.updatedthreshholdFocus = this.config.get('thresholdFocus');
+        this.updatedthreshholdCalm = this.config.get('thresholdCalm');
+        this.eyeIP = this.config.get('eyeTracker');
         this.listenForConfigChanges();
         this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
     }
@@ -114,10 +119,11 @@ class Settings {
     }
 
     listenForConfigChanges() {
+        // IT WORKS
         vscode.workspace.onDidChangeConfiguration(async (event) => {
             if (event.affectsConfiguration('emoide.crownDeviceID')) {
                 // Handle changes to crownDeviceID
-                const newDeviceID = this.config.get('crownDeviceID');
+                const newDeviceID = vscode.workspace.getConfiguration('emoide').get('crownDeviceID');
                 console.log('crownDeviceID changed to:', newDeviceID);
                 await this.createEnvFile('envNeurosity.env');
                 await this.reinitDataHandlerCallback();
@@ -125,11 +131,36 @@ class Settings {
     
             if (event.affectsConfiguration('emoide.crownEmail')) {
                 // Handle changes to crownEmail
-                const newEmail = this.config.get('crownEmail');
+                const newEmail = vscode.workspace.getConfiguration('emoide').get('crownEmail');
                 console.log('crownEmail changed to:', newEmail);
                 await this.createEnvFile('envNeurosity.env');
                 await this.reinitDataHandlerCallback();
             }
+    
+            if (event.affectsConfiguration('emoide.notifications')) {
+                const newNotifications = vscode.workspace.getConfiguration('emoide').get('notifications');
+                console.log('notifications changed to:', newNotifications);
+                this.allownotifications = newNotifications; // Update allownotifications directly
+            }
+
+            if (event.affectsConfiguration('emoide.thresholdFocus')) {
+                const newThresholdFocus = vscode.workspace.getConfiguration('emoide').get('thresholdFocus');
+                console.log('thresholdFocus changed to:', newThresholdFocus);
+                this.updatedthreshholdFocus = newThresholdFocus
+            }
+
+            if (event.affectsConfiguration('emoide.thresholdCalm')) {
+                const newThresholdCalm = vscode.workspace.getConfiguration('emoide').get('thresholdCalm');
+                console.log('thresholdCalm changed to:', newThresholdCalm);
+                this.updatedthreshholdCalm = newThresholdCalm;
+            }
+
+            if (event.affectsConfiguration('emoide.eyeTracker')) {
+                const newEyeTracker = vscode.workspace.getConfiguration('emoide').get('eyeTracker');
+                console.log('eyeTracker changed to:', newEyeTracker);
+                this.eyeIP = newEyeTracker
+            }
+            
         });
     }
     

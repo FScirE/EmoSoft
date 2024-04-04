@@ -9,9 +9,10 @@ class Evaluate {
 
         // Questions
         this.responses = [];
-        this.question1 = "How much work did you expect to finish this session?";
-        this.question2 = "How much work did you manage to finish during this session?";
-        this.question3 = "How accurate do you feel the calm and focus levels were in this session?";
+        this.question1 = "I was focused during this session."
+        this.question2 = "I was calm during this session."
+        this.question3 = "I expected to finish a lot of work during this session.";
+        this.question4 = "I managed to finish a lot of work during this session.";
         
         // Saving
         this.filename = './evaluations.txt';
@@ -64,6 +65,7 @@ class Evaluate {
                 }
             });
         });
+        console.log(this.responses)
         console.log(process.cwd());
         // The data that shall be written
         const dataList = []; 
@@ -85,12 +87,15 @@ class Evaluate {
             dataList.push(str);
         }
         // Questions with answers
+        // console.log('Responses in evaluate.js', this.responses) Responses innehåller array med 5 element
         dataList.push(this.question1);
-        dataList.push(this.responses[0]);
-        dataList.push(this.question2);
-        dataList.push(this.responses[1]);
-        dataList.push(this.question3);
         dataList.push(this.responses[2]);
+        dataList.push(this.question2);
+        dataList.push(this.responses[3]);
+        dataList.push(this.question3);
+        dataList.push(this.responses[0]);
+        dataList.push(this.question4);
+        dataList.push(this.responses[1]);
 
         // Split for next eval
         dataList.push("------------------------------------------------")

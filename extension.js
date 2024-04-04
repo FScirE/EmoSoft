@@ -96,23 +96,16 @@ async function activate(context) {
 		var focus = await this.dataHandler.getFocus()
 
 		if (this.uiHandler.webViewIsVisisble) {
-			this.uiHandler.setCalmProgress(calm)
-			this.uiHandler.setFocusProgress(focus)
+			await this.uiHandler.setCalmProgress(calm)
+			await this.uiHandler.setFocusProgress(focus)
 		}
-    
-		if (isWorkspaceOpen()) {
-			// use calm to create a two-digit hexadecimal string for the red channel
-			let newRed = Math.floor(Math.max(0, Math.min(255 - 255 * calm, 255))).toString(16).padStart(2, '0')
-			let newBlue = Math.floor(Math.max(0, Math.min(255 * focus, 255))).toString(16).padStart(2, '0')
-			let newColor = "#" + newRed + "00" + newBlue;
-			await this.uiHandler.setStatusBarBackgroundColor(newColor);
-			// await this.uiHandler.causeCancer(newColor);
-		}
+
+		await this.uiHandler.updateFocusCalmBarColors(focus, calm);
 		
 		await this.eventHandler.checkCalm(calm);
 		await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
 
-		this.eyetracker.getSetLinesInFocus()
+		await this.eyetracker.getSetLinesInFocus()
     
 	}, 500);
 
@@ -122,8 +115,8 @@ async function activate(context) {
 	}
 
 	let disposable = vscode.commands.registerCommand('emoide.setCrownPassword', async () => {
-        await this.settings.getCrownPassword();
-    });
+        await settings.getCrownPassword();
+    }); //KAN VARA BRA ATT HA VET INTE
 
 	context.subscriptions.push(disposable);
 	//example of sending ai message

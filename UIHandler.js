@@ -7,19 +7,18 @@ const fs = require('fs')
  */
 class UIHandler{
     constructor (context, settings) {
-
-        // Cleanup suggestion: run 'start.ui' on startup to avoid code duplication
-
         //create the UI HTML element, will hold AI window and progress bars
         this.messagePending = false
         this.webViewIsVisisble = true;
-        this.webView = createWebView(context)
+        this.webView = createWebView(context, 'webview', 'webview', 'webview')
         this.statusBarButton = createStatusBarButton()
         context.subscriptions.push(this.webView)
         context.subscriptions.push(this.statusBarButton)
         //show button when closed
         this.webView.onDidDispose(e => { this.webViewIsVisisble = false; this.statusBarButton.show() })
         this.context = context;
+        this.focusBar = createStatusBar('Focus', 1002)
+        this.calmBar = createStatusBar('Calm', 1001)
     }
     
     init(context, eventHandler) {
@@ -30,7 +29,7 @@ class UIHandler{
         context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
             if (this.webViewIsVisisble) return
             this.webViewIsVisisble = true;
-            this.webView = createWebView(context);
+            this.webView = createWebView(context, 'webview', 'webview', 'webview');
             eventHandler.initUIMessage(context)
             this.webView.onDidDispose(_ => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
             this.statusBarButton.hide()
@@ -66,57 +65,18 @@ class UIHandler{
         this.messagePending = false;
     }
 
-
-    async switchToPage(page) {
-        if (page == "evaluate") {
-            if (this.webViewIsVisisble)
-                this.webView.dispose()
-
-            var newWebView = vscode.window.createWebviewPanel(
-                'emoide',
-                'EmoIDE',
-                vscode.ViewColumn.Beside,
-                { enableScripts: true }
-            );
-
-            //set source paths for style and script
-            const styleSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './webview.css'])));
-            const scriptSrc = newWebView.webview.asWebviewUri(vscode.Uri.file(path.join(...[this.context.extensionPath, './evaluateWebView.js'])));
-            newWebView.webview.html = fs.readFileSync(path.join(this.context.extensionPath, './evaluate.html'), 'utf-8')
-                .replace('./webview.css', styleSrc.toString())
-                .replace('./evaluateWebView.js', scriptSrc.toString())
-            
-            this.evaluateWebView = newWebView
-            this.context.subscriptions.push(this.evaluateWebView)
-            
-            //this.evaluateWebView.onDidDispose(e => {  })
-            
-            this.eventHandler.initEvaluateReceiveMessage(this.context)
-        }
+    async switchToEvaluatePage() {
+        if (this.webViewIsVisisble) this.webView.dispose(); //close ui window if open
+        this.evaluateWebView = createWebView(this.context, 'evaluate', 'webview', 'evaluateWebView')
+        this.context.subscriptions.push(this.evaluateWebView)
     }
 
-    /** Sets the color of the status bar background, 
- * by changing the .vscode/settings.json file **in the current project folder of the vscode instance with the extension running**.
- * It doesn't seem viable to programmatically change the global setting :(
- * Also it removes any existing colorCustomisation settings bcuz of bug
- * @param {String} color
- */
-    async setStatusBarBackgroundColor(color) {
-        var configuration = await vscode.workspace.getConfiguration();
-
-        var newColorCustomization = {
-            "statusBar.background":  color
-        };
-
-        var existingColorCustomizations = configuration.get("workbench.colorCustomizations");
-        var updatedColorCustomizations = existingColorCustomizations ? {
-            ...existingColorCustomizations,
-            ...newColorCustomization
-        } : newColorCustomization;
-
-        await configuration.update("workbench.colorCustomizations", updatedColorCustomizations);
+    async updateFocusCalmBarColors(focus, calm) {
+        //#4fc553 focus
+        //#03a9f4 calm
+        this.focusBar.color = `rgba(70, ${focus*255}, 0, 1)`
+        this.calmBar.color = `rgba(40, 0, ${calm*255}, 1)`
     }
-
 }
 
 function createStatusBarButton() {
@@ -129,7 +89,16 @@ function createStatusBarButton() {
 	return statusBarUI
 }
 
-function createWebView(context) {
+function createStatusBar(content, weight) {
+    var statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, weight)
+    statusBar.text = '██████████';
+    statusBar.color = 'rgba(0, 0, 0, 0)'
+    statusBar.tooltip = content
+    statusBar.show()
+    return statusBar
+}
+
+function createWebView(context, html, style, script) {
 	var webView = vscode.window.createWebviewPanel(
 		'emoide',
 		'EmoIDE',
@@ -137,11 +106,13 @@ function createWebView(context) {
 		{ enableScripts: true }
 	);
 	//set source paths for style and script
-	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.css'])));
-	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './webview.js'])));
-	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, './webview.html'), 'utf-8')
-        .replace('./webview.css', styleSrc.toString())
-        .replace('./webview.js', scriptSrc.toString())
+	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${style}.css`])));
+	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${script}.js`])));
+    const heatmapSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './heatmap.png']))); //for evaluation
+	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, `./${html}.html`), 'utf-8')
+        .replace(`./${style}.css`, styleSrc.toString())
+        .replace(`./${script}.js`, scriptSrc.toString())
+        .replace('./heatmap.png', heatmapSrc.toString())
 	return webView;
 }
 

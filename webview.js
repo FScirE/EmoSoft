@@ -73,27 +73,6 @@ function textareaChanged(element) {
     document.querySelector("#counter").textContent = content != "" ? content.length + "/" + MAX_LENGTH : " "
 }
 
-window.addEventListener('message', e => {
-    const message = e.data; // The JSON data our extension sent
-    switch (message.variable) {
-        case 'focus':
-            setFocusValue(message.value)
-            break
-        case 'calm':
-            setCalmValue(message.value)
-            break
-        case "airesponse":
-            setAIResponse(message.value)
-            break 
-        case "aimessage":
-            addAIMessage(message.value, message.type)
-            break
-        case "recording":
-            setRecordingButton(message.value)
-            break
-    }
-})
-
 document.querySelector("textarea").addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey) {
         addUserMessage()
@@ -136,5 +115,24 @@ function record(button){
     })
 }
 
-
+window.addEventListener('message', e => {
+    const message = e.data; // The JSON data our extension sent
+    switch (message.variable) {
+        case 'focus':
+            setFocusValue(message.value)
+            break
+        case 'calm':
+            setCalmValue(message.value)
+            break
+        case "airesponse":
+            setAIResponse(message.value)
+            break 
+        case "aimessage":
+            addAIMessage(message.value, message.type)
+            break
+        case "recording":
+            setRecordingButton(message.value)
+            break
+    }
+})
 

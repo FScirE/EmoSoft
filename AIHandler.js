@@ -43,16 +43,16 @@ class AIHandler {
         
     }*/
     //Typ klar behövs test
-    async sendMsgToAI(preset, msg, chatactive){
+    async sendMsgToAI(preset, msg, chatActive){
         var templist = []
-        if (chatactive == true){
+        if (chatActive == true){
             preset += ",This is the code assistant (you) previous message: " + this.aipreviousmsg;
         }
         // sends a message and preset to the AI.
         await retrieveResponse(preset, msg, this.extensionpath).then(response => {
             templist.push(response);
             this.output = templist[0].join('');
-            if (chatactive == true) {
+            if (chatActive == true) {
                 this.aipreviousmsg = this.output;
                 this.output = this.output
                 .replace(/&/g, "&amp")

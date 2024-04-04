@@ -49,7 +49,7 @@ def generate_heatmap(x_in, y_in):
     plt.imshow(intensity, cmap='hot', interpolation='nearest')
     plt.colorbar()  # Add color bar indicating the scale
     #plt.show()
-    plt.savefig("heatmap.jpg")
+    plt.savefig("heatmap.png", transparent=True)
 
 generate_heatmap(x_arr, y_arr)
 exit(0)
