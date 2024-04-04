@@ -11,6 +11,8 @@ class Settings {
         this.updatedthreshholdFocus = this.config.get('thresholdFocus');
         this.updatedthreshholdCalm = this.config.get('thresholdCalm');
         this.eyeIP = this.config.get('eyeTracker');
+        this.updatedCrownEmail = this.config.get('crownEmail')
+        this.updatedCrownDeviceID = this.config.get('crownDeviceID')
         this.listenForConfigChanges();
         this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
     }
@@ -98,8 +100,8 @@ class Settings {
             }
     
             // Get configuration values
-            const email = this.config.get('crownEmail');
-            const deviceID = this.config.get('crownDeviceID');
+            const email = this.updatedCrownEmail;
+            const deviceID = this.updatedCrownDeviceID;
             const password = await this.getCrownPassword(); // Wait for password input
     
             // Create env data
@@ -125,6 +127,7 @@ class Settings {
                 // Handle changes to crownDeviceID
                 const newDeviceID = vscode.workspace.getConfiguration('emoide').get('crownDeviceID');
                 console.log('crownDeviceID changed to:', newDeviceID);
+                this.updatedCrownDeviceID = newDeviceID
                 await this.createEnvFile('envNeurosity.env');
                 await this.reinitDataHandlerCallback();
             }
@@ -133,6 +136,7 @@ class Settings {
                 // Handle changes to crownEmail
                 const newEmail = vscode.workspace.getConfiguration('emoide').get('crownEmail');
                 console.log('crownEmail changed to:', newEmail);
+                this.updatedCrownEmail = newEmail;
                 await this.createEnvFile('envNeurosity.env');
                 await this.reinitDataHandlerCallback();
             }
