@@ -32,13 +32,41 @@ class DataHandler {
 
     } // end of constructor
 
+    async uninit() {
+        console.log("uninitting DAtaHandler")
+        this.dataSourceType = "none";
+        try
+        {
+            this.neurosity.disconnect();
+        }
+        catch (e) {
+            console.log(e);
+        }
+        try
+        {
+            clearInterval(this.fakeDataIntervalHandler);
+        }
+        catch (e) {
+            console.log(e);
+        }
+        this.neurosity = null;
+        try
+        {
+            delete process.env.DEVICE_ID;
+            delete process.env.EMAIL;
+            delete process.env.PASSWORD;
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
 
     async init(extensionPath) {
+        console.log("initializing DAtaHandler")
         try { // login and connect to Neurosity device
 
-            // console.log("extensionPath is ", extensionPath) // debugging test/DataHandlerTest.js
-
-            const dotenvRequire = require('dotenv').config({
+            const dotenvRequire = await require('dotenv').config({
                 path: path.join(extensionPath, '/envNeurosity.env')
             }); // may be async? idk, seems to work anyway ¯\_(ツ)_/¯
             
@@ -126,7 +154,7 @@ class DataHandler {
 
             this.dataSourceType = "simulated (fake) data"
 
-            setInterval(() => {
+            this.fakeDataIntervalHandler = setInterval(() => {
                 var fakeCalmValue = this.recentCalm[this.recentCalm.length - 1] + (Math.random() - 0.5);
                 var fakeCalmValue = Math.min(Math.max(fakeCalmValue, 0), 1);
 
@@ -154,6 +182,8 @@ class DataHandler {
         else {
             console.error("DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
         }
+
+        console.log("initialized DataHandler to ", this.dataSourceType, " from ", this.email, " w/ pass ", this.#password);
 
     } // end of init function
 

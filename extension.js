@@ -77,6 +77,10 @@ async function activate(context) {
 
 	this.dataHandler = new DataHandler(settings);
 	await this.dataHandler.init(context.extensionPath);
+	settings.reinitDataHandlerCallback = async () => {
+		await this.dataHandler.uninit(); 
+		await this.dataHandler.init(context.extensionPath);
+	};
 
 	this.uiHandler = new UIHandler(context, settings);
 

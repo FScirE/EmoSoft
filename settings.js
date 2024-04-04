@@ -12,6 +12,7 @@ class Settings {
         this.updatedthreshholdCalm = this.config.get('thresholdCalm');
         this.eyeIP = this.config.get('eyeTracker');
         this.listenForConfigChanges();
+        this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
     }
 
     // Getter method for notifications configuration option
@@ -125,6 +126,7 @@ class Settings {
                 const newDeviceID = vscode.workspace.getConfiguration('emoide').get('crownDeviceID');
                 console.log('crownDeviceID changed to:', newDeviceID);
                 await this.createEnvFile('envNeurosity.env');
+                await this.reinitDataHandlerCallback();
             }
     
             if (event.affectsConfiguration('emoide.crownEmail')) {
@@ -132,6 +134,7 @@ class Settings {
                 const newEmail = vscode.workspace.getConfiguration('emoide').get('crownEmail');
                 console.log('crownEmail changed to:', newEmail);
                 await this.createEnvFile('envNeurosity.env');
+                await this.reinitDataHandlerCallback();
             }
     
             if (event.affectsConfiguration('emoide.notifications')) {
