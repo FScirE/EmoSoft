@@ -33,7 +33,7 @@ class DataHandler {
     } // end of constructor
 
     async uninit() {
-        console.log("uninitting DAtaHandler")
+        console.log("uninitting DataHandler")
         this.dataSourceType = "none";
         try
         {
