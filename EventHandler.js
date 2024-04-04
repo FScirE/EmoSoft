@@ -69,10 +69,10 @@ class EventHandler {
                                     }
                                 })                         
 
+                                await this.eyetracker.generateHeatmap()
+
                                 await this.uiHandler.switchToEvaluatePage();
                                 await this.initEvaluateReceiveMessage(context);
-
-                                await this.eyetracker.generateHeatmap()
 
                                 await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
