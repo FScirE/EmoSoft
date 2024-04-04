@@ -8,6 +8,9 @@ class Settings {
         this.extensionPath = extensionPath
         this.config = vscode.workspace.getConfiguration('emoide');
         this.allownotifications = this.config.get('notifications');
+        this.updatedthreshholdFocus = this.config.get('thresholdFocus');
+        this.updatedthreshholdCalm = this.config.get('thresholdCalm');
+        this.eyeIP = this.config.get('eyeTracker');
         this.listenForConfigChanges();
     }
 
@@ -136,6 +139,25 @@ class Settings {
                 console.log('notifications changed to:', newNotifications);
                 this.allownotifications = newNotifications; // Update allownotifications directly
             }
+
+            if (event.affectsConfiguration('emoide.thresholdFocus')) {
+                const newThresholdFocus = vscode.workspace.getConfiguration('emoide').get('thresholdFocus');
+                console.log('thresholdFocus changed to:', newThresholdFocus);
+                this.updatedthreshholdFocus = newThresholdFocus
+            }
+
+            if (event.affectsConfiguration('emoide.thresholdCalm')) {
+                const newThresholdCalm = vscode.workspace.getConfiguration('emoide').get('thresholdCalm');
+                console.log('thresholdCalm changed to:', newThresholdCalm);
+                this.updatedthreshholdCalm = newThresholdCalm;
+            }
+
+            if (event.affectsConfiguration('emoide.eyeTracker')) {
+                const newEyeTracker = vscode.workspace.getConfiguration('emoide').get('eyeTracker');
+                console.log('eyeTracker changed to:', newEyeTracker);
+                this.eyeIP = newEyeTracker
+            }
+            
         });
     }
     

@@ -28,6 +28,9 @@ class EyeTracker {
         this.recording = false
         this.settings = settings;
 
+        //UNDER IS THE IP ADRESS USE IT
+        //this.settings.eyeIP
+
         // Connect to the server
         this.socket.connect(4242, this.settings.eyeTracker, () => {
             console.log('Connected to EyeTracker server');
