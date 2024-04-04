@@ -4,8 +4,10 @@ const path = require('path');
 
 class Settings {
     constructor(extensionPath) {
+        console.log('Constructing Settings...')
         this.extensionPath = extensionPath
         this.config = vscode.workspace.getConfiguration('emoide');
+        this.allownotifications = this.config.get('notifications');
         this.listenForConfigChanges();
     }
 
@@ -113,19 +115,26 @@ class Settings {
     }
 
     listenForConfigChanges() {
+        // IT WORKS
         vscode.workspace.onDidChangeConfiguration(async (event) => {
             if (event.affectsConfiguration('emoide.crownDeviceID')) {
                 // Handle changes to crownDeviceID
-                const newDeviceID = this.config.get('crownDeviceID');
+                const newDeviceID = vscode.workspace.getConfiguration('emoide').get('crownDeviceID');
                 console.log('crownDeviceID changed to:', newDeviceID);
                 await this.createEnvFile('envNeurosity.env');
             }
     
             if (event.affectsConfiguration('emoide.crownEmail')) {
                 // Handle changes to crownEmail
-                const newEmail = this.config.get('crownEmail');
+                const newEmail = vscode.workspace.getConfiguration('emoide').get('crownEmail');
                 console.log('crownEmail changed to:', newEmail);
                 await this.createEnvFile('envNeurosity.env');
+            }
+    
+            if (event.affectsConfiguration('emoide.notifications')) {
+                const newNotifications = vscode.workspace.getConfiguration('emoide').get('notifications');
+                console.log('notifications changed to:', newNotifications);
+                this.allownotifications = newNotifications; // Update allownotifications directly
             }
         });
     }

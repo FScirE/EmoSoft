@@ -19,7 +19,7 @@ class EventHandler {
         // Thresholds for when a user should get notifications 
         this.thresholdFocus = this.settings.thresholdFocus / 100;
         this.thresholdCalm = this.settings.thresholdCalm / 100;
-        this.notificationsEnabled = this.settings.notificationsEnabled;
+        
     }
 
     async init(dataHandler) {
@@ -118,6 +118,7 @@ class EventHandler {
 
     // Check focus level and notifies user when focus drops below threshold
     async checkFocus(focus) {
+        this.notificationsEnabled = this.settings.allownotifications
         if (this.notificationsEnabled && focus < this.thresholdFocus && this.allowNotificationFocus == true && !this.uiHandler.messagePending) {
             this.allowNotificationFocus = false
             await this.aiHandler.sendMsgToUnfocusedDev(focus)
@@ -130,6 +131,7 @@ class EventHandler {
     }
     // Check calmness level and notifies user when calmness drops below threshold
     async checkCalm(calm) {
+        this.notificationsEnabled = this.settings.allownotifications
         if (this.notificationsEnabled && calm < this.thresholdCalm && this.allowNotificationCalm == true && !this.uiHandler.messagePending) {
             this.allowNotificationCalm = false
             await this.aiHandler.sendMsgToAggitatedDev(calm)
