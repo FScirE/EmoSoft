@@ -102,7 +102,7 @@ function saveEvaluateResponses() {
                                 document.getElementsByName("q2rating"),
                                 document.getElementsByName("q3rating")]
     
-    const responses = ["-1", "-1", "-1"]
+    var responses = []
     
     for (var group = 0; group < radioButtonGroups.length; group++) 
         for (var button = 0; button < radioButtonGroups[group].length; button++) 

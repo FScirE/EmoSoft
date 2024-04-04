@@ -9,11 +9,10 @@ class Evaluate {
 
         // Questions
         this.responses = [];
-        this.question1 = "Q1 - Slider - Focus"
-        this.question2 = "Q2 - Slider - Calm"
-        this.question3 = "How much work did you expect to finish this session?";
-        this.question4 = "How much work did you manage to finish during this session?";
-        this.question5 = "How accurate do you feel the calm and focus levels were in this session?";
+        this.question1 = "I was focused during this session."
+        this.question2 = "I was calm during this session."
+        this.question3 = "I expected to finish a lot of work during this session.";
+        this.question4 = "I managed to finish a lot of work during this session.";
         
         // Saving
         this.filename = './evaluations.txt';
@@ -90,15 +89,13 @@ class Evaluate {
         // Questions with answers
         // console.log('Responses in evaluate.js', this.responses) Responses innehåller array med 5 element
         dataList.push(this.question1);
-        dataList.push(this.responses[3]);
+        dataList.push(this.responses[2]);
         dataList.push(this.question2);
-        dataList.push(this.responses[4]);
+        dataList.push(this.responses[3]);
         dataList.push(this.question3);
         dataList.push(this.responses[0]);
         dataList.push(this.question4);
         dataList.push(this.responses[1]);
-        dataList.push(this.question5);
-        dataList.push(this.responses[2]);
 
         // Split for next eval
         dataList.push("------------------------------------------------")
