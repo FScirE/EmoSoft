@@ -33,7 +33,7 @@ class DataHandler {
     } // end of constructor
 
     async uninit() {
-        console.log("uninitting DAtaHandler")
+        console.log("uninitting DataHandler")
         this.dataSourceType = "none";
         try
         {
@@ -63,7 +63,7 @@ class DataHandler {
 
 
     async init(extensionPath) {
-        console.log("initializing DAtaHandler")
+        console.log("initializing DataHandler")
         try { // login and connect to Neurosity device
 
             const dotenvRequire = await require('dotenv').config({

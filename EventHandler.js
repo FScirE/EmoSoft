@@ -9,6 +9,8 @@ class EventHandler {
         // Makes sure user doesn't gets spammed with notifications
         this.allowNotificationFocus = true
         this.allowNotificationCalm = true
+        this.mutexFocus = false
+        this.mutexCalm = false
 
         // Create AIHandler and uihandler for chat and Evaluate object for the evaluate session feature
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
@@ -67,11 +69,16 @@ class EventHandler {
                                 })                         
 
                                 await this.eyetracker.generateHeatmap()
+                                var funcs = await this.eyetracker.calculateTopLines()
 
                                 await this.uiHandler.switchToEvaluatePage();
                                 await this.initEvaluateReceiveMessage(context);
 
                                 await sleepSeconds(1) //safety
+                                this.uiHandler.evaluateWebView.webview.postMessage({
+                                    variable: "functions",
+                                    value: funcs
+                                })
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
@@ -126,32 +133,38 @@ class EventHandler {
     // Check focus level and notifies user when focus drops below 30%
     async checkFocus(focus) {
         var notificationsEnabled = this.settings.allownotifications;
-        var thresholdFocus = this.settings.updatedthreshholdFocus;
+        var thresholdFocus = this.settings.updatedthreshholdFocus/100;
         if (notificationsEnabled) {
             if (focus < thresholdFocus && this.allowNotificationFocus == true && !this.uiHandler.messagePending) {
                 this.allowNotificationFocus = false
                 await this.aiHandler.sendMsgToUnfocusedDev(focus)
                 this.uiHandler.printAIMessage(this.aiHandler.output, true)
             }
-            if (this.allowNotificationFocus == false && focus > thresholdFocus + 0.15) { //Reset boolean that allows notifications
+            if (!this.mutexFocus && this.allowNotificationFocus == false && focus > thresholdFocus + 0.15) { //Reset boolean that allows notifications
+                this.mutexFocus = true
                 await sleepSeconds(120)
                 this.allowNotificationFocus = true
+                this.mutexFocus = false
+                console.log("It can now send notifications // focus")
             }
         }
     }
     // Check calmness level and notifies user when calmness drops below 30%
     async checkCalm(calm) {
         var notificationsEnabled = this.settings.allownotifications;
-        var thresholdCalm = this.settings.updatedthreshholdCalm;
+        var thresholdCalm = this.settings.updatedthreshholdCalm/100;
         if (notificationsEnabled) {
             if (calm < thresholdCalm && this.allowNotificationCalm == true && !this.uiHandler.messagePending) {
                 this.allowNotificationCalm = false
                 await this.aiHandler.sendMsgToAggitatedDev(calm)
                 this.uiHandler.printAIMessage(this.aiHandler.output, false)
             }
-            if (this.allowNotificationCalm == false && calm > thresholdCalm + 0.15) { //Reset boolean that allows notifications
+            if (!this.mutexCalm && this.allowNotificationCalm == false && calm > thresholdCalm + 0.15) { //Reset boolean that allows notifications
+                this.mutexCalm = true
                 await sleepSeconds(120)
                 this.allowNotificationCalm = true
+                this.mutexFocus = false
+                console.log("It can now send notifications // Calm")
             }
         }
     }
