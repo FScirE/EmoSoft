@@ -119,6 +119,16 @@ function saveEvaluateResponses() {
     })
 }
 
+function setTopFunctions(funcs) {
+	var innerHTML = ''
+	for (var f of funcs) {
+		innerHTML += `
+			<li><code>${f[0]}</code>: ${parseInt(f[1]) / 2}s</li>
+		`
+	}
+	document.querySelector('#topFunctions ol').innerHTML = innerHTML
+}
+
 const focusSlider = document.getElementById("focusSlider");
 const focusOutput = document.getElementById("focusValue");
 
@@ -145,6 +155,9 @@ window.addEventListener("message", e => {
 			focusValues = message.value[0]
 			calmValues = message.value[1]
 			createChart()
-			break
+			break;
+		case "functions":
+			setTopFunctions(message.value)
+			break;
 	}
 })

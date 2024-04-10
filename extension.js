@@ -115,8 +115,20 @@ async function activate(context) {
 	}
 
 	let disposable = vscode.commands.registerCommand('emoide.setCrownPassword', async () => {
+
         await settings.getCrownPassword();
     }); //KAN VARA BRA ATT HA VET INTE
+
+	let disposableCalibrateEyeTracker = vscode.commands.registerCommand('emoide.calibrateEyeTracker', async () => {
+        try {
+            await this.eyetracker.calibrate();
+        } catch (error) {
+            console.error('Error while calibrating eye tracker:', error);
+            vscode.window.showErrorMessage('Failed to start eye tracker calibration.');
+        }
+    });
+
+    context.subscriptions.push(disposableCalibrateEyeTracker);
 
 	context.subscriptions.push(disposable);
 	//example of sending ai message

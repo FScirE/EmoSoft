@@ -1,8 +1,12 @@
 @charset "UTF-8";
+:root {
+    --focus-color: #4fc553; /* Default focus color */
+    --calm-color: #03a9f4; /* Default calm color */
+}
+
 *{
     font-family: 'Roboto Mono', sans-serif;
     letter-spacing: 0.5px;
-    
 }
 body {
     font-size: 14px;
@@ -19,7 +23,7 @@ p {
 }
 
 code{
-    color: red;
+    color: #DF73FF;
 }
 /*Main areas*/
 .wrapper {
@@ -60,14 +64,14 @@ code{
     text-align: center;
 }
 .focus progress {
-    accent-color: #4fc553;
+    accent-color: var(--focus-color);
 }
 .calm {
     width: 46%;
     text-align: center;
 }
 .calm progress {
-    accent-color: #03a9f4;
+    accent-color: var(--calm-color);
 }
 progress {
     width: 85%;
@@ -119,7 +123,7 @@ progress {
     color: white;
 }
 .chatbox #textarea textarea:focus {
-    outline: 1px solid #03a9f4;
+    outline: 1px solid var(--calm-color);
 }
 .chatbox #textarea #sendbutton {
     width: 11%;
@@ -184,10 +188,10 @@ progress {
     color: grey; 
 }
 .focusresponse {
-    box-shadow: 0px 0px 0px 3px #4fc553 inset;
+    box-shadow: 0px 0px 0px 3px var(--focus-color) inset;
 }
 .calmresponse {
-    box-shadow: 0px 0px 0px 3px #03a9f4 inset;
+    box-shadow: 0px 0px 0px 3px var(--calm-color) inset;
 }
 
 /*Loading bar*/
@@ -245,6 +249,11 @@ progress {
     background-color: red;
 }
 /*--------------------Evaluate----------------------------*/
+
+h2 {
+    text-align: center;
+}
+
 .graph{
     background-color: red;
     width: 100%;
@@ -256,17 +265,30 @@ progress {
     margin: 0 auto;
     width: 90%;
     height: 370px;
-   
 }
 
 #chartContainer canvas{
     border-radius: 11px;   
 }
 
+#eyetracker {
+    align-self: center;
+    margin: 0 auto;
+    background-color: rgb(50, 55, 58);
+    border-radius: 11px;
+    width: 90%;   
+}
+
+#topFunctions {  
+    align-self: center;
+    margin: 10px auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 #heatmap {
     align-self: center;
     margin: 10px auto;
-    width: 90%;
     height: auto;
 }
 
@@ -382,7 +404,7 @@ input[type=range] {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #4fc553;
+    background-color: var(--focus-color);
     cursor: pointer;
 }
 .slider-container #calmSlider[type=range]::-webkit-slider-thumb {
@@ -391,7 +413,7 @@ input[type=range] {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #03a9f4;
+    background-color: var(--calm-color);
     cursor: pointer;
 }
 

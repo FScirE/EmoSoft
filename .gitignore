@@ -7,7 +7,9 @@ node_modules
 *.txt
 *.jpg
 .jpg
-# just to be on the safe side ig
+*.png
+.png
+# Might not need
 envNeurosity.env
 settings.json
 
