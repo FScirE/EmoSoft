@@ -55,16 +55,35 @@ Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of DEMO 1
+Initial release
 * Chat with AI assistant (based on GPT4)
 * AI gives notification when unfocused/agitated
 * Show your current focus and calm level (bottom of UI/Chat window)
 
-### 1.0.1
-
-Fixed issue #.
-
 ### 1.1.0
+Major changes:
+
+* Implementation of eye-tracking feature (generates heatmap, highlights lines)
+* Implementation of evaluate session
+* Implementation of start/end recording sessions
+* Implementation of status bar (focus and calm)
+
+Minor changes:
+* AI chat now remembers the last promtp sent
+
+### 1.2.0
+
+Major changes:
+* Implementation of settings
+The user can now change certain settings such as: allow notifications, max lenght of session, color schemes, adjust threshold etc.
+* In the evaluate session page, top 3 functions you were looking at is now visable
+
+Minor changes:
+* Various bug fixes
+* When the evaluate page is loading, the user is presented with a notification
+* Status bar colors and size changed
+
+
 
 Added features X, Y, and Z.
 ## Additional Notes
