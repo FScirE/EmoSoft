@@ -23,7 +23,7 @@ p {
 }
 
 code{
-    color: red;
+    color: #DF73FF;
 }
 /*Main areas*/
 .wrapper {
@@ -249,6 +249,11 @@ progress {
     background-color: red;
 }
 /*--------------------Evaluate----------------------------*/
+
+h2 {
+    text-align: center;
+}
+
 .graph{
     background-color: red;
     width: 100%;
@@ -260,17 +265,30 @@ progress {
     margin: 0 auto;
     width: 90%;
     height: 370px;
-   
 }
 
 #chartContainer canvas{
     border-radius: 11px;   
 }
 
+#eyetracker {
+    align-self: center;
+    margin: 0 auto;
+    background-color: rgb(50, 55, 58);
+    border-radius: 11px;
+    width: 90%;   
+}
+
+#topFunctions {  
+    align-self: center;
+    margin: 10px auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 #heatmap {
     align-self: center;
     margin: 10px auto;
-    width: 90%;
     height: auto;
 }
 

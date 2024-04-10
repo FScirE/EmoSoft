@@ -69,12 +69,16 @@ class EventHandler {
                                 })                         
 
                                 await this.eyetracker.generateHeatmap()
-                                await this.eyetracker.calculateTopLines()
+                                var funcs = await this.eyetracker.calculateTopLines()
 
                                 await this.uiHandler.switchToEvaluatePage();
                                 await this.initEvaluateReceiveMessage(context);
 
                                 await sleepSeconds(1) //safety
+                                this.uiHandler.evaluateWebView.webview.postMessage({
+                                    variable: "functions",
+                                    value: funcs
+                                })
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
