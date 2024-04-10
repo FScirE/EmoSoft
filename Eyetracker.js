@@ -9,7 +9,7 @@ var readFunctionDelay = 10 //in seconds
 
 const EDITOR_START_Y = 0.107
 const EDITOR_END_Y = 0.733
-const EDITOR_START_X = 0.135
+const EDITOR_START_X = 0.129
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 var timeOut = false;
 
@@ -32,6 +32,14 @@ class EyeTracker {
         //UNDER IS THE IP ADRESS USE IT
         //this.settings.eyeIP
 
+        this.init()
+
+        // this.socket.on('error', (err) => {
+        //     console.error('Error:', err.message);
+        // });
+    }
+
+    init() {
         // Connect to the server
         this.socket.connect(4242, this.settings.eyeTracker, () => {
             console.log('Connected to EyeTracker server');
@@ -68,12 +76,9 @@ class EyeTracker {
         });
 
         var disposableInterval = setInterval(async () => {
-            await this.getMostFocusedFunction()
+            if (this.recording)
+                await this.getMostFocusedFunction()
         }, readFunctionDelay * 1000)
-
-        // this.socket.on('error', (err) => {
-        //     console.error('Error:', err.message);
-        // });
     }
 
     getX() {
@@ -93,10 +98,10 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {	
-			//var y = this.getY()
-			//var x = this.getX()
-            var y = 0.12
-            var x = 0.21
+			var y = this.getY()
+			var x = this.getX()
+            //var y = 0.12
+            //var x = 0.21
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
@@ -139,12 +144,12 @@ class EyeTracker {
     recordingStart() { 
         this.long_X = []
         this.long_Y = [] //clear lists
+        fs.writeFileSync(this.path + '\\fullDictionaryFile.txt', '') //empty old file
         this.recording = true
     }
     recordingEnd() {
         this.recording = false
     }
-    
     
     generateHeatmap() {
         fs.writeFileSync(this.path + '\\xValues.txt', this.long_X.toString())
@@ -162,12 +167,10 @@ class EyeTracker {
     }
 
     calibrate() {
+        console.log('Calibrating')
         this.socket.write(
-            '<SET ID="CALIBRATE_SHOW" VALUE="1" />\r\n' + 
-            //'<SET ID="CALIBRATE_RESET" />\r\n' + kanske inte behövs
-            '<SET ID="CALIBRATE_START" VALUE="1" />\r\n')
-        //wait for calibrate to send finish message ------
-        this.socket.write('<SET ID="CALIBRATE_SHOW" VALUE="0" />\r\n')
+            '<SET ID="CALIBRATE_SHOW" STATE="1" />\r\n' + 
+            '<SET ID="CALIBRATE_START" STATE="1" />\r\n')
     }
 }
 

@@ -89,6 +89,8 @@ async function activate(context) {
 
 	this.uiHandler.init(context, this.eventHandler);
 
+	this.eyetracker.calibrate()
+
 	//main loop
 	var setCalmFocusAndStatusBars = setInterval(async () => {
 

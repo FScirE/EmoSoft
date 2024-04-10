@@ -63,7 +63,7 @@ class DataHandler {
 
 
     async init(extensionPath) {
-        console.log("initializing DAtaHandler")
+        console.log("initializing DataHandler")
         try { // login and connect to Neurosity device
 
             const dotenvRequire = await require('dotenv').config({
