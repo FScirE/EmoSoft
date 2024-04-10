@@ -183,7 +183,6 @@ class DataHandler {
             console.error("DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
         }
 
-        console.log("initialized DataHandler to ", this.dataSourceType, " from ", this.email, " w/ pass ", this.#password);
 
     } // end of init function
 
