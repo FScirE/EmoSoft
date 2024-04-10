@@ -54,21 +54,33 @@
           "default": "None"
         },
         "emoide.focusColor": {
-          "type": "string",
-          "description": "Prefered color representing focus, format: RED, GREEN, BLUE (ex: 234, 29, 198)",
-          "default": "None"
+          "type":"string",
+          "description": "Color theme",
+          "enum":["Green", "Light"],
+          "default": "Green"
         },
         "emoide.calmColor": {
-          "type": "string",
-          "description": "Prefered color representing calm, format: RED, GREEN, BLUE (ex: 234, 29, 198)",
-          "default": "None"
+          "type":"string",
+          "description": "Color theme",
+          "enum":["Blue", "Light"],
+          "default": "Blue"
+        },
+        "emoide.calibrateEye": {
+          "type":"object",
+          "description": "Calibrate eyetracker",
+          "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEye)"
         }
+
       }
     },
     "commands": [
       {
         "title": "Start UI",
         "command": "start.ui"
+      },
+      {
+        "title": "Calibrate Eye Tracker",
+        "command": "emoide.calibrateEye"
       }
     ]
   },

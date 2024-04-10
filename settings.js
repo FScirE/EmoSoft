@@ -13,6 +13,8 @@ class Settings {
         this.eyeIP = this.config.get('eyeTracker');
         this.updatedCrownEmail = this.config.get('crownEmail')
         this.updatedCrownDeviceID = this.config.get('crownDeviceID')
+        this.focusColorChange = this.config.get('focusColor');
+        this.calmColorChange = this.config.get('calmColor');
         this.listenForConfigChanges();
         this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
     }
@@ -51,25 +53,34 @@ class Settings {
     get crownDeviceID() {
         return this.config.get('crownDeviceID');
     }
+    
+    get focusColor() {
+        return this.config.get('focusColor');
+    }
+
+    get calmColor() {
+        return this.config.get('calmColor');
+    }
+
+    // Getter method for crown device ID configuration option
 
     // Getter method for focus color configuration option
-    get focusColor() {
-        return this.formattedRGB(this.config.get('focusColor'));
-    }
+    // get focusColor() {
+    //     return this.formattedRGB(this.config.get('focusColor'));
+    // }
 
-    // Getter method for calm color configuration option
-    get calmColor() {
-        return this.formattedRGB(this.config.get('calmColor'));
-    }
+    // // Getter method for calm color configuration option
+    // get calmColor() {
+    //     return this.formattedRGB(this.config.get('calmColor'));
+    // }
 
-    // Function to format RGB
-    formattedRGB(color) {
-        const nums = color.split(',').map(num => parseInt(num.trim()));
-        const [x, y, z] = nums;
-        const RGB = { x, y, z };
-
-        return RGB;
-    }
+    // // Function to format RGB
+    // formattedRGB(color) {
+    //     const nums = color.split(',').map(num => parseInt(num.trim()));
+    //     const [x, y, z] = nums;
+    //     const RGB = { x, y, z };
+    //     return RGB;
+    // }
 
     async getCrownPassword() {
         const password = await vscode.window.showInputBox({
@@ -162,8 +173,19 @@ class Settings {
             if (event.affectsConfiguration('emoide.eyeTracker')) {
                 const newEyeTracker = vscode.workspace.getConfiguration('emoide').get('eyeTracker');
                 console.log('eyeTracker changed to:', newEyeTracker);
-                this.eyeIP = newEyeTracker
+                this.eyeIP = newEyeTracker;
             }
+            if (event.affectsConfiguration('emoide.focusColor')) {
+                const newFocusColor = vscode.workspace.getConfiguration('emoide').get('focusColor');
+                console.log('Focus color changed to:', newFocusColor);
+                this.focusColorChange = newFocusColor;
+            }
+            if (event.affectsConfiguration('emoide.calmColor')) {
+                const newCalmColor = vscode.workspace.getConfiguration('emoide').get('calmColor');
+                console.log('Calm color changed to:', newCalmColor);
+                this.calmColorChange = newCalmColor;
+            }
+            
             
         });
     }
