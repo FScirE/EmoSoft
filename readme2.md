@@ -83,13 +83,8 @@ Minor changes:
 * When the evaluate page is loading, the user is presented with a notification
 * Status bar colors and size changed
 
-
-
-
-
-Added features X, Y, and Z.
 ## Additional Notes
 The AI assistant may prompt you with advice if your focus or calmness levels drop below a set threshold.
-A color indicator at the bottom of VScode reflects your current emotional state (blue - focused/calm, red - unfocused/uncalm, orange - mixed state)
+A color indicator at the bottom of VScode reflects your current emotional state.
 
 * In order for the eye tracker to work, the program Gazepoint Control has to be started already. When you start the extention a calibration will run.
