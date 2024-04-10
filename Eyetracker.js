@@ -84,6 +84,7 @@ class EyeTracker {
                         this.socket.write(
                             '<SET ID="CALIBRATE_SHOW" STATE="0" />\r\n' +
                             '<SET ID="TRACKER_DISPLAY" STATE="0" />\r\n')
+                        vscode.window.showInformationMessage('Eye tracker calibration finished.');
                     }
 
                     break;
