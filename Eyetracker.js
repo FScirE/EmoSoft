@@ -1,4 +1,3 @@
-
 const net = require('net')
 const vscode = require('vscode')
 const { execSync } = require('child_process')
@@ -6,6 +5,7 @@ var DOMParser = require('xmldom').DOMParser;
 const fs = require('fs')
 
 const MAX_LENGTH = 30
+var readFunctionDelay = 10 //in seconds
 
 const EDITOR_START_Y = 0.107
 const EDITOR_END_Y = 0.733
@@ -25,6 +25,7 @@ class EyeTracker {
         this.Y = [0.0]
         this.long_X = []
         this.long_Y = []
+        this.lookedLines = {}
         this.recording = false
         this.settings = settings;
 
@@ -39,7 +40,6 @@ class EyeTracker {
             this.socket.write(
                 '<SET ID="ENABLE_SEND_DATA" STATE="1" />\r\n' +
                 '<SET ID="ENABLE_SEND_POG_FIX" STATE="1" />\r\n')
-
         });
 
         this.socket.on('data', (data) => {
@@ -67,6 +67,10 @@ class EyeTracker {
             console.log('Connection closed');
         });
 
+        var disposableInterval = setInterval(async () => {
+            await this.getMostFocusedFunction()
+        }, readFunctionDelay * 1000)
+
         // this.socket.on('error', (err) => {
         //     console.error('Error:', err.message);
         // });
@@ -80,7 +84,7 @@ class EyeTracker {
         return this.Y.reduce((a, b) => a + b, 0) / this.Y.length
     }
 
-    getSetLinesInFocus() {
+    async getSetLinesInFocus() {
         var editor = vscode.window.visibleTextEditors[0]
 		var decorationRange = []
         var returnText = ''
@@ -89,14 +93,15 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {	
-			var y = this.getY()
-			var x = this.getX()
-            //var y = 0.12
-            //var x = 0.21
+			//var y = this.getY()
+			//var x = this.getX()
+            var y = 0.12
+            var x = 0.21
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
                 const lineCount = editor.document.lineCount
+                this.filePath = editor.document.fileName
 
 				var current = Math.floor(((y - EDITOR_START_Y) * 30) / (EDITOR_END_Y - EDITOR_START_Y)) //assume 30 lines	
                 if (current < 0) current = 0 //avoid negative lines			
@@ -111,6 +116,11 @@ class EyeTracker {
 					var start = new vscode.Position(startLine, 0);
 					var end = new vscode.Position(endLine, editor.document.lineAt(endLine).text.length);
 					var range = new vscode.Range(start, end);
+                    
+                    if (lineNumber in this.lookedLines)
+                        this.lookedLines[lineNumber] += 1
+                    else
+                        this.lookedLines[lineNumber] = 1
 
 					decorationRange = [range]
                     returnText = editor.document.getText(range) //return text of the 3 lines
@@ -135,10 +145,20 @@ class EyeTracker {
         this.recording = false
     }
     
+    
     generateHeatmap() {
         fs.writeFileSync(this.path + '\\xValues.txt', this.long_X.toString())
         fs.writeFileSync(this.path + '\\yValues.txt', this.long_Y.toString())
         execSync(`python heatmapGenerator.py ${this.path}`, { cwd: this.path })
+    }
+
+    getMostFocusedFunction() {
+        fs.writeFileSync(this.path + '\\lineDictionary.txt', '')
+        for (let [key, value] of Object.entries(this.lookedLines)) {
+            fs.appendFileSync(this.path + '\\lineDictionary.txt', `${key}:${value}\n`)
+        }       
+        execSync(`python findFuncFromLines.py ${this.filePath}`, { cwd: this.path })
+        this.lookedLines = {} //empty
     }
 
     calibrate() {
