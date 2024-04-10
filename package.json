@@ -68,7 +68,7 @@
         "emoide.calibrateEye": {
           "type":"object",
           "description": "Calibrate eyetracker",
-          "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEye)"
+          "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEyeTracker)"
         }
 
       }
