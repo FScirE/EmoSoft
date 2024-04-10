@@ -18,7 +18,7 @@ const decorationType = vscode.window.createTextEditorDecorationType({
 })
 
 class EyeTracker {
-    constructor(path) {
+    constructor(path, settings) {
         this.socket = new net.Socket();
         this.path = path
         this.X = [0.0]
@@ -27,9 +27,13 @@ class EyeTracker {
         this.long_Y = []
         this.lookedLines = {}
         this.recording = false
+        this.settings = settings;
+
+        //UNDER IS THE IP ADRESS USE IT
+        //this.settings.eyeIP
 
         // Connect to the server
-        this.socket.connect(4242, '192.168.105.230', () => {
+        this.socket.connect(4242, this.settings.eyeTracker, () => {
             console.log('Connected to EyeTracker server');
             
             // Sending initial command after the connection is established

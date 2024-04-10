@@ -14,6 +14,57 @@
   ],
   "main": "./extension.js",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "emoide",
+      "properties": {
+        "emoide.notifications": {
+          "type": "boolean",
+          "description": "Allow Notifications",
+          "default": true
+        },
+        "emoide.thresholdFocus": {
+          "type": "integer",
+          "description": "Focus threshold for notifications",
+          "default": 30
+        },
+        "emoide.thresholdCalm": {
+          "type": "integer",
+          "description": "Calm threshold for notifications",
+          "default": 20
+        },
+        "emoide.sessionLength": {
+          "type": "integer",
+          "description": "Max allowed length of a session (minutes)",
+          "default": 30
+        },
+        "emoide.eyeTracker": {
+          "type": "string",
+          "description": "IP address for the Eye-tracker",
+          "default": "None"
+        },
+        "emoide.crownEmail": {
+          "type": "string",
+          "description": "Email for Neurosity",
+          "default": "None"
+        },
+        "emoide.crownDeviceID": {
+          "type": "string",
+          "description": "Device ID for Neurosity",
+          "default": "None"
+        },
+        "emoide.focusColor": {
+          "type": "string",
+          "description": "Prefered color representing focus, format: RED, GREEN, BLUE (ex: 234, 29, 198)",
+          "default": "None"
+        },
+        "emoide.calmColor": {
+          "type": "string",
+          "description": "Prefered color representing calm, format: RED, GREEN, BLUE (ex: 234, 29, 198)",
+          "default": "None"
+        }
+      }
+    },
     "commands": [
       {
         "title": "Start UI",
@@ -38,6 +89,7 @@
   },
   "dependencies": {
     "canvasjs": "^1.8.3",
+    "@xmldom/xmldom": "^0.8.10",
     "chart.js": "^4.4.2",
     "child_process": "^1.0.2",
     "dotenv": "^16.4.5",

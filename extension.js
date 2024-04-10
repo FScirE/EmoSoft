@@ -11,6 +11,7 @@ const { EventHandler } = require('./EventHandler')
 const { EyeTracker } = require('./Eyetracker')
 const { AIHandler } = require('./AIHandler')
 const { UIHandler } = require('./UIHandler')
+const { Settings } = require('./settings.js')
 
 
 // This method is called when your extension is activated
@@ -70,17 +71,23 @@ async function activate(context) {
 	await closeEmptyTabs();
 
 	//initializations
-	this.eyetracker = new EyeTracker(context.extensionPath)
+	const settings = new Settings(context.extensionPath);
+	
+	this.eyetracker = new EyeTracker(context.extensionPath, settings);
 
-	this.dataHandler = new DataHandler()
+	this.dataHandler = new DataHandler(settings);
 	await this.dataHandler.init(context.extensionPath);
+	settings.reinitDataHandlerCallback = async () => {
+		await this.dataHandler.uninit(); 
+		await this.dataHandler.init(context.extensionPath);
+	};
 
-	this.uiHandler = new UIHandler(context)
+	this.uiHandler = new UIHandler(context, settings);
 
-	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker)
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, settings);
 	await this.eventHandler.init(this.dataHandler);
 
-	this.uiHandler.init(context, this.eventHandler)
+	this.uiHandler.init(context, this.eventHandler);
 
 	//main loop
 	var setCalmFocusAndStatusBars = setInterval(async () => {
@@ -107,6 +114,11 @@ async function activate(context) {
 			vscode.workspace.workspaceFolders.length > 0);
 	}
 
+	let disposable = vscode.commands.registerCommand('emoide.setCrownPassword', async () => {
+        await settings.getCrownPassword();
+    }); //KAN VARA BRA ATT HA VET INTE
+
+	context.subscriptions.push(disposable);
 	//example of sending ai message
 	/*const ai = new AIHandler('', '', context.extensionPath)
    	await ai.sendMsgToAggitatedDev()

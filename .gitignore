@@ -12,3 +12,6 @@ node_modules
 # Might not need
 envNeurosity.env
 settings.json
+
+package.json
+envNeurosity-old.env
