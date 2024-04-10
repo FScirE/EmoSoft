@@ -4,12 +4,13 @@ const { execSync } = require('child_process')
 var DOMParser = require('xmldom').DOMParser;
 const fs = require('fs')
 
+
 const MAX_LENGTH = 30
 var readFunctionDelay = 10 //in seconds
 
 const EDITOR_START_Y = 0.107
 const EDITOR_END_Y = 0.733
-const EDITOR_START_X = 0.135
+const EDITOR_START_X = 0.129
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 var timeOut = false;
 
@@ -32,6 +33,14 @@ class EyeTracker {
         //UNDER IS THE IP ADRESS USE IT
         //this.settings.eyeIP
 
+        this.init()
+
+        // this.socket.on('error', (err) => {
+        //     console.error('Error:', err.message);
+        // });
+    }
+
+    init() {
         // Connect to the server
         this.socket.connect(4242, this.settings.eyeTracker, () => {
             console.log('Connected to EyeTracker server');
@@ -45,22 +54,40 @@ class EyeTracker {
         this.socket.on('data', (data) => {
             //console.log(data.toString())
             const parsedXml = new DOMParser().parseFromString(data.toString(), 'text/xml')
-            const record = parsedXml.getElementsByTagName('REC')[0]
+            switch (data.toString().substring(0, 4)) {
+                case '<REC':            
+                    var record = parsedXml.getElementsByTagName('REC')[0]
 
-            var newX = parseFloat(record.getAttribute('FPOGX'))
-            var newY = parseFloat(record.getAttribute('FPOGY'))
-            this.X.push(newX)
-            this.Y.push(newY)
-            if (!timeOut && this.recording && newX >= 0 && newX < 1 && newY >= 0 && newY < 1) {
-                this.long_X.push(newX)
-                this.long_Y.push(newY)
-                timeOutMutex(100)
+                    var newX = parseFloat(record.getAttribute('FPOGX'))
+                    var newY = parseFloat(record.getAttribute('FPOGY'))
+                    this.X.push(newX)
+                    this.Y.push(newY)
+                    if (!timeOut && this.recording && newX >= 0 && newX < 1 && newY >= 0 && newY < 1) {
+                        this.long_X.push(newX)
+                        this.long_Y.push(newY)
+                        timeOutMutex(100)                     
+                    }
+
+                    if (this.X.length > MAX_LENGTH)
+                        this.X.shift()
+                    if (this.Y.length > MAX_LENGTH)
+                        this.Y.shift()
+
+                    break;
+
+                case '<CAL':
+                    var record = parsedXml.getElementsByTagName('CAL')[0]
+
+                    var calID = record.getAttribute('ID')
+                    if (calID == 'CALIB_RESULT') {
+                        console.log('Close calibrate window')
+                        this.socket.write(
+                            '<SET ID="CALIBRATE_SHOW" STATE="0" />\r\n' +
+                            '<SET ID="TRACKER_DISPLAY" STATE="0" />\r\n')
+                    }
+
+                    break;
             }
-
-            if (this.X.length > MAX_LENGTH)
-                this.X.shift()
-            if (this.Y.length > MAX_LENGTH)
-                this.Y.shift()
         });
 
         this.socket.on('close', () => {
@@ -68,12 +95,9 @@ class EyeTracker {
         });
 
         var disposableInterval = setInterval(async () => {
-            await this.getMostFocusedFunction()
+            if (this.recording)
+                await this.getMostFocusedFunction()
         }, readFunctionDelay * 1000)
-
-        // this.socket.on('error', (err) => {
-        //     console.error('Error:', err.message);
-        // });
     }
 
     getX() {
@@ -93,10 +117,10 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {	
-			//var y = this.getY()
-			//var x = this.getX()
-            var y = 0.12
-            var x = 0.21
+			var y = this.getY()
+			var x = this.getX()
+            //var y = 0.12
+            //var x = 0.21
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
@@ -139,12 +163,12 @@ class EyeTracker {
     recordingStart() { 
         this.long_X = []
         this.long_Y = [] //clear lists
+        fs.writeFileSync(this.path + '\\fullDictionaryFile.txt', '') //empty old file
         this.recording = true
     }
     recordingEnd() {
         this.recording = false
     }
-    
     
     generateHeatmap() {
         fs.writeFileSync(this.path + '\\xValues.txt', this.long_X.toString())
@@ -161,24 +185,50 @@ class EyeTracker {
         this.lookedLines = {} //empty
     }
 
+    calculateTopLines(){
+        var topFuncs = {}
+        var data = fs.readFileSync(this.path + '\\fullDictionaryFile.txt').toString()
+        for (var line of data.split('\n')) {
+            var stripLine = line.substring(1, line.length - 2)
+            for (var entry of stripLine.split(', ')) {
+                var key = entry.split(':')[0]
+                var value = parseInt(entry.split(':')[1])
+                if (key != '' && key != '-1' && key != '-2')
+                {
+                    if (key in topFuncs)
+                        topFuncs[key] += value
+                    else
+                        topFuncs[key] = value
+                }
+            }
+        }
+        
+        var keyValues = []
+        for (var key in topFuncs) {
+            keyValues.push([key, topFuncs[key]])
+        }
+        keyValues.sort((a, b) => { return b[1] - a[1] }) //sort
+        keyValues.slice(0, 3) //top 3 values
+
+        return keyValues
+    }
+
     calibrate() {
+        console.log('Calibrating')
         this.socket.write(
-            '<SET ID="CALIBRATE_SHOW" VALUE="1" />\r\n' + 
-            //'<SET ID="CALIBRATE_RESET" />\r\n' + kanske inte behövs
-            '<SET ID="CALIBRATE_START" VALUE="1" />\r\n')
-        //wait for calibrate to send finish message ------
-        this.socket.write('<SET ID="CALIBRATE_SHOW" VALUE="0" />\r\n')
+            '<SET ID="CALIBRATE_SHOW" STATE="1" />\r\n' + 
+            '<SET ID="CALIBRATE_START" STATE="1" />\r\n')
     }
 }
 
-function timeOutMutex(time) {
+async function timeOutMutex(time) {
     timeOut = true
-    sleep(time)
+    await sleep(time)
     timeOut = false
 }
 
 function sleep(ms) {
-    var _ = new Promise(resolve => setTimeout(resolve, ms)).then(() => {return});
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = {

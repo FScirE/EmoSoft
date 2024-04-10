@@ -69,6 +69,7 @@ class EventHandler {
                                 })                         
 
                                 await this.eyetracker.generateHeatmap()
+                                await this.eyetracker.calculateTopLines()
 
                                 await this.uiHandler.switchToEvaluatePage();
                                 await this.initEvaluateReceiveMessage(context);
