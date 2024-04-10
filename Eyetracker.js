@@ -153,7 +153,6 @@ class EyeTracker {
         for (let [key, value] of Object.entries(this.lookedLines)) {
             fs.appendFileSync(this.path + '\\lineDictionary.txt', `${key}:${value}\n`)
         }       
-        console.log(this.filePath)
         execSync(`python findFuncFromLines.py ${this.filePath}`, { cwd: this.path })
         this.lookedLines = {} //empty
     }
