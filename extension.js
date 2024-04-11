@@ -124,7 +124,6 @@ async function activate(context) {
 	let disposableCalibrateEyeTracker = vscode.commands.registerCommand('emoide.calibrateEyeTracker', async () => {
         try {
             await this.eyetracker.calibrate();
-            vscode.window.showInformationMessage('Eye tracker calibration started.');
         } catch (error) {
             console.error('Error while calibrating eye tracker:', error);
             vscode.window.showErrorMessage('Failed to start eye tracker calibration.');
