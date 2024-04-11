@@ -54,40 +54,36 @@ class EyeTracker {
         this.socket.on('data', (data) => {
             //console.log(data.toString())
             const parsedXml = new DOMParser().parseFromString(data.toString(), 'text/xml')
-            switch (data.toString().substring(0, 4)) {
-                case '<REC':            
-                    var record = parsedXml.getElementsByTagName('REC')[0]
 
-                    var newX = parseFloat(record.getAttribute('FPOGX'))
-                    var newY = parseFloat(record.getAttribute('FPOGY'))
-                    this.X.push(newX)
-                    this.Y.push(newY)
-                    if (!timeOut && this.recording && newX >= 0 && newX < 1 && newY >= 0 && newY < 1) {
-                        this.long_X.push(newX)
-                        this.long_Y.push(newY)
-                        timeOutMutex(100)                     
-                    }
+            var records = parsedXml.getElementsByTagName('REC')
+            for (var i = 0; i < records.length; i++) {
+                var newX = parseFloat(records[i].getAttribute('FPOGX'))
+                var newY = parseFloat(records[i].getAttribute('FPOGY'))
+                this.X.push(newX)
+                this.Y.push(newY)
+                if (!timeOut && this.recording && newX > 0 && newX < 1 && newY > 0 && newY < 1) {
+                    this.long_X.push(newX)
+                    this.long_Y.push(newY)
+                    timeOutMutex(100)                     
+                }
 
-                    if (this.X.length > MAX_LENGTH)
-                        this.X.shift()
-                    if (this.Y.length > MAX_LENGTH)
-                        this.Y.shift()
-
-                    break;
-
-                case '<CAL':
-                    var record = parsedXml.getElementsByTagName('CAL')[0]
-
-                    var calID = record.getAttribute('ID')
-                    if (calID == 'CALIB_RESULT') {
-                        console.log('Close calibrate window')
-                        this.socket.write(
-                            '<SET ID="CALIBRATE_SHOW" STATE="0" />\r\n' +
-                            '<SET ID="TRACKER_DISPLAY" STATE="0" />\r\n')
-                    }
-
-                    break;
+                if (this.X.length > MAX_LENGTH)
+                    this.X.shift()
+                if (this.Y.length > MAX_LENGTH)
+                    this.Y.shift()
             }
+
+            var calibs = parsedXml.getElementsByTagName('CAL')
+            for (var i = 0; i < calibs.length; i++) {
+                var calID = calibs[i].getAttribute('ID')
+                if (calID == 'CALIB_RESULT') {
+                    console.log('Close calibrate window')
+                    this.socket.write(
+                        '<SET ID="CALIBRATE_SHOW" STATE="0" />\r\n' +
+                        '<SET ID="TRACKER_DISPLAY" STATE="0" />\r\n')
+                    vscode.window.showInformationMessage('Eye tracker calibration finished.');
+                }
+            }          
         });
 
         this.socket.on('close', () => {
