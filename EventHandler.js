@@ -31,8 +31,8 @@ class EventHandler {
         
         await this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
             switch (message.variable) {
+                // User chats with AI assistent
                 case 'user':
-                    //console.log(message.value);
                     await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
                     var responseFromAi = this.aiHandler.output
                     this.uiHandler.webView.webview.postMessage({
@@ -40,7 +40,7 @@ class EventHandler {
                         value: responseFromAi
                     })
                     return;
-
+                // Record a session
                 case 'recording':
                     if (message.value == true) {
                         this.dataHandler.isRecording = true;
@@ -91,22 +91,10 @@ class EventHandler {
                         
                     }
                     return;
-                case 'user':
-                    //console.log(message.value);
-                    await this.aiHandler.sendMsgToAI("you are a coding assistant to a user, give short responses.", message.value, true);
-                    var responseFromAi = this.aiHandler.output
-                    this.uiHandler.webView.webview.postMessage({
-                        variable: "airesponse",
-                        value: responseFromAi
-                    })
-                    return;
-            }
-            
-            
+            }   
         },
             undefined,
             context.subscriptions);
-        
     }
 
     async initEvaluateReceiveMessage(context) {
@@ -130,7 +118,7 @@ class EventHandler {
 
     
 
-    // Check focus level and notifies user when focus drops below 30%
+    // Check focus level and notifies user when focus drops below threshold
     async checkFocus(focus) {
         var notificationsEnabled = this.settings.allownotifications;
         var thresholdFocus = this.settings.updatedthreshholdFocus/100;
@@ -145,11 +133,10 @@ class EventHandler {
                 await sleepSeconds(120)
                 this.allowNotificationFocus = true
                 this.mutexFocus = false
-                console.log("It can now send notifications // focus")
             }
         }
     }
-    // Check calmness level and notifies user when calmness drops below 30%
+    // Check calmness level and notifies user when calmness drops below threshold
     async checkCalm(calm) {
         var notificationsEnabled = this.settings.allownotifications;
         var thresholdCalm = this.settings.updatedthreshholdCalm/100;
@@ -164,12 +151,10 @@ class EventHandler {
                 await sleepSeconds(120)
                 this.allowNotificationCalm = true
                 this.mutexFocus = false
-                console.log("It can now send notifications // Calm")
             }
         }
     }
 }
-
 
 function sleepSeconds(s) {
     return new Promise(resolve => setTimeout(resolve, s * 1000));

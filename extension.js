@@ -117,7 +117,6 @@ async function activate(context) {
 	}
 
 	let disposable = vscode.commands.registerCommand('emoide.setCrownPassword', async () => {
-
         await this.settings.getCrownPassword();
     }); //KAN VARA BRA ATT HA VET INTE
 

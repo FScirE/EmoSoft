@@ -19,6 +19,7 @@ class Evaluate {
         this.evalID = '#none' // Should later be able to enter by user (I think)
     }
 
+    // ------------- Setter and getter functions -------------------------------------------------------------//
     setFocusValues(focusValues) {
         this.focusValues = focusValues;
     }
@@ -43,7 +44,7 @@ class Evaluate {
         var response = {question, number};
         this.responses.push(response);
     }
-
+//------------------------------------------------------------------------------//
     saveEvaluationToFile() {
         // Open file
         fs.open(this.filename, 'wx', (err, fd) => {
@@ -65,29 +66,33 @@ class Evaluate {
                 }
             });
         });
-        console.log(this.responses)
-        console.log(process.cwd());
         // The data that shall be written
-        const dataList = []; 
+        const dataList = [];
+
         dataList.push(this.evalID); // ID
+
+        // Date
         const currentDate = new Date(); // Todays date
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
         var dateStringFormatted = "Date: " + dateString; // Format date string
         dataList.push(dateStringFormatted);
+
         dataList.push("Focus:");
         // String for all focus values with time stamps
         for (let i = 0; i < this.focusValues.length; i++) {
             var str = "x: " + this.focusValues[i].x + ", y: " + this.focusValues[i].y;
             dataList.push(str);
         }
+
         dataList.push("Calm:")
         // String for all calm values with time stamps
         for (let i = 0; i < this.calmValues.length; i++) {
             var str = "x: " + this.calmValues[i].x + ", y: " + this.calmValues[i].y;
             dataList.push(str);
         }
+
+//------------------------------------------------------------------------------//
         // Questions with answers
-        // console.log('Responses in evaluate.js', this.responses) Responses innehåller array med 5 element
         dataList.push(this.question1);
         dataList.push(this.responses[2]);
         dataList.push(this.question2);
@@ -112,6 +117,7 @@ class Evaluate {
     }
 }
 
+//------------------------------------------------------------------------------//
 module.exports = {
     Evaluate
 };

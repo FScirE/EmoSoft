@@ -52,7 +52,6 @@ class EyeTracker {
         });
 
         this.socket.on('data', (data) => {
-            //console.log(data.toString())
             const parsedXml = new DOMParser().parseFromString(data.toString(), 'text/xml')
 
             var records = parsedXml.getElementsByTagName('REC')

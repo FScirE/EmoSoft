@@ -64,11 +64,11 @@ class DataHandler {
 
     async init(extensionPath) {
         console.log("initializing DataHandler")
-        try { // login and connect to Neurosity device
-
+        try { 
+            // login and connect to Neurosity device
             const dotenvRequire = await require('dotenv').config({
                 path: path.join(extensionPath, '/envNeurosity.env')
-            }); // may be async? idk, seems to work anyway ¯\_(ツ)_/¯
+            });
             
             this.deviceId = process.env.DEVICE_ID || "";
             this.email = process.env.EMAIL || "";
@@ -200,9 +200,10 @@ class DataHandler {
         return new Promise(resolve => setTimeout(resolve, s * 1000));
     }
 
+    // Save focus and calm values temporarily during a session
     async recordSession() {
         var s = 0;
-        const interval = 10;
+        const interval = 10; // Save values every 10 seconds
         this.focusValuesSession = [];
         this.calmValuesSession = [];
         while (this.isRecording) {

@@ -26,23 +26,6 @@ class AIHandler {
         
     }
 
-    /*retrieveContext(filePath, lineNumber, contextLines = 5){
-        const fs = require('fs');
-            try {
-                const lines = fs.readFileSync(filePath, 'utf8').split('\n');
-                const startLine = Math.max(0, lineNumber - contextLines - 1);
-                const endLine = Math.min(lines.length, lineNumber + contextLines);
-                return lines.slice(startLine, endLine).map((line, index) => ({
-                    line: startLine + index + 1,
-                    content: line.trim()
-                }));
-            } catch (err) {
-                console.error('Error reading file:', err);
-                return [];
-            }
-        
-    }*/
-    //Typ klar behövs test
     async sendMsgToAI(preset, msg, chatActive){
         var templist = []
         if (chatActive == true){
@@ -67,9 +50,8 @@ class AIHandler {
     async sendMsgToUnfocusedDev(focus){
         focus *= 100;
         focus = focus.toFixed(0);
-        // console.log(focus);
         focus = "This is the focus level in percent:  " + focus.toString() + "%. ";
-        // console.log(focus);
+
         // sends a message to the AI with standard message telling the user to focus. 
         await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_HELP_UNFOCUSED_DEV + focus, false);
     }
@@ -78,7 +60,6 @@ class AIHandler {
         calm *= 100;
         calm = calm.toFixed(0);
         calm = "This is the calm level in percent:  " + calm.toString() + "%. ";
-        // console.log(calm);
         await this.sendMsgToAI(CONTEXT_HELPADEV , MESSAGE_CALM_DOWN + calm, false);
     }  
     async sendMsgToTakeBreak(){

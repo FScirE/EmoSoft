@@ -89,8 +89,7 @@ print(dict_funcs)
 with open('fullDictionaryFile.txt', 'a') as dict_file:
     # Read the contents of the file
     content = dict_file.write(str(dict_funcs) + "\n")
-
-
+##-----------------------------------------------------------------##
 # TESTS
 # function = find_definition(41)
 # print(function)
