@@ -133,6 +133,12 @@ window.addEventListener('message', e => {
         case "recording":
             setRecordingButton(message.value)
             break
+        case "focusColor":
+            document.documentElement.style.setProperty("--focus-color", message.value)
+            break
+        case "calmColor":
+            document.documentElement.style.setProperty("--calm-color", message.value)
+            break
     }
 })
 

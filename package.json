@@ -56,13 +56,13 @@
         "emoide.focusColor": {
           "type":"string",
           "description": "Color theme",
-          "enum":["Green", "Light"],
+          "enum":["Green", "Blue","Yellow", "Pink", "Purple", "Cyan", "White", "Mango"],
           "default": "Green"
         },
         "emoide.calmColor": {
           "type":"string",
           "description": "Color theme",
-          "enum":["Blue", "Light"],
+          "enum":["Blue", "Green","Yellow", "Pink", "Purple", "Cyan", "White", "Mango"],
           "default": "Blue"
         },
         "emoide.calibrateEye": {
