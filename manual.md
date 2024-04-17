@@ -79,7 +79,7 @@ var names, naming conventions, docstrings, comments etc.
 
 ## Components and interactions
 
-![Example Image](C:\Users\AhmadEddin\Downloads\bth.png)
+![Logo](https://im17.inviewer.se/skiss/48/48CF7PTCY8.jpg?123 "BTH")
 
 Here is UML diagrams: component diagram and interaction diagrams
 
