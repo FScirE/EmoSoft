@@ -107,8 +107,7 @@ class EventHandler {
         switch (message.variable) {
             case 'evaluateResponses':
                 this.evaluate.responses = message.value;
-                console.log(this.evaluate.responses);
-                if (this.evaluate.responses[5] != -1) {
+                if (this.evaluate.responses.evalID != -1) {
                     vscode.window.showInformationMessage('Evaluation has been saved.');
                 } 
                 await this.evaluate.saveEvaluationToFile();

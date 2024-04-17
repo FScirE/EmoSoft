@@ -1,48 +1,94 @@
 [
   {
-    "evaluationID": 1,
-    "name": "hel",
+    "evaluationID": 1713372553672,
+    "name": "uuu",
     "date": "2024-04-17",
     "focusValues": [
       {
         "x": 0,
-        "y": 45
+        "y": 49
       }
     ],
     "calmValues": [
       {
         "x": 0,
-        "y": 62
+        "y": 43
       }
     ],
-    "responses": [
-      "23",
-      "59",
-      "2",
-      "4"
-    ]
+    "responses": {
+      "focusAnswer": "67",
+      "calmAnswer": "68",
+      "expectedWorkAnswer": "4",
+      "finishedWorkAnswer": "4"
+    }
   },
   {
-    "evaluationID": 2,
-    "name": "hdas",
+    "evaluationID": 1713372585917,
+    "name": "aaa",
     "date": "2024-04-17",
     "focusValues": [
+      {
+        "x": 0,
+        "y": 55
+      }
+    ],
+    "calmValues": [
       {
         "x": 0,
         "y": 53
       }
     ],
+    "responses": {
+      "focusAnswer": "50",
+      "calmAnswer": "42",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
+  },
+  {
+    "evaluationID": 1713372932252,
+    "name": "dupe",
+    "date": "2024-04-17",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 75
+      }
+    ],
     "calmValues": [
       {
         "x": 0,
-        "y": 64
+        "y": 43
       }
     ],
-    "responses": [
-      "40",
-      "80",
-      "5",
-      "5"
-    ]
+    "responses": {
+      "focusAnswer": "58",
+      "calmAnswer": "48",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "evaluationID": 1713373247581,
+    "name": "ggg",
+    "date": "2024-04-17",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 42
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 61
+      }
+    ],
+    "responses": {
+      "focusAnswer": "32",
+      "calmAnswer": "24",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "2"
+    }
   }
 ]

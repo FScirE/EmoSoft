@@ -7,7 +7,6 @@ const vscode = acquireVsCodeApi() //ignore error
 var focusValues = []
 var calmValues = []
 var evaluateids = []
-var evaluateid = -1
 
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
@@ -96,27 +95,29 @@ function addSymbols(e) {
 }
 
 function saveEvaluateResponses() {
+	// Fetch data from HTML
+	var name = document.getElementById("textInput").value;
 
 	const focusSliderValue = document.getElementById("focusSlider").value;
     const calmSliderValue = document.getElementById("calmSlider").value;
 
-    const radioButtonGroups = [	document.getElementsByName("q1rating"),
-                                document.getElementsByName("q2rating"),
-                                document.getElementsByName("q3rating")]
-    
-    var responses = []
-    
-    for (var group = 0; group < radioButtonGroups.length; group++) 
-        for (var button = 0; button < radioButtonGroups[group].length; button++) 
-            if (radioButtonGroups[group][button].checked) 
-                responses[group] = radioButtonGroups[group][button].value
+    const q1Rating = document.querySelector('input[name="q1rating"]:checked');
+	const q2Rating = document.querySelector('input[name="q2rating"]:checked');
 	
-	responses.push(focusSliderValue)
-	responses.push(calmSliderValue)
-	
-	var evaluationId = document.getElementById("textInput").value;
-	responses.push(evaluationId);
-	responses.push(evaluateid)
+	const q1Value = q1Rating ? q1Rating.value : null;
+	const q2Value = q2Rating ? q2Rating.value : null;
+    
+	// Add all evaluate response to a dict
+    var responses = {}
+	responses.expectedWorkAnswer = q1Value;
+	responses.finishedWorkAnswer = q2Value;
+	responses.focusAnswer = focusSliderValue
+	responses.calmAnswer = calmSliderValue
+	responses.name = name;
+	const newEvalID = new Date().getTime();
+	responses.evalID = newEvalID;
+
+	// Send data to eventhandler
     vscode.postMessage({
         variable: "evaluateResponses",
         value: responses

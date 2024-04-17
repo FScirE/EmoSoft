@@ -3,20 +3,18 @@ const fs = require('fs');
 
 class Evaluate {
     constructor(path) {
+        // Path to save json file att correct place
         this.path = path;
-        this.tempSession = [];
 
-        // Values, not sure yet if we need them in this
+        // Current session before it has been saved to json
+        this.tempSession = {};
+
+        // Focus and calm values
         this.focusValues = [];
         this.calmValues = [];
 
-        // Questions
-        this.responses = [];
-        this.question1 = "I was focused during this session."
-        this.question2 = "I was calm during this session."
-        this.question3 = "I expected to finish a lot of work during this session.";
-        this.question4 = "I managed to finish a lot of work during this session.";
-        
+        // Data to be stored
+        this.responses = {};
     }
 
     // ------------- Setter and getter functions -------------------------------------------------------------//
@@ -46,11 +44,11 @@ class Evaluate {
     }
 //------------------------------------------------------------------------------//
     saveEvaluationToFile() {
-        if (this.responses[5] == -1) {
+        if (this.responses.evalID == -1) {
             this.tempSession = this.responses;
             return;
         }
-
+        
         // Open file
         var jsonData = [];
         try {
@@ -59,25 +57,24 @@ class Evaluate {
         } catch (err) {
             console.log("evaluations.json does not exist or is empty. The file will be created.")
         }
-
-        // Find correct evaluation
-        var i = 0;
-        while (jsonData[i].evaluationID != this.responses[5] && i < jsonData.length) {
-            i++;
+        
+        // Find correct evaluation and delete if overwrite
+        let evalIDlist = [];
+        for (let i = 0; i < jsonData.length; i++) {
+            evalIDlist.push(jsonData[i].evaluationID);
         }
-
+        let index = evalIDlist.indexOf(this.responses.evalID);
+        if (index != -1) {
+            jsonData.splice(index, 1);
+        }
+    
         // The data that shall be written
         const dataList = {};
 
-        // ID
-        dataList.evaluationID = jsonData.length + 1
-        if (i < jsonData.length) {
-            jsonData.splice(i, 1);
-        }
-
         // Evaluation Name
-        dataList.name = this.responses[4];
-
+        dataList.evaluationID = this.responses.evalID;
+        dataList.name = this.responses.name;
+        
         // Date
         const currentDate = new Date(); // Todays date
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
@@ -86,11 +83,11 @@ class Evaluate {
         // Focus and calm values
         dataList.focusValues = this.focusValues;
         dataList.calmValues = this.calmValues;
-
-//------------------------------------------------------------------------------//
+        
         // Responses
-        dataList.responses = [this.responses[2], this.responses[3], this.responses[0], this.responses[1]];
-
+        dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer, 
+                              expectedWorkAnswer: this.responses.expectedWorkAnswer, finishedWorkAnswer: this.responses.finishedWorkAnswer};
+        
         // Write to JSON file
         jsonData.push(dataList);
         fs.writeFileSync(this.path + '\\evaluations.json', JSON.stringify(jsonData, null, 2));
