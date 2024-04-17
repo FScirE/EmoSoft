@@ -14,7 +14,7 @@ class EventHandler {
 
         // Create AIHandler and uihandler for chat and Evaluate object for the evaluate session feature
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
-        this.evaluate = new Evaluate();
+        this.evaluate = new Evaluate(extensionPath);
         this.settings = settings;
         this.uiHandler = uiHandler
         this.eyetracker = eyetracker
@@ -86,6 +86,7 @@ class EventHandler {
                             }
                             if (e == 'No') {
                                 console.log("No to evaluate")
+                                console.log(this.evaluate.loadEvalIdList());
                             }
                         })
                         

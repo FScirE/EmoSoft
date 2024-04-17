@@ -2,7 +2,9 @@ const fs = require('fs');
 
 
 class Evaluate {
-    constructor() {
+    constructor(path) {
+        this.path = path;
+
         // Values, not sure yet if we need them in this
         this.focusValues = [];
         this.calmValues = [];
@@ -47,73 +49,57 @@ class Evaluate {
 //------------------------------------------------------------------------------//
     saveEvaluationToFile() {
         // Open file
-        fs.open(this.filename, 'wx', (err, fd) => {
-            if (err) {
-                if (err.code === 'EEXIST') {
-                    console.log('File already exists.');
-                    return;
-                }
-                console.error('Error creating file:', err);
-                return;
-            }
-            console.log('File created successfully!');
-            
-            
-            // Close the file
-            fs.close(fd, (err) => {
-                if (err) {
-                    console.error('Error closing file:', err);
-                }
-            });
-        });
-        // The data that shall be written
-        const dataList = [];
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty. The file will be created.")
+        }
 
-        dataList.push(this.evalID); // ID
+        // The data that shall be written
+        const dataList = {};
+
+        // Evaluation ID
+        dataList.evalID = this.evalID;
 
         // Date
         const currentDate = new Date(); // Todays date
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
-        var dateStringFormatted = "Date: " + dateString; // Format date string
-        dataList.push(dateStringFormatted);
+        dataList.date = dateString;
 
-        dataList.push("Focus:");
-        // String for all focus values with time stamps
-        for (let i = 0; i < this.focusValues.length; i++) {
-            var str = "x: " + this.focusValues[i].x + ", y: " + this.focusValues[i].y;
-            dataList.push(str);
-        }
-
-        dataList.push("Calm:")
-        // String for all calm values with time stamps
-        for (let i = 0; i < this.calmValues.length; i++) {
-            var str = "x: " + this.calmValues[i].x + ", y: " + this.calmValues[i].y;
-            dataList.push(str);
-        }
+        // Focus and calm values
+        dataList.focusValues = this.focusValues;
+        dataList.calmValues = this.calmValues;
 
 //------------------------------------------------------------------------------//
-        // Questions with answers
-        dataList.push(this.question1);
-        dataList.push(this.responses[2]);
-        dataList.push(this.question2);
-        dataList.push(this.responses[3]);
-        dataList.push(this.question3);
-        dataList.push(this.responses[0]);
-        dataList.push(this.question4);
-        dataList.push(this.responses[1]);
+        // Responses
+        dataList.responses = [this.responses[2], this.responses[3], this.responses[0], this.responses[1]];
 
-        // Split for next eval
-        dataList.push("------------------------------------------------")
+        // Write to JSON file
+        jsonData.push(dataList);
+        fs.writeFileSync(this.path + '\\evaluations.json', JSON.stringify(jsonData, null, 2));
+        console.log('Data saved to evaluations.json');
+    }
+    loadEvalIdList() {
+        // List of eval IDs
+        var IdList = [];
 
-        // Iterate through the list and append each element to the file with a newline character
-        dataList.forEach(data => {
-            try {
-                fs.appendFileSync(this.filename, data + '\n');
-                console.log(`Data "${data}" appended to file successfully!`);
-            } catch (err) {
-                console.error('Error appending to file:', err);
-            }
-        });
+        // Load json data
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty.")
+        }
+
+        // Get each evalID
+        for (let i = 0; i < jsonData.length; i++) {
+            IdList[i] = jsonData[i].evalID;
+        }
+
+        return IdList;
     }
 }
 
