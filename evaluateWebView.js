@@ -6,6 +6,7 @@ const vscode = acquireVsCodeApi() //ignore error
 	
 var focusValues = []
 var calmValues = []
+var evaluateids = []
 
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
@@ -119,6 +120,8 @@ function saveEvaluateResponses() {
     })
 }
 
+
+
 function setTopFunctions(funcs) {
 	var innerHTML = ''
 	for (var f of funcs) {
@@ -159,5 +162,20 @@ window.addEventListener("message", e => {
 		case "functions":
 			setTopFunctions(message.value)
 			break;
+		case "evaluateids":
+			evaluateids = message.value
+			populatedropdown()
+			break;
+
 	}
 })
+function populatedropdown(){
+	var dropdown = document.getElementById("History");
+	for (var i = 0; i < evaluateids.length; i++) {
+		var option = document.createElement("option");
+		option.text = evaluateids[i];
+		option.value = evaluateids[i];
+		dropdown.appendChild(option);
+	}
+
+}

@@ -265,10 +265,12 @@ h2 {
     margin: 0 auto;
     width: 90%;
     height: 370px;
+    margin-top: 65px;
 }
 
 #chartContainer canvas{
-    border-radius: 11px;   
+    border-radius: 11px;
+      
 }
 
 #eyetracker {
@@ -301,7 +303,6 @@ h2 {
     border-radius: 11px;
     width: 90%;
     height: auto;
-
     align-self: center;
     position: relative;
     margin: 10px auto;
@@ -317,7 +318,6 @@ h2 {
     margin-bottom: 11px;
     text-align: center;
     font-size: 16px;
-    
     color: #FFF;
 }
 
@@ -327,9 +327,8 @@ h2 {
     margin-top: 3%;
     align-self: center;
     position: relative;
-    
-    
 }
+
 .question .labelContainer label {
     padding-top: 10px; /* Adjust the padding-top value to move the label text down */
     display: inline-block;
@@ -373,6 +372,7 @@ h2 {
     align-items: center;
     padding: 10px; /* Add padding for better spacing */
 }
+
 .submitBtn #submitEvaluationBtn{
     color: white;
     background-color: rgb(50, 55, 58);
@@ -381,6 +381,7 @@ h2 {
     height: 40px;
     font-size: 16px;
 }
+
 .submitBtn #submitEvaluationBtn:hover{
     background-color: #03a9f4
 }
@@ -398,6 +399,7 @@ input[type=range] {
     outline: none;
     margin: 15px 0;
 }
+
 .slider-container #focusSlider[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -407,6 +409,7 @@ input[type=range] {
     background-color: var(--focus-color);
     cursor: pointer;
 }
+
 .slider-container #calmSlider[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -420,3 +423,23 @@ input[type=range] {
 .slider-value {
     text-align: center;
 }
+
+#dropdown {
+    float: right;
+    margin-right: 16px;
+    padding: 4px;
+}
+#dropdown #History {
+    color: #FFF;
+    width: 200px;
+    height: 30px;
+    margin-right: 20px;
+    background-color: rgb(50, 55, 58);
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0);
+}
+
+#dropdown #History:focus {
+    border-color: #03a9f4;
+}
+
