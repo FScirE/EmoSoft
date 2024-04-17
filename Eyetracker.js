@@ -4,13 +4,17 @@ const { execSync } = require('child_process')
 var DOMParser = require('xmldom').DOMParser;
 const fs = require('fs')
 
-
 const MAX_LENGTH = 30
 var readFunctionDelay = 10 //in seconds
 
-const EDITOR_START_Y = 0.107
-const EDITOR_END_Y = 0.733
-const EDITOR_START_X = 0.129
+// ericvärden
+//const EDITOR_START_Y = 0.103
+//const EDITOR_END_Y = 0.738
+//const EDITOR_START_X = 0.14
+// hugovärden
+const EDITOR_START_Y = 0.12
+const EDITOR_END_Y = 0.777
+const EDITOR_START_X = 0.20
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 var timeOut = false;
 
@@ -58,8 +62,11 @@ class EyeTracker {
             for (var i = 0; i < records.length; i++) {
                 var newX = parseFloat(records[i].getAttribute('FPOGX'))
                 var newY = parseFloat(records[i].getAttribute('FPOGY'))
-                this.X.push(newX)
-                this.Y.push(newY)
+                if (newX != 0 || newY != 0)
+                {
+                    this.X.push(newX)
+                    this.Y.push(newY)
+                }
                 if (!timeOut && this.recording && newX > 0 && newX < 1 && newY > 0 && newY < 1) {
                     this.long_X.push(newX)
                     this.long_Y.push(newY)
@@ -114,8 +121,8 @@ class EyeTracker {
 		if (editor != undefined) {	
 			var y = this.getY()
 			var x = this.getX()
-            //var y = 0.12
-            //var x = 0.21
+            // var y = 0.5
+            // var x = 0.5
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
