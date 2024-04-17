@@ -7,6 +7,7 @@ const vscode = acquireVsCodeApi() //ignore error
 var focusValues = []
 var calmValues = []
 var evaluateids = []
+var evaluateid = -1
 
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
@@ -115,6 +116,7 @@ function saveEvaluateResponses() {
 	
 	var evaluationId = document.getElementById("textInput").value;
 	responses.push(evaluationId);
+	responses.push(evaluateid)
     vscode.postMessage({
         variable: "evaluateResponses",
         value: responses
@@ -157,12 +159,23 @@ function populatedropdown(){
 	for (var i = 0; i < evaluateids.length; i++) {
 		var inner = dropdown.innerHTML;
 		var option = `
-		<option value="${evaluateids[i]}">${evaluateids[i]}</option>
+		<option value="${evaluateids[i].name}">${evaluateids[i].name}</option>
 		`
 		inner = inner + option;
 		dropdown.innerHTML = inner;
 	}
 }
+
+var selectElement = document.getElementById("History");
+
+selectElement.addEventListener("change", function(event) {
+    // Code to execute when the selection changes
+	if(evaluateid == -1){
+		saveEvaluateResponses()
+	}
+    
+    
+});
 
 window.addEventListener("message", e => {
 	const message = e.data; // The JSON data our extension sent

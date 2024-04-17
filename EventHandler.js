@@ -107,8 +107,11 @@ class EventHandler {
         switch (message.variable) {
             case 'evaluateResponses':
                 this.evaluate.responses = message.value;
-                vscode.window.showInformationMessage('Evaluation has been saved.'); 
-                await this.evaluate.saveEvaluationToFile(this.evaluate.responses[4]);
+                console.log(this.evaluate.responses);
+                if (this.evaluate.responses[5] != -1) {
+                    vscode.window.showInformationMessage('Evaluation has been saved.');
+                } 
+                await this.evaluate.saveEvaluationToFile();
                 this.uiHandler.evaluateWebView.dispose();
                 vscode.commands.executeCommand('start.ui')
                 return;

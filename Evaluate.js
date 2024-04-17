@@ -4,6 +4,7 @@ const fs = require('fs');
 class Evaluate {
     constructor(path) {
         this.path = path;
+        this.tempSession = [];
 
         // Values, not sure yet if we need them in this
         this.focusValues = [];
@@ -44,7 +45,12 @@ class Evaluate {
         this.responses.push(response);
     }
 //------------------------------------------------------------------------------//
-    saveEvaluationToFile(evalID) {
+    saveEvaluationToFile() {
+        if (this.responses[5] == -1) {
+            this.tempSession = this.responses;
+            return;
+        }
+
         // Open file
         var jsonData = [];
         try {
@@ -54,11 +60,23 @@ class Evaluate {
             console.log("evaluations.json does not exist or is empty. The file will be created.")
         }
 
+        // Find correct evaluation
+        var i = 0;
+        while (jsonData[i].evaluationID != this.responses[5] && i < jsonData.length) {
+            i++;
+        }
+
         // The data that shall be written
         const dataList = {};
 
-        // Evaluation ID
-        dataList.evalID = evalID;
+        // ID
+        dataList.evaluationID = jsonData.length + 1
+        if (i < jsonData.length) {
+            jsonData.splice(i, 1);
+        }
+
+        // Evaluation Name
+        dataList.name = this.responses[4];
 
         // Date
         const currentDate = new Date(); // Todays date
@@ -80,7 +98,7 @@ class Evaluate {
     }
     loadEvalIdList() {
         // List of eval IDs
-        var IdList = [];
+        var dataList = [];
 
         // Load json data
         var jsonData = [];
@@ -93,12 +111,12 @@ class Evaluate {
 
         // Get each evalID
         for (let i = 0; i < jsonData.length; i++) {
-            IdList[i] = jsonData[i].evalID;
+            dataList[i] = {evaluationID: jsonData[i].evaluationID, name: jsonData[i].name};
         }
 
-        return IdList;
+        return dataList;
     }
-    loadEvalData(evalID) {
+    loadEvalData(evaluationID) {
         // Load json data
         var jsonData = [];
         try {
@@ -110,7 +128,7 @@ class Evaluate {
 
         // Find correct evaluation
         var i = 0;
-        while (jsonData[i].evalID != evalID && i < jsonData.length) {
+        while (jsonData[i].evaluationID != evaluationID && i < jsonData.length) {
             i++;
         }
         if (i == jsonData.length) { // Evaluation ID not found
