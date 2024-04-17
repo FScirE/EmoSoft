@@ -112,12 +112,14 @@ function saveEvaluateResponses() {
 	
 	responses.push(focusSliderValue)
 	responses.push(calmSliderValue)
-    console.log(responses);
-
+	
+	var evaluationId = document.getElementById("textInput").value;
+	responses.push(evaluationId);
     vscode.postMessage({
         variable: "evaluateResponses",
         value: responses
     })
+	
 }
 
 
@@ -150,6 +152,18 @@ calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
 
+function populatedropdown(){
+	var dropdown = document.getElementById("History");
+	for (var i = 0; i < evaluateids.length; i++) {
+		var inner = dropdown.innerHTML;
+		var option = `
+		<option value="${evaluateids[i]}">${evaluateids[i]}</option>
+		`
+		inner = inner + option;
+		dropdown.innerHTML = inner;
+	}
+}
+
 window.addEventListener("message", e => {
 	const message = e.data; // The JSON data our extension sent
 	
@@ -169,12 +183,3 @@ window.addEventListener("message", e => {
 
 	}
 })
-function populatedropdown(){
-	var dropdown = document.getElementById("History");
-	for (var i = 0; i < evaluateids.length; i++) {
-		var option = document.createElement("option");
-		option.text = evaluateids[i];
-		option.value = evaluateids[i];
-		dropdown.appendChild(option);
-	}
-}

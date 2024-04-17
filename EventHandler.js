@@ -85,7 +85,7 @@ class EventHandler {
                                 })
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "evaluateids",
-                                    value: [this.evaluate.loadEvalIdList()]
+                                    value: this.evaluate.loadEvalIdList()
                                 })
                             }
                             if (e == 'No') {
@@ -106,10 +106,11 @@ class EventHandler {
         this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
         switch (message.variable) {
             case 'evaluateResponses':
-                console.log("evaluate responses: ", message.value);
                 this.evaluate.responses = message.value;
-                this.evaluate.saveEvaluationToFile();
+                vscode.window.showInformationMessage('Evaluation has been saved.'); 
+                await this.evaluate.saveEvaluationToFile(this.evaluate.responses[4]);
                 this.uiHandler.evaluateWebView.dispose();
+                vscode.commands.executeCommand('start.ui')
                 return;
             case 'finished':
                 console.log(message.value)

@@ -425,18 +425,38 @@ input[type=range] {
 }
 
 #dropdown {
-    float: right;
+    width: 100%;
+    height: 40px;
+    display: inline-block;
+    
     margin-right: 16px;
     padding: 4px;
 }
 #dropdown #History {
+    float: right;
     color: #FFF;
-    width: 200px;
-    height: 30px;
-    margin-right: 20px;
+    width: 20%;
+    height: 38px;
+    margin-right: 4%;
     background-color: rgb(50, 55, 58);
     border-radius: 8px;
     border: 2px solid rgba(0, 0, 0, 0);
+}
+
+#dropdown #textInput {
+    min-width: 60%;
+    width: auto;
+    height: 25px;
+    margin-left: 4%;
+    background-color: rgb(50, 55, 58);
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0);
+    color: white;
+    padding: 5px 10px;
+}
+
+#dropdown #textInput:focus {
+    border-color: #03a9f4;
 }
 
 #dropdown #History:focus {

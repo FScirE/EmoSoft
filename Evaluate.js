@@ -16,9 +16,6 @@ class Evaluate {
         this.question3 = "I expected to finish a lot of work during this session.";
         this.question4 = "I managed to finish a lot of work during this session.";
         
-        // Saving
-        this.filename = './evaluations.txt';
-        this.evalID = '#none' // Should later be able to enter by user (I think)
     }
 
     // ------------- Setter and getter functions -------------------------------------------------------------//
@@ -47,7 +44,7 @@ class Evaluate {
         this.responses.push(response);
     }
 //------------------------------------------------------------------------------//
-    saveEvaluationToFile() {
+    saveEvaluationToFile(evalID) {
         // Open file
         var jsonData = [];
         try {
@@ -61,7 +58,7 @@ class Evaluate {
         const dataList = {};
 
         // Evaluation ID
-        dataList.evalID = this.evalID;
+        dataList.evalID = evalID;
 
         // Date
         const currentDate = new Date(); // Todays date
@@ -100,6 +97,27 @@ class Evaluate {
         }
 
         return IdList;
+    }
+    loadEvalData(evalID) {
+        // Load json data
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty.")
+        }
+
+        // Find correct evaluation
+        var i = 0;
+        while (jsonData[i].evalID != evalID && i < jsonData.length) {
+            i++;
+        }
+        if (i == jsonData.length) { // Evaluation ID not found
+            return -1;
+        }
+
+        return jsonData[i];
     }
 }
 
