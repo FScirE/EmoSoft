@@ -177,5 +177,4 @@ function populatedropdown(){
 		option.value = evaluateids[i];
 		dropdown.appendChild(option);
 	}
-
 }

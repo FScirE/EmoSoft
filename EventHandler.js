@@ -83,6 +83,10 @@ class EventHandler {
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
                                 })
+                                this.uiHandler.evaluateWebView.webview.postMessage({
+                                    variable: "evaluateids",
+                                    value: [this.evaluate.loadEvalIdList()]
+                                })
                             }
                             if (e == 'No') {
                                 console.log("No to evaluate")
