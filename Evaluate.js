@@ -44,11 +44,6 @@ class Evaluate {
     }
 //------------------------------------------------------------------------------//
     saveEvaluationToFile() {
-        if (this.responses.evalID == -1) {
-            this.tempSession = this.responses;
-            return;
-        }
-        
         // Open file
         var jsonData = [];
         try {
@@ -57,22 +52,11 @@ class Evaluate {
         } catch (err) {
             console.log("evaluations.json does not exist or is empty. The file will be created.")
         }
-        
-        // Find correct evaluation and delete if overwrite
-        let evalIDlist = [];
-        for (let i = 0; i < jsonData.length; i++) {
-            evalIDlist.push(jsonData[i].evaluationID);
-        }
-        let index = evalIDlist.indexOf(this.responses.evalID);
-        if (index != -1) {
-            jsonData.splice(index, 1);
-        }
     
         // The data that shall be written
         const dataList = {};
 
         // Evaluation Name
-        dataList.evaluationID = this.responses.evalID;
         dataList.name = this.responses.name;
         
         // Date
@@ -93,7 +77,7 @@ class Evaluate {
         fs.writeFileSync(this.path + '\\evaluations.json', JSON.stringify(jsonData, null, 2));
         console.log('Data saved to evaluations.json');
     }
-    loadEvalIdList() {
+    loadEvalNameList() {
         // List of eval IDs
         var dataList = [];
 
@@ -108,12 +92,12 @@ class Evaluate {
 
         // Get each evalID
         for (let i = 0; i < jsonData.length; i++) {
-            dataList[i] = {evaluationID: jsonData[i].evaluationID, name: jsonData[i].name};
+            dataList[i] = jsonData[i].name;
         }
 
         return dataList;
     }
-    loadEvalData(evaluationID) {
+    loadEvalData(name) {
         // Load json data
         var jsonData = [];
         try {
@@ -125,7 +109,7 @@ class Evaluate {
 
         // Find correct evaluation
         var i = 0;
-        while (jsonData[i].evaluationID != evaluationID && i < jsonData.length) {
+        while (jsonData[i].name != name && i < jsonData.length) {
             i++;
         }
         if (i == jsonData.length) { // Evaluation ID not found

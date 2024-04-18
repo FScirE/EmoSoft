@@ -6,7 +6,8 @@ const vscode = acquireVsCodeApi() //ignore error
 	
 var focusValues = []
 var calmValues = []
-var evaluateids = []
+var evaluateNames = []
+var responses = {}
 
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
@@ -94,10 +95,7 @@ function addSymbols(e) {
 	return CanvasJS.formatNumber(e.value / Math.pow(1000, order), "#,##0.##") + suffix;
 }
 
-function saveEvaluateResponses() {
-	// Fetch data from HTML
-	var name = document.getElementById("textInput").value;
-
+function gatherResponses() {
 	const focusSliderValue = document.getElementById("focusSlider").value;
     const calmSliderValue = document.getElementById("calmSlider").value;
 
@@ -108,14 +106,19 @@ function saveEvaluateResponses() {
 	const q2Value = q2Rating ? q2Rating.value : null;
     
 	// Add all evaluate response to a dict
-    var responses = {}
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
 	responses.focusAnswer = focusSliderValue
 	responses.calmAnswer = calmSliderValue
+	
+}
+
+function saveEvaluateResponses() {
+	// Fetch data from HTML
+	var name = document.getElementById("textInput").value;
+	gatherResponses()
 	responses.name = name;
-	const newEvalID = new Date().getTime();
-	responses.evalID = newEvalID;
+	
 
 	// Send data to eventhandler
     vscode.postMessage({
@@ -124,8 +127,6 @@ function saveEvaluateResponses() {
     })
 	
 }
-
-
 
 function setTopFunctions(funcs) {
 	var innerHTML = ''
@@ -157,25 +158,64 @@ calmSlider.oninput = function() {
 
 function populatedropdown(){
 	var dropdown = document.getElementById("History");
-	for (var i = 0; i < evaluateids.length; i++) {
+	for (var i = 0; i < evaluateNames.length; i++) {
 		var inner = dropdown.innerHTML;
 		var option = `
-		<option value="${evaluateids[i].name}">${evaluateids[i].name}</option>
+		<option value="${evaluateNames[i]}">${evaluateNames[i]}</option>
 		`
 		inner = inner + option;
 		dropdown.innerHTML = inner;
 	}
 }
 
+function loadSession() {
+	focusValues = responses.focusValues;
+	calmValues = responses.calmValues;
+	createChart()
+	
+	focusSlider.value = responses.responses.focusAnswer
+    focusOutput.innerHTML = responses.responses.focusAnswer
+
+	calmSlider.value = responses.responses.calmAnswer
+    calmOutput.innerHTML = responses.responses.calmAnswer
+
+	var name = responses.name
+	document.getElementById("textInput").value = name;
+
+	var q1Rating = responses.responses.expectedWorkAnswer;
+    var q2Rating = responses.responses.finishedWorkAnswer;
+
+    // Check the radio buttons for question 1
+    var q1RadioButtons = document.querySelectorAll('input[name="q1rating"]');
+    for (var i = 0; i < q1RadioButtons.length; i++) {
+        if (q1RadioButtons[i].value === q1Rating) {
+            q1RadioButtons[i].checked = true;
+        }
+    }
+
+    // Check the radio buttons for question 2
+    var q2RadioButtons = document.querySelectorAll('input[name="q2rating"]');
+    for (var i = 0; i < q2RadioButtons.length; i++) {
+        if (q2RadioButtons[i].value === q2Rating) {
+            q2RadioButtons[i].checked = true;
+        }
+    }
+}
+
 var selectElement = document.getElementById("History");
 
 selectElement.addEventListener("change", function(event) {
     // Code to execute when the selection changes
-	if(evaluateid == -1){
-		saveEvaluateResponses()
+	var sessionName = selectElement.value
+	if (responses.name == "New Session") {
+		gatherResponses()
+		newestSession = responses;
+		loadSession()
 	}
-    
-    
+	vscode.postMessage({
+		variable: 'nameRequest',
+		value: sessionName
+	})
 });
 
 window.addEventListener("message", e => {
@@ -190,10 +230,17 @@ window.addEventListener("message", e => {
 		case "functions":
 			setTopFunctions(message.value)
 			break;
-		case "evaluateids":
-			evaluateids = message.value
+		case "evaluateNames":
+			evaluateNames = message.value
 			populatedropdown()
 			break;
-
+		case "sessionData":
+			if (message.value == -1) {
+				responses = {};
+			} else {
+				responses = message.value;
+			}
+			loadSession();
+			break;
 	}
 })

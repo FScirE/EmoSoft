@@ -39,7 +39,7 @@ class EventHandler {
                         variable: "airesponse",
                         value: responseFromAi
                     })
-                    return;
+                    break;
                 // Record a session
                 case 'recording':
                     if (message.value == true) {
@@ -84,18 +84,18 @@ class EventHandler {
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
                                 })
                                 this.uiHandler.evaluateWebView.webview.postMessage({
-                                    variable: "evaluateids",
-                                    value: this.evaluate.loadEvalIdList()
+                                    variable: "evaluateNames",
+                                    value: this.evaluate.loadEvalNameList()
                                 })
                             }
                             if (e == 'No') {
                                 console.log("No to evaluate")
-                                console.log(this.evaluate.loadEvalIdList());
+                                console.log(this.evaluate.loadEvalNameList());
                             }
                         })
                         
                     }
-                    return;
+                    break;
             }   
         },
             undefined,
@@ -107,17 +107,22 @@ class EventHandler {
         switch (message.variable) {
             case 'evaluateResponses':
                 this.evaluate.responses = message.value;
-                if (this.evaluate.responses.evalID != -1) {
-                    vscode.window.showInformationMessage('Evaluation has been saved.');
-                } 
+                vscode.window.showInformationMessage('Evaluation has been saved.');
                 await this.evaluate.saveEvaluationToFile();
                 this.uiHandler.evaluateWebView.dispose();
                 vscode.commands.executeCommand('start.ui')
-                return;
+                break;
+            case 'nameRequest':
+                var loadedData = await this.evaluate.loadEvalData(message.value);
+                this.uiHandler.evaluateWebView.webview.postMessage({
+                    variable: "sessionData",
+                    value: loadedData
+                })
+                break;
             case 'finished':
                 console.log(message.value)
                 this.generated = true
-                return;
+                break;
         }
     },
         this,

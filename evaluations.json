@@ -1,94 +1,86 @@
 [
   {
-    "evaluationID": 1713372553672,
-    "name": "uuu",
-    "date": "2024-04-17",
+    "name": "oliver",
+    "date": "2024-04-18",
     "focusValues": [
       {
         "x": 0,
-        "y": 49
+        "y": 76
       }
     ],
     "calmValues": [
       {
         "x": 0,
-        "y": 43
+        "y": 21
       }
     ],
     "responses": {
-      "focusAnswer": "67",
-      "calmAnswer": "68",
-      "expectedWorkAnswer": "4",
-      "finishedWorkAnswer": "4"
-    }
-  },
-  {
-    "evaluationID": 1713372585917,
-    "name": "aaa",
-    "date": "2024-04-17",
-    "focusValues": [
-      {
-        "x": 0,
-        "y": 55
-      }
-    ],
-    "calmValues": [
-      {
-        "x": 0,
-        "y": 53
-      }
-    ],
-    "responses": {
-      "focusAnswer": "50",
-      "calmAnswer": "42",
+      "focusAnswer": "18",
+      "calmAnswer": "29",
       "expectedWorkAnswer": "3",
       "finishedWorkAnswer": "3"
     }
   },
   {
-    "evaluationID": 1713372932252,
-    "name": "dupe",
-    "date": "2024-04-17",
+    "name": "dupeärcool",
+    "date": "2024-04-18",
     "focusValues": [
       {
         "x": 0,
-        "y": 75
+        "y": 39
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 20,
+        "y": 12
+      },
+      {
+        "x": 30,
+        "y": 15
+      },
+      {
+        "x": 40,
+        "y": 28
+      },
+      {
+        "x": 50,
+        "y": 62
       }
     ],
     "calmValues": [
       {
         "x": 0,
-        "y": 43
+        "y": 55
+      },
+      {
+        "x": 10,
+        "y": 41
+      },
+      {
+        "x": 20,
+        "y": 47
+      },
+      {
+        "x": 30,
+        "y": 61
+      },
+      {
+        "x": 40,
+        "y": 30
+      },
+      {
+        "x": 50,
+        "y": 23
       }
     ],
     "responses": {
-      "focusAnswer": "58",
-      "calmAnswer": "48",
+      "focusAnswer": "36",
+      "calmAnswer": "25",
       "expectedWorkAnswer": "1",
       "finishedWorkAnswer": "1"
-    }
-  },
-  {
-    "evaluationID": 1713373247581,
-    "name": "ggg",
-    "date": "2024-04-17",
-    "focusValues": [
-      {
-        "x": 0,
-        "y": 42
-      }
-    ],
-    "calmValues": [
-      {
-        "x": 0,
-        "y": 61
-      }
-    ],
-    "responses": {
-      "focusAnswer": "32",
-      "calmAnswer": "24",
-      "expectedWorkAnswer": "1",
-      "finishedWorkAnswer": "2"
     }
   }
 ]
