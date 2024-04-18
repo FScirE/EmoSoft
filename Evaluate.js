@@ -107,15 +107,15 @@ class Evaluate {
             console.log("evaluations.json does not exist or is empty.")
         }
 
+        if (name == "New Session") { // Evaluation ID not found
+            return -1;
+        }
+        
         // Find correct evaluation
         var i = 0;
         while (jsonData[i].name != name && i < jsonData.length) {
             i++;
         }
-        if (i == jsonData.length) { // Evaluation ID not found
-            return -1;
-        }
-
         return jsonData[i];
     }
 }

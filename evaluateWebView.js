@@ -8,6 +8,7 @@ var focusValues = []
 var calmValues = []
 var evaluateNames = []
 var responses = {}
+var newestSession = {}
 
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
@@ -169,54 +170,81 @@ function populatedropdown(){
 }
 
 function loadSession() {
+	var name = responses.name
+	if (name != "New Session") {
+		document.getElementById("textInput").value = name;
+	}
+	else {
+		document.getElementById("textInput").value = "";
+	}
+	//CHART LOAD
 	focusValues = responses.focusValues;
 	calmValues = responses.calmValues;
 	createChart()
-	
+
+	//SLIDER LOAD
 	focusSlider.value = responses.responses.focusAnswer
     focusOutput.innerHTML = responses.responses.focusAnswer
 
 	calmSlider.value = responses.responses.calmAnswer
     calmOutput.innerHTML = responses.responses.calmAnswer
 
-	var name = responses.name
-	document.getElementById("textInput").value = name;
-
+	//RADIO BUTTON LOAD
 	var q1Rating = responses.responses.expectedWorkAnswer;
     var q2Rating = responses.responses.finishedWorkAnswer;
 
     // Check the radio buttons for question 1
     var q1RadioButtons = document.querySelectorAll('input[name="q1rating"]');
     for (var i = 0; i < q1RadioButtons.length; i++) {
-        if (q1RadioButtons[i].value === q1Rating) {
-            q1RadioButtons[i].checked = true;
-        }
+        if (q1Rating && q1RadioButtons[i].value === q1Rating) {
+			q1RadioButtons[i].checked = true;
+		} else {
+			q1RadioButtons[i].checked = false; // Uncheck the radio button
+		}
     }
 
     // Check the radio buttons for question 2
     var q2RadioButtons = document.querySelectorAll('input[name="q2rating"]');
     for (var i = 0; i < q2RadioButtons.length; i++) {
-        if (q2RadioButtons[i].value === q2Rating) {
-            q2RadioButtons[i].checked = true;
-        }
+        if (q2Rating && q2RadioButtons[i].value === q2Rating) {
+			q2RadioButtons[i].checked = true;
+		} else {
+			q2RadioButtons[i].checked = false; // Uncheck the radio button
+		}
     }
 }
 
 var selectElement = document.getElementById("History");
 
 selectElement.addEventListener("change", function(event) {
-    // Code to execute when the selection changes
 	var sessionName = selectElement.value
-	if (responses.name == "New Session") {
-		gatherResponses()
-		newestSession = responses;
-		loadSession()
-	}
 	vscode.postMessage({
 		variable: 'nameRequest',
 		value: sessionName
 	})
+	
 });
+
+selectElement.addEventListener("focus", function(event) {
+	if (selectElement.value == "New Session"){
+		newestSession.name = "New Session";
+		newestSession.responses = {};
+		newestSession.focusValues = focusValues;
+		newestSession.calmValues = calmValues;
+		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
+		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
+
+		const q1Rating = document.querySelector('input[name="q1rating"]:checked');
+		const q2Rating = document.querySelector('input[name="q2rating"]:checked');
+	
+		const q1Value = q1Rating ? q1Rating.value : null;
+		const q2Value = q2Rating ? q2Rating.value : null;
+
+		newestSession.responses.expectedWorkAnswer = q1Value;
+		newestSession.responses.finishedWorkAnswer = q2Value;
+	}
+});
+
 
 window.addEventListener("message", e => {
 	const message = e.data; // The JSON data our extension sent
@@ -236,7 +264,7 @@ window.addEventListener("message", e => {
 			break;
 		case "sessionData":
 			if (message.value == -1) {
-				responses = {};
+				responses = newestSession
 			} else {
 				responses = message.value;
 			}

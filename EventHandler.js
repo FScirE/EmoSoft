@@ -113,6 +113,7 @@ class EventHandler {
                 vscode.commands.executeCommand('start.ui')
                 break;
             case 'nameRequest':
+                console.log("Requesting " + message.value);
                 var loadedData = await this.evaluate.loadEvalData(message.value);
                 this.uiHandler.evaluateWebView.webview.postMessage({
                     variable: "sessionData",
