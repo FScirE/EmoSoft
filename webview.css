@@ -164,10 +164,11 @@ progress {
 
 /*Individual messages*/
 .message {
+    font-size: 12px;
     border-radius: 11px;
     max-width: 70%;
     width: auto;
-    padding: 9px;
+    padding: 8px;
     overflow-wrap: break-word;
 }
 .left {
@@ -329,6 +330,8 @@ h2 {
     position: relative;
 }
 
+
+
 .question .labelContainer label {
     padding-top: 10px; /* Adjust the padding-top value to move the label text down */
     display: inline-block;
@@ -388,7 +391,7 @@ h2 {
 /*------------------Slider-------------*/
 .slider-container {
     width: 80%;
-    margin: 50px auto;
+    margin: 40px auto;
 }
 input[type=range] {
     -webkit-appearance: none;
