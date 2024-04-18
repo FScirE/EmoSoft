@@ -20,7 +20,7 @@ class UIHandler{
         this.focusBar = createStatusBar('Focus', 1002)
         this.calmBar = createStatusBar('Calm', 1001)
     }
-    
+
     init(context, eventHandler) {
         // Handle messages from the webview
         this.eventHandler = eventHandler
@@ -48,7 +48,7 @@ class UIHandler{
         this.webView.webview.postMessage({variable: 'calm', value: calm * 100})
     }
 
-    // this is maybe not the cleanest way to do this, 
+    // this is maybe not the cleanest way to do this,
     //    but this sets UIHandler.funcname to give the function that is outside the class in this file
     //setStatusBarBackgroundColor = setStatusBarBackgroundColor;
 
@@ -58,17 +58,17 @@ class UIHandler{
             await sleep(100)
         }
         this.webView.webview.postMessage({
-            variable: 'aimessage', 
-            value: text, 
+            variable: 'aimessage',
+            value: text,
             type: cssClass
         })
         this.messagePending = false;
     }
 
     async switchToEvaluatePage() {
-        if (this.webViewIsVisisble) this.webView.dispose(); //close ui window if open
-        this.evaluateWebView = createWebView(this.context, 'evaluate', 'webview', 'evaluateWebView')
-        this.context.subscriptions.push(this.evaluateWebView)
+        if (this.webViewIsVisisble) await this.webView.dispose(); //close ui window if open
+        this.evaluateWebView = await createWebView(this.context, 'evaluate', 'webview', 'evaluateWebView')
+        await this.context.subscriptions.push(this.evaluateWebView)
     }
 
     async updateFocusCalmBarColors(focus, calm) {
@@ -105,6 +105,7 @@ function createWebView(context, html, style, script) {
 		vscode.ViewColumn.Beside,
 		{ enableScripts: true }
 	);
+    webView.iconPath = vscode.Uri.file(context.extensionPath + '\\mfw_cropped.jpg')
 	//set source paths for style and script
 	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${style}.css`])));
 	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${script}.js`])));

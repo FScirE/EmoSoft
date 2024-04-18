@@ -27,7 +27,7 @@ class EventHandler {
         this.dataHandler = dataHandler;
     }
 
-    async initUIMessage(context) {      
+    async initUIMessage(context) {
         this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
             switch (message.variable) {
                 // User chats with AI assistent
@@ -65,7 +65,7 @@ class EventHandler {
                                     while(!this.generated) {
                                         await sleepSeconds(0.2)
                                     }
-                                })                         
+                                })
 
                                 await this.eyetracker.generateHeatmap()
                                 var funcs = await this.eyetracker.calculateTopLines()
@@ -74,16 +74,17 @@ class EventHandler {
                                 await this.initEvaluateReceiveMessage(context);
 
                                 await sleepSeconds(1) //safety
+                                
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "functions",
                                     value: funcs
                                 })
-                                await sleepSeconds(1) //safety
+                                //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
                                 })
-                                await sleepSeconds(1) //safety
+                                //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "evaluateNames",
                                     value: this.evaluate.loadEvalNameList()
@@ -94,10 +95,10 @@ class EventHandler {
                                 console.log(this.evaluate.loadEvalNameList());
                             }
                         })
-                        
+
                     }
                     break;
-            }   
+            }
         },
             undefined,
             context.subscriptions);

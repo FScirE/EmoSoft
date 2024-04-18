@@ -54,23 +54,40 @@
           "default": "None"
         },
         "emoide.focusColor": {
-          "type":"string",
+          "type": "string",
           "description": "Color theme",
-          "enum":["Green", "Blue","Yellow", "Pink", "Purple", "Cyan", "White", "Mango"],
+          "enum": [
+            "Green",
+            "Blue",
+            "Yellow",
+            "Pink",
+            "Purple",
+            "Cyan",
+            "White",
+            "Mango"
+          ],
           "default": "Green"
         },
         "emoide.calmColor": {
-          "type":"string",
+          "type": "string",
           "description": "Color theme",
-          "enum":["Blue", "Green","Yellow", "Pink", "Purple", "Cyan", "White", "Mango"],
+          "enum": [
+            "Blue",
+            "Green",
+            "Yellow",
+            "Pink",
+            "Purple",
+            "Cyan",
+            "White",
+            "Mango"
+          ],
           "default": "Blue"
         },
         "emoide.calibrateEye": {
-          "type":"object",
+          "type": "object",
           "description": "Calibrate eyetracker",
           "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEyeTracker)"
         }
-
       }
     },
     "commands": [
@@ -100,8 +117,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "canvasjs": "^1.8.3",
     "@xmldom/xmldom": "^0.8.10",
+    "canvasjs": "^1.8.3",
     "chart.js": "^4.4.2",
     "child_process": "^1.0.2",
     "dotenv": "^16.4.5",
