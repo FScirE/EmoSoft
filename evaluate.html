@@ -8,7 +8,13 @@
 <body>
 
 <h1 class="header">Evaluate session</h1>
-
+<div id="dropdown">
+    <input type="text" id="textInput" placeholder="Enter Evaluation ID">
+    <select id="History">
+        <option value="New Session">New Session</option>
+        <!-- Options will be added dynamically here -->
+    </select>
+</div>
 <div id="chartContainer">
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </div>
@@ -25,7 +31,9 @@
 <div id="questionContainer">
     <h2>Questions regarding the session</h2>
     <div class="question">
-        <label for="q1">I was focused during this session.</label>
+        <div class="labelContainer">
+            <label for="q1">I was focused during this session.</label>
+        </div>
         <div class="slider-container">
             <input type="range" min="0" max="100" value="0" id="focusSlider">
             <div class="slider-value" id="focusValue">0</div>
@@ -33,7 +41,9 @@
     </div>
     
     <div class="question">
-        <label for="q2">I was calm during this session.</label>
+        <div class="labelContainer">
+            <label for="q2">I was calm during this session.</label>
+        </div>
         <div class="slider-container">
             <input type="range" min="0" max="100" value="0" id="calmSlider">
             <div class="slider-value" id="calmValue">0</div>

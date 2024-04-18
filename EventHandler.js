@@ -14,7 +14,7 @@ class EventHandler {
 
         // Create AIHandler and uihandler for chat and Evaluate object for the evaluate session feature
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
-        this.evaluate = new Evaluate();
+        this.evaluate = new Evaluate(extensionPath);
         this.settings = settings;
         this.uiHandler = uiHandler
         this.eyetracker = eyetracker
@@ -83,9 +83,15 @@ class EventHandler {
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
                                 })
+                                await sleepSeconds(1) //safety
+                                this.uiHandler.evaluateWebView.webview.postMessage({
+                                    variable: "evaluateNames",
+                                    value: this.evaluate.loadEvalNameList()
+                                })
                             }
                             if (e == 'No') {
                                 console.log("No to evaluate")
+                                console.log(this.evaluate.loadEvalNameList());
                             }
                         })
                         
@@ -101,10 +107,19 @@ class EventHandler {
         this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
         switch (message.variable) {
             case 'evaluateResponses':
-                console.log("evaluate responses: ", message.value);
                 this.evaluate.responses = message.value;
-                this.evaluate.saveEvaluationToFile();
+                vscode.window.showInformationMessage('Evaluation has been saved.');
+                await this.evaluate.saveEvaluationToFile();
                 this.uiHandler.evaluateWebView.dispose();
+                vscode.commands.executeCommand('start.ui')
+                break;
+            case 'nameRequest':
+                console.log("Requesting " + message.value);
+                var loadedData = await this.evaluate.loadEvalData(message.value);
+                this.uiHandler.evaluateWebView.webview.postMessage({
+                    variable: "sessionData",
+                    value: loadedData
+                })
                 break;
             case 'finished':
                 console.log(message.value)

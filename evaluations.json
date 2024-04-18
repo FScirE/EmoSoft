@@ -1,0 +1,152 @@
+[
+  {
+    "name": "oliver",
+    "date": "2024-04-18",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 76
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 21
+      }
+    ],
+    "responses": {
+      "focusAnswer": "18",
+      "calmAnswer": "29",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
+  },
+  {
+    "name": "dupeärcool",
+    "date": "2024-04-18",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 39
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 20,
+        "y": 12
+      },
+      {
+        "x": 30,
+        "y": 15
+      },
+      {
+        "x": 40,
+        "y": 28
+      },
+      {
+        "x": 50,
+        "y": 62
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 55
+      },
+      {
+        "x": 10,
+        "y": 41
+      },
+      {
+        "x": 20,
+        "y": 47
+      },
+      {
+        "x": 30,
+        "y": 61
+      },
+      {
+        "x": 40,
+        "y": 30
+      },
+      {
+        "x": 50,
+        "y": 23
+      }
+    ],
+    "responses": {
+      "focusAnswer": "36",
+      "calmAnswer": "25",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "name": "maxärgay",
+    "date": "2024-04-18",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 70
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 48
+      }
+    ],
+    "responses": {
+      "focusAnswer": "69",
+      "calmAnswer": "40",
+      "expectedWorkAnswer": "4",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "bajs",
+    "date": "2024-04-18",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 50
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 50
+      }
+    ],
+    "responses": {
+      "focusAnswer": "31",
+      "calmAnswer": "26",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "5"
+    }
+  },
+  {
+    "name": "fitta",
+    "date": "2024-04-18",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 24
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 62
+      }
+    ],
+    "responses": {
+      "focusAnswer": "72",
+      "calmAnswer": "65",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
+    }
+  }
+]

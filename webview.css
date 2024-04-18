@@ -164,10 +164,11 @@ progress {
 
 /*Individual messages*/
 .message {
+    font-size: 12px;
     border-radius: 11px;
     max-width: 70%;
     width: auto;
-    padding: 9px;
+    padding: 8px;
     overflow-wrap: break-word;
 }
 .left {
@@ -265,10 +266,12 @@ h2 {
     margin: 0 auto;
     width: 90%;
     height: 370px;
+    margin-top: 65px;
 }
 
 #chartContainer canvas{
-    border-radius: 11px;   
+    border-radius: 11px;
+      
 }
 
 #eyetracker {
@@ -301,7 +304,6 @@ h2 {
     border-radius: 11px;
     width: 90%;
     height: auto;
-
     align-self: center;
     position: relative;
     margin: 10px auto;
@@ -317,7 +319,6 @@ h2 {
     margin-bottom: 11px;
     text-align: center;
     font-size: 16px;
-    
     color: #FFF;
 }
 
@@ -327,9 +328,10 @@ h2 {
     margin-top: 3%;
     align-self: center;
     position: relative;
-    
-    
 }
+
+
+
 .question .labelContainer label {
     padding-top: 10px; /* Adjust the padding-top value to move the label text down */
     display: inline-block;
@@ -373,6 +375,7 @@ h2 {
     align-items: center;
     padding: 10px; /* Add padding for better spacing */
 }
+
 .submitBtn #submitEvaluationBtn{
     color: white;
     background-color: rgb(50, 55, 58);
@@ -381,13 +384,14 @@ h2 {
     height: 40px;
     font-size: 16px;
 }
+
 .submitBtn #submitEvaluationBtn:hover{
     background-color: #03a9f4
 }
 /*------------------Slider-------------*/
 .slider-container {
     width: 80%;
-    margin: 50px auto;
+    margin: 40px auto;
 }
 input[type=range] {
     -webkit-appearance: none;
@@ -398,6 +402,7 @@ input[type=range] {
     outline: none;
     margin: 15px 0;
 }
+
 .slider-container #focusSlider[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -407,6 +412,7 @@ input[type=range] {
     background-color: var(--focus-color);
     cursor: pointer;
 }
+
 .slider-container #calmSlider[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -420,3 +426,43 @@ input[type=range] {
 .slider-value {
     text-align: center;
 }
+
+#dropdown {
+    width: 100%;
+    height: 40px;
+    display: inline-block;
+    
+    margin-right: 16px;
+    padding: 4px;
+}
+#dropdown #History {
+    float: right;
+    color: #FFF;
+    width: 20%;
+    height: 38px;
+    margin-right: 4%;
+    background-color: rgb(50, 55, 58);
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0);
+}
+
+#dropdown #textInput {
+    min-width: 60%;
+    width: auto;
+    height: 25px;
+    margin-left: 4%;
+    background-color: rgb(50, 55, 58);
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0);
+    color: white;
+    padding: 5px 10px;
+}
+
+#dropdown #textInput:focus {
+    border-color: #03a9f4;
+}
+
+#dropdown #History:focus {
+    border-color: #03a9f4;
+}
+

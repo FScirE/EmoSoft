@@ -2,21 +2,19 @@ const fs = require('fs');
 
 
 class Evaluate {
-    constructor() {
-        // Values, not sure yet if we need them in this
+    constructor(path) {
+        // Path to save json file att correct place
+        this.path = path;
+
+        // Current session before it has been saved to json
+        this.tempSession = {};
+
+        // Focus and calm values
         this.focusValues = [];
         this.calmValues = [];
 
-        // Questions
-        this.responses = [];
-        this.question1 = "I was focused during this session."
-        this.question2 = "I was calm during this session."
-        this.question3 = "I expected to finish a lot of work during this session.";
-        this.question4 = "I managed to finish a lot of work during this session.";
-        
-        // Saving
-        this.filename = './evaluations.txt';
-        this.evalID = '#none' // Should later be able to enter by user (I think)
+        // Data to be stored
+        this.responses = {};
     }
 
     // ------------- Setter and getter functions -------------------------------------------------------------//
@@ -47,73 +45,78 @@ class Evaluate {
 //------------------------------------------------------------------------------//
     saveEvaluationToFile() {
         // Open file
-        fs.open(this.filename, 'wx', (err, fd) => {
-            if (err) {
-                if (err.code === 'EEXIST') {
-                    console.log('File already exists.');
-                    return;
-                }
-                console.error('Error creating file:', err);
-                return;
-            }
-            console.log('File created successfully!');
-            
-            
-            // Close the file
-            fs.close(fd, (err) => {
-                if (err) {
-                    console.error('Error closing file:', err);
-                }
-            });
-        });
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty. The file will be created.")
+        }
+    
         // The data that shall be written
-        const dataList = [];
+        const dataList = {};
 
-        dataList.push(this.evalID); // ID
-
+        // Evaluation Name
+        dataList.name = this.responses.name;
+        
         // Date
         const currentDate = new Date(); // Todays date
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
-        var dateStringFormatted = "Date: " + dateString; // Format date string
-        dataList.push(dateStringFormatted);
+        dataList.date = dateString;
 
-        dataList.push("Focus:");
-        // String for all focus values with time stamps
-        for (let i = 0; i < this.focusValues.length; i++) {
-            var str = "x: " + this.focusValues[i].x + ", y: " + this.focusValues[i].y;
-            dataList.push(str);
+        // Focus and calm values
+        dataList.focusValues = this.focusValues;
+        dataList.calmValues = this.calmValues;
+        
+        // Responses
+        dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer, 
+                              expectedWorkAnswer: this.responses.expectedWorkAnswer, finishedWorkAnswer: this.responses.finishedWorkAnswer};
+        
+        // Write to JSON file
+        jsonData.push(dataList);
+        fs.writeFileSync(this.path + '\\evaluations.json', JSON.stringify(jsonData, null, 2));
+        console.log('Data saved to evaluations.json');
+    }
+    loadEvalNameList() {
+        // List of eval IDs
+        var dataList = [];
+
+        // Load json data
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty.")
         }
 
-        dataList.push("Calm:")
-        // String for all calm values with time stamps
-        for (let i = 0; i < this.calmValues.length; i++) {
-            var str = "x: " + this.calmValues[i].x + ", y: " + this.calmValues[i].y;
-            dataList.push(str);
+        // Get each evalID
+        for (let i = 0; i < jsonData.length; i++) {
+            dataList[i] = jsonData[i].name;
         }
 
-//------------------------------------------------------------------------------//
-        // Questions with answers
-        dataList.push(this.question1);
-        dataList.push(this.responses[2]);
-        dataList.push(this.question2);
-        dataList.push(this.responses[3]);
-        dataList.push(this.question3);
-        dataList.push(this.responses[0]);
-        dataList.push(this.question4);
-        dataList.push(this.responses[1]);
+        return dataList;
+    }
+    loadEvalData(name) {
+        // Load json data
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty.")
+        }
 
-        // Split for next eval
-        dataList.push("------------------------------------------------")
-
-        // Iterate through the list and append each element to the file with a newline character
-        dataList.forEach(data => {
-            try {
-                fs.appendFileSync(this.filename, data + '\n');
-                console.log(`Data "${data}" appended to file successfully!`);
-            } catch (err) {
-                console.error('Error appending to file:', err);
-            }
-        });
+        if (name == "New Session") { // Evaluation ID not found
+            return -1;
+        }
+        
+        // Find correct evaluation
+        var i = 0;
+        while (jsonData[i].name != name && i < jsonData.length) {
+            i++;
+        }
+        return jsonData[i];
     }
 }
 

@@ -6,6 +6,9 @@ const vscode = acquireVsCodeApi() //ignore error
 	
 var focusValues = []
 var calmValues = []
+var evaluateNames = []
+var responses = {}
+var newestSession = {}
 
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
@@ -93,30 +96,37 @@ function addSymbols(e) {
 	return CanvasJS.formatNumber(e.value / Math.pow(1000, order), "#,##0.##") + suffix;
 }
 
-function saveEvaluateResponses() {
-
+function gatherResponses() {
 	const focusSliderValue = document.getElementById("focusSlider").value;
     const calmSliderValue = document.getElementById("calmSlider").value;
 
-    const radioButtonGroups = [	document.getElementsByName("q1rating"),
-                                document.getElementsByName("q2rating"),
-                                document.getElementsByName("q3rating")]
-    
-    var responses = []
-    
-    for (var group = 0; group < radioButtonGroups.length; group++) 
-        for (var button = 0; button < radioButtonGroups[group].length; button++) 
-            if (radioButtonGroups[group][button].checked) 
-                responses[group] = radioButtonGroups[group][button].value
+    const q1Rating = document.querySelector('input[name="q1rating"]:checked');
+	const q2Rating = document.querySelector('input[name="q2rating"]:checked');
 	
-	responses.push(focusSliderValue)
-	responses.push(calmSliderValue)
-    console.log(responses);
+	const q1Value = q1Rating ? q1Rating.value : null;
+	const q2Value = q2Rating ? q2Rating.value : null;
+    
+	// Add all evaluate response to a dict
+	responses.expectedWorkAnswer = q1Value;
+	responses.finishedWorkAnswer = q2Value;
+	responses.focusAnswer = focusSliderValue
+	responses.calmAnswer = calmSliderValue
+	
+}
 
+function saveEvaluateResponses() {
+	// Fetch data from HTML
+	var name = document.getElementById("textInput").value;
+	gatherResponses()
+	responses.name = name;
+	
+
+	// Send data to eventhandler
     vscode.postMessage({
         variable: "evaluateResponses",
         value: responses
     })
+	
 }
 
 function setTopFunctions(funcs) {
@@ -147,6 +157,95 @@ calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
 
+function populatedropdown(){
+	var dropdown = document.getElementById("History");
+	for (var i = 0; i < evaluateNames.length; i++) {
+		var inner = dropdown.innerHTML;
+		var option = `
+		<option value="${evaluateNames[i]}">${evaluateNames[i]}</option>
+		`
+		inner = inner + option;
+		dropdown.innerHTML = inner;
+	}
+}
+
+function loadSession() {
+	var name = responses.name
+	if (name != "New Session") {
+		document.getElementById("textInput").value = name;
+	}
+	else {
+		document.getElementById("textInput").value = "";
+	}
+	//CHART LOAD
+	focusValues = responses.focusValues;
+	calmValues = responses.calmValues;
+	createChart()
+
+	//SLIDER LOAD
+	focusSlider.value = responses.responses.focusAnswer
+    focusOutput.innerHTML = responses.responses.focusAnswer
+
+	calmSlider.value = responses.responses.calmAnswer
+    calmOutput.innerHTML = responses.responses.calmAnswer
+
+	//RADIO BUTTON LOAD
+	var q1Rating = responses.responses.expectedWorkAnswer;
+    var q2Rating = responses.responses.finishedWorkAnswer;
+
+    // Check the radio buttons for question 1
+    var q1RadioButtons = document.querySelectorAll('input[name="q1rating"]');
+    for (var i = 0; i < q1RadioButtons.length; i++) {
+        if (q1Rating && q1RadioButtons[i].value === q1Rating) {
+			q1RadioButtons[i].checked = true;
+		} else {
+			q1RadioButtons[i].checked = false; // Uncheck the radio button
+		}
+    }
+
+    // Check the radio buttons for question 2
+    var q2RadioButtons = document.querySelectorAll('input[name="q2rating"]');
+    for (var i = 0; i < q2RadioButtons.length; i++) {
+        if (q2Rating && q2RadioButtons[i].value === q2Rating) {
+			q2RadioButtons[i].checked = true;
+		} else {
+			q2RadioButtons[i].checked = false; // Uncheck the radio button
+		}
+    }
+}
+
+var selectElement = document.getElementById("History");
+
+selectElement.addEventListener("change", function(event) {
+	var sessionName = selectElement.value
+	vscode.postMessage({
+		variable: 'nameRequest',
+		value: sessionName
+	})
+	
+});
+
+selectElement.addEventListener("focus", function(event) {
+	if (selectElement.value == "New Session"){
+		newestSession.name = "New Session";
+		newestSession.responses = {};
+		newestSession.focusValues = focusValues;
+		newestSession.calmValues = calmValues;
+		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
+		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
+
+		const q1Rating = document.querySelector('input[name="q1rating"]:checked');
+		const q2Rating = document.querySelector('input[name="q2rating"]:checked');
+	
+		const q1Value = q1Rating ? q1Rating.value : null;
+		const q2Value = q2Rating ? q2Rating.value : null;
+
+		newestSession.responses.expectedWorkAnswer = q1Value;
+		newestSession.responses.finishedWorkAnswer = q2Value;
+	}
+});
+
+
 window.addEventListener("message", e => {
 	const message = e.data; // The JSON data our extension sent
 	
@@ -158,6 +257,18 @@ window.addEventListener("message", e => {
 			break;
 		case "functions":
 			setTopFunctions(message.value)
+			break;
+		case "evaluateNames":
+			evaluateNames = message.value
+			populatedropdown()
+			break;
+		case "sessionData":
+			if (message.value == -1) {
+				responses = newestSession
+			} else {
+				responses = message.value;
+			}
+			loadSession();
 			break;
 	}
 })
