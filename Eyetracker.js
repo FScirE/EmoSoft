@@ -17,9 +17,11 @@ const EDITOR_END_Y = 0.777
 const EDITOR_START_X = 0.20
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 var timeOut = false;
+var stuckFunc = ''
+var stuckCounter = 0
 
 const decorationType = vscode.window.createTextEditorDecorationType({
-    backgroundColor: 'rgba(200, 200, 200, 0.3)'
+    backgroundColor: 'rgba(200, 200, 200, 0.2)'
 })
 
 class EyeTracker {
@@ -37,14 +39,14 @@ class EyeTracker {
         //UNDER IS THE IP ADRESS USE IT
         //this.settings.eyeIP
 
-        this.init()
-
         // this.socket.on('error', (err) => {
         //     console.error('Error:', err.message);
         // });
     }
 
-    init() {
+    init(eventHandler) {
+        this.eventHandler = eventHandler
+
         // Connect to the server
         this.socket.connect(4242, this.settings.eyeTracker, () => {
             console.log('Connected to EyeTracker server');
@@ -99,7 +101,7 @@ class EyeTracker {
         var disposableInterval = setInterval(async () => {
             if (this.recording)
                 await this.getMostFocusedFunction()
-        }, readFunctionDelay * 1000)
+        }, readFunctionDelay * 1000 + 500)
     }
 
     getX() {
@@ -119,10 +121,10 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {	
-			var y = this.getY()
-			var x = this.getX()
-            // var y = 0.5
-            // var x = 0.5
+			// var y = this.getY()
+			// var x = this.getX()
+            var y = 0.5
+            var x = 0.5
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
@@ -163,6 +165,7 @@ class EyeTracker {
     }
 
     recordingStart() { 
+        this.lookedLines = {}
         this.long_X = []
         this.long_Y = [] //clear lists
         fs.writeFileSync(this.path + '\\fullDictionaryFile.txt', '') //empty old file
@@ -185,17 +188,44 @@ class EyeTracker {
         }       
         execSync(`python findFuncFromLines.py ${this.filePath}`, { cwd: this.path })
         this.lookedLines = {} //empty
+
+        var stuckFileContent = fs.readFileSync(this.path + '\\stuckLine.txt').toString().split(':')
+        stuckCounter = stuckFunc == stuckFileContent[0] ? stuckCounter + 1 : 1
+        // console.log(`${stuckCounter}:${stuckFileContent[0]}:${stuckFileContent[1]}`)
+        if (this.settings.allownotifications && stuckCounter == 3 && stuckFunc != '' && stuckFunc != '-1') //same a few times in a row
+            vscode.window.showInformationMessage(`It seems you are stuck, do you need assistance?`, ...['Yes', 'No']).then((answer) => {
+                console.log(answer + ' to stuck')
+                if (answer == 'Yes') {
+                    var functionText = this.getFuncFromSpan(stuckFileContent[1])
+                    this.eventHandler.stuckOnFunction(functionText)
+                }
+            })
+        stuckFunc = stuckFileContent[0]
     }
 
-    calculateTopLines(){
+    getFuncFromSpan(span) {
+        var editor = vscode.window.visibleTextEditors[0]
+        var formattedSpan = span.trim().substring(1, span.length - 1).split(', ')
+
+        var startLine = parseInt(formattedSpan[0]) - 1
+        var endLine = parseInt(formattedSpan[1]) - 1
+
+        var start = new vscode.Position(startLine, 0);
+        var end = new vscode.Position(endLine, editor.document.lineAt(endLine).text.length);
+        var range = new vscode.Range(start, end);
+
+        return editor.document.getText(range)
+    }
+
+    calculateTopLines() {
         var topFuncs = {}
         var data = fs.readFileSync(this.path + '\\fullDictionaryFile.txt').toString()
         for (var line of data.split('\n')) {
-            var stripLine = line.substring(1, line.length - 2)
+            var stripLine = line.trim().substring(1, line.length - 1)
             for (var entry of stripLine.split(', ')) {
                 var key = entry.split(':')[0]
                 var value = parseInt(entry.split(':')[1])
-                if (key != '' && key != '-1' && key != '-2')
+                if (key != '' && key != '-1')
                 {
                     if (key in topFuncs)
                         topFuncs[key] += value
@@ -210,7 +240,7 @@ class EyeTracker {
             keyValues.push([key, topFuncs[key]])
         }
         keyValues.sort((a, b) => { return b[1] - a[1] }) //sort
-        keyValues.slice(0, 3) //top 3 values
+        keyValues = keyValues.slice(0, 3) //top 3 values
 
         return keyValues
     }

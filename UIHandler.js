@@ -52,7 +52,7 @@ class UIHandler{
     //    but this sets UIHandler.funcname to give the function that is outside the class in this file
     //setStatusBarBackgroundColor = setStatusBarBackgroundColor;
 
-    async printAIMessage(text, isFocus) {
+    async printAIMessage(text, cssClass) {
         this.messagePending = true;
         while (!this.webViewIsVisisble) {
             await sleep(100)
@@ -60,7 +60,7 @@ class UIHandler{
         this.webView.webview.postMessage({
             variable: 'aimessage', 
             value: text, 
-            type: isFocus ? 'focus' : 'calm' 
+            type: cssClass
         })
         this.messagePending = false;
     }
@@ -74,8 +74,8 @@ class UIHandler{
     async updateFocusCalmBarColors(focus, calm) {
         //#4fc553 focus
         //#03a9f4 calm
-        this.focusBar.color = `rgba(70, ${focus*255}, 0, 1)`
-        this.calmBar.color = `rgba(40, 0, ${calm*255}, 1)`
+        this.focusBar.color = `#4fc553` + Math.round(focus * 255).toString(16)
+        this.calmBar.color = `#03a9f4` + Math.round(calm * 255).toString(16)
     }
 }
 

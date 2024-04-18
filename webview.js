@@ -56,7 +56,7 @@ function setAIResponse(text) {
 
 function addAIMessage(text, type) {
     const messageHTML = `
-    <div class="message left ${type}response">
+    <div class="message left ${type}">
         <p>${text}</p>
     </div>
     `

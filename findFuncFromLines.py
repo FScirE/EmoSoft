@@ -14,8 +14,6 @@ try:
         content = file.read().split('\n')
 except:
     raise "Error opening file. Traceback to findFuncFromLines.py"
-    print("Error opening file. Traceback to findFuncFromLines.py")
-    exit(-2)
 
 ##-----------------------------------------------------------------##
 
@@ -27,7 +25,6 @@ def find_definition(line_num):
     Parameter is the number of a line. 
     Returns the function name the line is in. Ex: foo, meaning that the function name is foo.
     A return value of -1 means that the line of code is not within a function.
-    A return value of -2 means that the file does not exist.
     """
     print ("called find def")
     functions = {}
@@ -42,13 +39,12 @@ def find_definition(line_num):
                     functions[item.name] = (start, end)
     except:
         raise "Error with path: " + filepath
-        return -2
 
     for key, value in functions.items():
         if value[0] <= line_num <= value[1]:
-            return key
+            return key, value
         
-    return -1
+    return -1, (0, 0)
 
 def compute_size(node):
     min_lineno = node.lineno
@@ -66,6 +62,7 @@ def compute_size(node):
 # The dict is line number as key and amount of time as value
 
 dict_funcs = {}
+span_funcs = {}
 
 for line in content:
     if (line != ''):
@@ -73,9 +70,10 @@ for line in content:
         value = int(line.split(":")[1])
         
         print(f"this is line: ", key)
-        function_name = find_definition(key)
+        function_name, span = find_definition(key)
         print(function_name)
         
+        span_funcs[function_name] = span
         if (function_name not in dict_funcs):
             dict_funcs[function_name] = value
         else:
@@ -87,11 +85,25 @@ print(dict_funcs)
 
 # Open the file in append mode
 with open('fullDictionaryFile.txt', 'a') as dict_file:
-    # Read the contents of the file
+    # Append to the end of the file
     content = dict_file.write(str(dict_funcs) + "\n")
+    dict_file.close()
+
+with open('stuckLine.txt', 'w') as stuck_file:
+    try:
+        max_key = max(dict_funcs, key=dict_funcs.get)
+        content = f'{max_key}:{span_funcs[max_key]}'
+        if (dict_funcs[max_key] >= 19):
+            stuck_file.write(content)
+        stuck_file.close()
+    except:
+        stuck_file.close()
+        raise "No functions in focus"
+
 ##-----------------------------------------------------------------##
 # TESTS
-# function = find_definition(41)
-# print(function)
-# function = find_definition(50)
-# print(function)
+
+print(find_definition(41))
+
+# print(find_definition(50)
+

@@ -27,9 +27,8 @@ class EventHandler {
         this.dataHandler = dataHandler;
     }
 
-    async initUIMessage(context) {
-        
-        await this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
+    async initUIMessage(context) {      
+        this.uiHandler.webView.webview.onDidReceiveMessage(async message => {
             switch (message.variable) {
                 // User chats with AI assistent
                 case 'user':
@@ -39,7 +38,7 @@ class EventHandler {
                         variable: "airesponse",
                         value: responseFromAi
                     })
-                    return;
+                    break;
                 // Record a session
                 case 'recording':
                     if (message.value == true) {
@@ -79,6 +78,7 @@ class EventHandler {
                                     variable: "functions",
                                     value: funcs
                                 })
+                                await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
                                     value: [this.evaluate.focusValues, this.evaluate.calmValues]
@@ -90,7 +90,7 @@ class EventHandler {
                         })
                         
                     }
-                    return;
+                    break;
             }   
         },
             undefined,
@@ -105,18 +105,21 @@ class EventHandler {
                 this.evaluate.responses = message.value;
                 this.evaluate.saveEvaluationToFile();
                 this.uiHandler.evaluateWebView.dispose();
-                return;
+                break;
             case 'finished':
                 console.log(message.value)
                 this.generated = true
-                return;
+                break;
         }
     },
         this,
         context.subscriptions);
     }
 
-    
+    async stuckOnFunction(functionText) {
+        await this.aiHandler.sendMsgHelpWithFunc(functionText)
+        this.uiHandler.printAIMessage(this.aiHandler.output, '')
+    }
 
     // Check focus level and notifies user when focus drops below threshold
     async checkFocus(focus) {
@@ -126,7 +129,7 @@ class EventHandler {
             if (focus < thresholdFocus && this.allowNotificationFocus == true && !this.uiHandler.messagePending) {
                 this.allowNotificationFocus = false
                 await this.aiHandler.sendMsgToUnfocusedDev(focus)
-                this.uiHandler.printAIMessage(this.aiHandler.output, true)
+                this.uiHandler.printAIMessage(this.aiHandler.output, 'focusresponse')
             }
             if (!this.mutexFocus && this.allowNotificationFocus == false && focus > thresholdFocus + 0.15) { //Reset boolean that allows notifications
                 this.mutexFocus = true
@@ -144,7 +147,7 @@ class EventHandler {
             if (calm < thresholdCalm && this.allowNotificationCalm == true && !this.uiHandler.messagePending) {
                 this.allowNotificationCalm = false
                 await this.aiHandler.sendMsgToAggitatedDev(calm)
-                this.uiHandler.printAIMessage(this.aiHandler.output, false)
+                this.uiHandler.printAIMessage(this.aiHandler.output, 'calmresponse')
             }
             if (!this.mutexCalm && this.allowNotificationCalm == false && calm > thresholdCalm + 0.15) { //Reset boolean that allows notifications
                 this.mutexCalm = true

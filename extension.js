@@ -87,6 +87,7 @@ async function activate(context) {
 	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, this.settings);
 	await this.eventHandler.init(this.dataHandler);
 
+	this.eyetracker.init(this.eventHandler)
 	this.uiHandler.init(context, this.eventHandler);
 
 	this.settings.setUIHandler(this.uiHandler)
