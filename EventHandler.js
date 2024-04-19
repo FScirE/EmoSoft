@@ -109,10 +109,16 @@ class EventHandler {
         switch (message.variable) {
             case 'evaluateResponses':
                 this.evaluate.responses = message.value;
-                vscode.window.showInformationMessage('Evaluation has been saved.');
+                if (this.evaluate.responses.hasOwnProperty('focusValues')) {
+                    this.evaluate.setFocusValues(this.evaluate.responses.focusValues);
+                }
+                if (this.evaluate.responses.hasOwnProperty('calmValues')) {
+                    this.evaluate.setCalmValues(this.evaluate.responses.calmValues);
+                }
                 await this.evaluate.saveEvaluationToFile();
+                vscode.window.showInformationMessage('Evaluation has been saved.');
                 this.uiHandler.evaluateWebView.dispose();
-                vscode.commands.executeCommand('start.ui')
+                vscode.commands.executeCommand('start.ui');
                 break;
             case 'nameRequest':
                 console.log("Requesting " + message.value);
