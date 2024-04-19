@@ -1,71 +1,127 @@
 [
   {
-    "name": "oliver",
-    "date": "2024-04-18",
+    "name": "dupe äger",
+    "date": "2024-04-19",
     "focusValues": [
       {
         "x": 0,
-        "y": 76
-      }
-    ],
-    "calmValues": [
-      {
-        "x": 0,
-        "y": 21
-      }
-    ],
-    "responses": {
-      "focusAnswer": "18",
-      "calmAnswer": "29",
-      "expectedWorkAnswer": "3",
-      "finishedWorkAnswer": "3"
-    }
-  },
-  {
-    "name": "dupeärcool",
-    "date": "2024-04-18",
-    "focusValues": [
-      {
-        "x": 0,
-        "y": 39
+        "y": 43
       },
       {
         "x": 10,
-        "y": 8
+        "y": 60
       },
       {
         "x": 20,
-        "y": 12
+        "y": 50
       },
       {
         "x": 30,
-        "y": 15
+        "y": 32
       },
       {
         "x": 40,
-        "y": 28
+        "y": 38
       },
       {
         "x": 50,
-        "y": 62
+        "y": 53
       }
     ],
     "calmValues": [
       {
         "x": 0,
-        "y": 55
+        "y": 60
       },
       {
         "x": 10,
-        "y": 41
+        "y": 74
       },
       {
         "x": 20,
-        "y": 47
+        "y": 78
       },
       {
         "x": 30,
-        "y": 61
+        "y": 83
+      },
+      {
+        "x": 40,
+        "y": 91
+      },
+      {
+        "x": 50,
+        "y": 64
+      }
+    ],
+    "responses": {
+      "focusAnswer": "44",
+      "calmAnswer": "62",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "5"
+    }
+  },
+  {
+    "name": "test1",
+    "date": "2024-04-19",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 81
+      },
+      {
+        "x": 10,
+        "y": 78
+      },
+      {
+        "x": 20,
+        "y": 68
+      },
+      {
+        "x": 30,
+        "y": 44
+      },
+      {
+        "x": 40,
+        "y": 29
+      },
+      {
+        "x": 50,
+        "y": 26
+      },
+      {
+        "x": 60,
+        "y": 30
+      },
+      {
+        "x": 70,
+        "y": 62
+      },
+      {
+        "x": 80,
+        "y": 82
+      },
+      {
+        "x": 90,
+        "y": 87
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 27
+      },
+      {
+        "x": 10,
+        "y": 57
+      },
+      {
+        "x": 20,
+        "y": 53
+      },
+      {
+        "x": 30,
+        "y": 30
       },
       {
         "x": 40,
@@ -73,80 +129,30 @@
       },
       {
         "x": 50,
-        "y": 23
-      }
-    ],
-    "responses": {
-      "focusAnswer": "36",
-      "calmAnswer": "25",
-      "expectedWorkAnswer": "1",
-      "finishedWorkAnswer": "1"
-    }
-  },
-  {
-    "name": "maxärgay",
-    "date": "2024-04-18",
-    "focusValues": [
+        "y": 30
+      },
       {
-        "x": 0,
-        "y": 70
-      }
-    ],
-    "calmValues": [
+        "x": 60,
+        "y": 49
+      },
       {
-        "x": 0,
-        "y": 48
-      }
-    ],
-    "responses": {
-      "focusAnswer": "69",
-      "calmAnswer": "40",
-      "expectedWorkAnswer": "4",
-      "finishedWorkAnswer": "2"
-    }
-  },
-  {
-    "name": "bajs",
-    "date": "2024-04-18",
-    "focusValues": [
-      {
-        "x": 0,
-        "y": 50
-      }
-    ],
-    "calmValues": [
-      {
-        "x": 0,
-        "y": 50
-      }
-    ],
-    "responses": {
-      "focusAnswer": "31",
-      "calmAnswer": "26",
-      "expectedWorkAnswer": "1",
-      "finishedWorkAnswer": "5"
-    }
-  },
-  {
-    "name": "fitta",
-    "date": "2024-04-18",
-    "focusValues": [
-      {
-        "x": 0,
-        "y": 24
-      }
-    ],
-    "calmValues": [
-      {
-        "x": 0,
+        "x": 70,
         "y": 62
+      },
+      {
+        "x": 80,
+        "y": 47
+      },
+      {
+        "x": 90,
+        "y": 38
       }
     ],
     "responses": {
-      "focusAnswer": "72",
-      "calmAnswer": "65",
-      "expectedWorkAnswer": "2",
-      "finishedWorkAnswer": "2"
+      "focusAnswer": "14",
+      "calmAnswer": "100",
+      "expectedWorkAnswer": "5",
+      "finishedWorkAnswer": "5"
     }
   }
 ]

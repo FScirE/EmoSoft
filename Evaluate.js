@@ -52,6 +52,12 @@ class Evaluate {
         } catch (err) {
             console.log("evaluations.json does not exist or is empty. The file will be created.")
         }
+        // Remove if name already exists (overwrite)
+        for (let i = 0; i < jsonData.length; i++) {
+            if (jsonData[i].name == this.responses.name) {
+                jsonData.splice(i, 1);
+            }
+        }
     
         // The data that shall be written
         const dataList = {};
