@@ -101,7 +101,7 @@ class EyeTracker {
         var disposableInterval = setInterval(async () => {
             if (this.recording)
                 await this.getMostFocusedFunction()
-        }, readFunctionDelay * 1000 + 500)
+        }, readFunctionDelay * 1000 + 200)
     }
 
     getX() {
