@@ -62,17 +62,21 @@ class DataHandler {
     }
 
 
-    async init(extensionPath) {
+    async init(settings) {
         console.log("initializing DataHandler")
         try { 
-            // login and connect to Neurosity device
-            const dotenvRequire = await require('dotenv').config({
-                path: path.join(extensionPath, '/envNeurosity.env')
-            });
+            // // login and connect to Neurosity device
+            // const dotenvRequire = await require('dotenv').config({
+            //     path: path.join(extensionPath, '/envNeurosity.env')
+            // });
             
-            this.deviceId = process.env.DEVICE_ID || "";
-            this.email = process.env.EMAIL || "";
-            this.#password = process.env.PASSWORD || "";
+            // this.deviceId = process.env.DEVICE_ID || ""; 
+            // this.email = process.env.EMAIL || "";
+            // this.#password = process.env.PASSWORD || "";
+            
+            this.deviceId = settings.crownDeviceID;
+            this.email = settings.crownEmail;
+            this.#password = settings.getCrownPassword();
             
             const verifyEnvs = (email, password, deviceId) => {
                 const invalidEnv = (env) => {

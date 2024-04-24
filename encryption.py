@@ -30,6 +30,20 @@ def decrypt_message(enc_message, key):
     pt = unpad(cipher.decrypt(ct), AES.block_size)
     return pt.decode('utf-8')
 
+def load_password_to_shared_memory(password: str):
+    import multiprocessing.shared_memory as shm
+    import time
+    
+    password = password.encode("ascii")
+    shm_name = "password"
+    shm_size = len(password)
+    shm_obj = shm.SharedMemory(shm_name, create=True, size=shm_size)
+    shm_obj.buf[:] = password
+    
+    time.sleep(5)
+    shm_obj.close()
+    
+
 # Main flow
 if __name__ == "__main__":
     salt = write_key()  # Generate and save a new key

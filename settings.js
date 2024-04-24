@@ -1,6 +1,7 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process')
 
 const colorDictionary = {
     'Green': '#4fc553', 
@@ -97,6 +98,19 @@ class Settings {
     //     const RGB = { x, y, z };
     //     return RGB;
     // }
+
+    async getCrownPasswordFromEnv(){
+        
+        // login and connect to Neurosity device
+        const dotenvRequire = await require('dotenv').config({
+            path: path.join(this.extensionPath, '/envNeurosity.env')
+        });
+        
+        var password = process.env.PASSWORD || "";
+        // decrypt password and return 
+        const encryptionProcess = execSync(`python encryption.py ${this.extensionPath}`, { cwd: this.extensionPath })
+        throw new Error("Not implemented")
+    }
 
     async getCrownPassword() {
         const password = await vscode.window.showInputBox({
