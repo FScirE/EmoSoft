@@ -26,7 +26,6 @@ class Settings {
         this.updatedCrownDeviceID = this.config.get('crownDeviceID')
         this.focusColorChange = this.config.get('focusColor');
         this.calmColorChange = this.config.get('calmColor');
-        this.sessionLengthChange = this.config.get('sessionLength');
         this.listenForConfigChanges();
         this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
         this.highlightEyetracker = this.config.get('highlightEye')
@@ -53,11 +52,6 @@ class Settings {
     // Getter method for thresholdCalm configuration option
     get thresholdCalm() {
         return this.config.get('thresholdCalm');
-    }
-
-    // Getter method for thresholdCalm configuration option (minutes)
-    get sessionLength() {
-        return this.config.get('sessionLength');
     }
 
     // Getter method for eyeTracker IP configuration option
@@ -239,23 +233,21 @@ class Settings {
                 console.log('eyeTracker changed to:', newEyeTracker);
                 this.eyeIP = newEyeTracker;
             }
+
             if (event.affectsConfiguration('emoide.focusColor')) {
                 const newFocusColor = vscode.workspace.getConfiguration('emoide').get('focusColor');
                 console.log('Focus color changed to:', newFocusColor);
                 this.focusColorChange = newFocusColor;
                 this.sendColorChange(true, colorDictionary[this.focusColorChange])
             }
+
             if (event.affectsConfiguration('emoide.calmColor')) {
                 const newCalmColor = vscode.workspace.getConfiguration('emoide').get('calmColor');
                 console.log('Calm color changed to:', newCalmColor);
                 this.calmColorChange = newCalmColor;
                 this.sendColorChange(false, colorDictionary[this.calmColorChange])
             }
-            if (event.affectsConfiguration('emoide.sessionLength')) {
-                const newSessionLength = vscode.workspace.getConfiguration('emoide').get('sessionLength');
-                console.log('Session length changed to:', newSessionLength);
-                this.sessionLengthChange = newSessionLength;
-            }
+
             if (event.affectsConfiguration('emoide.highlightEye')) {
                 const newhighlightEye = vscode.workspace.getConfiguration('emoide').get('highlightEye')
                 console.log('Highlight Eyetracker changed to:', newhighlightEye)
