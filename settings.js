@@ -100,16 +100,32 @@ class Settings {
     // }
 
     async getCrownPasswordFromEnv(){
+        // NOT TESTED
+
         
-        // login and connect to Neurosity device
         const dotenvRequire = await require('dotenv').config({
             path: path.join(this.extensionPath, '/envNeurosity.env')
         });
-        
         var password = process.env.PASSWORD || "";
+
         // decrypt password and return 
-        const encryptionProcess = execSync(`python encryption.py ${this.extensionPath}`, { cwd: this.extensionPath })
-        throw new Error("Not implemented")
+        const sharedArray = new Int32Array(1024);
+
+        const script_path = path.join(this.extensionPath, './encryption.py');
+        const encryptionProcess = execSync('python', [script_path, sharedArray.buffer]);
+        
+        encryptionProcess.stdout.on('data', (data) => {
+            if (data.startsWith("done")) {
+                const password_length = Number(data.split(" ")[1]);
+                let decrypted_password = '';
+                for(let i = 0; i < password_length; i++) {
+                    decrypted_password += String.fromCharCode(sharedArray[i]);
+                }
+                return decrypted_password;
+            }
+            else
+                throw new Error("Error: getCrownPasswordFromEnv received: " + data)
+        });
     }
 
     async getCrownPassword() {

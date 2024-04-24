@@ -2,7 +2,11 @@ from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Protocol.KDF import scrypt
 from Crypto.Util.Padding import pad, unpad
+import multiprocessing
 import os
+import sys
+import time
+
 # Function to generate a key
 def write_key():
     salt = get_random_bytes(16)
@@ -31,21 +35,26 @@ def decrypt_message(enc_message, key):
     return pt.decode('utf-8')
 
 def load_password_to_shared_memory(password: str):
-    import multiprocessing.shared_memory as shm
-    import time
+    # NOT TESTED
     
     password = password.encode("ascii")
-    shm_name = "password"
-    shm_size = len(password)
-    shm_obj = shm.SharedMemory(shm_name, create=True, size=shm_size)
-    shm_obj.buf[:] = password
+    
+    shared_buffer = sys.argv[1]
+    shared_array = multiprocessing.RawArray('i', shared_buffer)
+    
+    for i, c in enumerate(password):
+        shared_array[i] = c
+    
+    print("done " + str(len(password)))
     
     time.sleep(5)
-    shm_obj.close()
+    
     
 
 # Main flow
 if __name__ == "__main__":
+    # TODO: call load_password_to_shared_memory
+    
     salt = write_key()  # Generate and save a new key
     
     # Load the key

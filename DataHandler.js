@@ -76,7 +76,7 @@ class DataHandler {
             
             this.deviceId = settings.crownDeviceID;
             this.email = settings.crownEmail;
-            this.#password = settings.getCrownPassword();
+            this.#password = settings.getCrownPasswordFromEnv();
             
             const verifyEnvs = (email, password, deviceId) => {
                 const invalidEnv = (env) => {
