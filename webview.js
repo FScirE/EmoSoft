@@ -56,7 +56,7 @@ function setAIResponse(text) {
 
 function addAIMessage(text, type) {
     const messageHTML = `
-    <div class="message left ${type}response">
+    <div class="message left ${type}">
         <p>${text}</p>
     </div>
     `
@@ -132,6 +132,12 @@ window.addEventListener('message', e => {
             break
         case "recording":
             setRecordingButton(message.value)
+            break
+        case "focusColor":
+            document.documentElement.style.setProperty("--focus-color", message.value)
+            break
+        case "calmColor":
+            document.documentElement.style.setProperty("--calm-color", message.value)
             break
     }
 })

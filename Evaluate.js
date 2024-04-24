@@ -2,23 +2,22 @@ const fs = require('fs');
 
 
 class Evaluate {
-    constructor() {
-        // Values, not sure yet if we need them in this
+    constructor(path) {
+        // Path to save json file att correct place
+        this.path = path;
+
+        // Current session before it has been saved to json
+        this.tempSession = {};
+
+        // Focus and calm values
         this.focusValues = [];
         this.calmValues = [];
 
-        // Questions
-        this.responses = [];
-        this.question1 = "I was focused during this session."
-        this.question2 = "I was calm during this session."
-        this.question3 = "I expected to finish a lot of work during this session.";
-        this.question4 = "I managed to finish a lot of work during this session.";
-        
-        // Saving
-        this.filename = './evaluations.txt';
-        this.evalID = '#none' // Should later be able to enter by user (I think)
+        // Data to be stored
+        this.responses = {};
     }
 
+    // ------------- Setter and getter functions -------------------------------------------------------------//
     setFocusValues(focusValues) {
         this.focusValues = focusValues;
     }
@@ -43,75 +42,91 @@ class Evaluate {
         var response = {question, number};
         this.responses.push(response);
     }
-
+//------------------------------------------------------------------------------//
     saveEvaluationToFile() {
         // Open file
-        fs.open(this.filename, 'wx', (err, fd) => {
-            if (err) {
-                if (err.code === 'EEXIST') {
-                    console.log('File already exists.');
-                    return;
-                }
-                console.error('Error creating file:', err);
-                return;
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty. The file will be created.")
+        }
+        // Remove if name already exists (overwrite)
+        for (let i = 0; i < jsonData.length; i++) {
+            if (jsonData[i].name == this.responses.name) {
+                jsonData.splice(i, 1);
             }
-            console.log('File created successfully!');
-            
-            
-            // Close the file
-            fs.close(fd, (err) => {
-                if (err) {
-                    console.error('Error closing file:', err);
-                }
-            });
-        });
-        console.log(this.responses)
-        console.log(process.cwd());
+        }
+    
         // The data that shall be written
-        const dataList = []; 
-        dataList.push(this.evalID); // ID
+        const dataList = {};
+
+        // Evaluation Name
+        dataList.name = this.responses.name;
+        
+        // Date
         const currentDate = new Date(); // Todays date
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
-        var dateStringFormatted = "Date: " + dateString; // Format date string
-        dataList.push(dateStringFormatted);
-        dataList.push("Focus:");
-        // String for all focus values with time stamps
-        for (let i = 0; i < this.focusValues.length; i++) {
-            var str = "x: " + this.focusValues[i].x + ", y: " + this.focusValues[i].y;
-            dataList.push(str);
-        }
-        dataList.push("Calm:")
-        // String for all calm values with time stamps
-        for (let i = 0; i < this.calmValues.length; i++) {
-            var str = "x: " + this.calmValues[i].x + ", y: " + this.calmValues[i].y;
-            dataList.push(str);
-        }
-        // Questions with answers
-        // console.log('Responses in evaluate.js', this.responses) Responses innehåller array med 5 element
-        dataList.push(this.question1);
-        dataList.push(this.responses[2]);
-        dataList.push(this.question2);
-        dataList.push(this.responses[3]);
-        dataList.push(this.question3);
-        dataList.push(this.responses[0]);
-        dataList.push(this.question4);
-        dataList.push(this.responses[1]);
+        dataList.date = dateString;
 
-        // Split for next eval
-        dataList.push("------------------------------------------------")
+        // Focus and calm values
+        dataList.focusValues = this.focusValues;
+        dataList.calmValues = this.calmValues;
+        
+        // Responses
+        dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer, 
+                              expectedWorkAnswer: this.responses.expectedWorkAnswer, finishedWorkAnswer: this.responses.finishedWorkAnswer};
+        
+        // Write to JSON file
+        jsonData.push(dataList);
+        fs.writeFileSync(this.path + '\\evaluations.json', JSON.stringify(jsonData, null, 2));
+        console.log('Data saved to evaluations.json');
+    }
+    loadEvalNameList() {
+        // List of eval IDs
+        var dataList = [];
 
-        // Iterate through the list and append each element to the file with a newline character
-        dataList.forEach(data => {
-            try {
-                fs.appendFileSync(this.filename, data + '\n');
-                console.log(`Data "${data}" appended to file successfully!`);
-            } catch (err) {
-                console.error('Error appending to file:', err);
-            }
-        });
+        // Load json data
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty.")
+        }
+
+        // Get each evalID
+        for (let i = 0; i < jsonData.length; i++) {
+            dataList[i] = jsonData[i].name;
+        }
+
+        return dataList;
+    }
+    loadEvalData(name) {
+        // Load json data
+        var jsonData = [];
+        try {
+            const fileContent = fs.readFileSync(this.path + '\\evaluations.json', 'utf8');
+            jsonData = JSON.parse(fileContent);
+        } catch (err) {
+            console.log("evaluations.json does not exist or is empty.")
+        }
+
+        if (name == "New Session") { // Evaluation ID not found
+            return -1;
+        }
+        
+        // Find correct evaluation
+        var i = 0;
+        while (jsonData[i].name != name && i < jsonData.length) {
+            i++;
+        }
+        return jsonData[i];
     }
 }
 
+//------------------------------------------------------------------------------//
 module.exports = {
     Evaluate
 };

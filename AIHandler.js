@@ -10,10 +10,12 @@ const { retrieveResponse } = require('./OpenAIExtension.js');
 dotenv.config();
 
 // Constants, Standard messages to promt against chatGPT
-const MESSAGE_HELP_UNFOCUSED_DEV = "Help a programmer who is at a certain focus level to become more focused. Give one example of what he can do to become more focused with two sentances. You must use the focus level in your message once. Don't give pomodore example";
-const MESSAGE_TAKE_BREAK = "Generate a friendly messsage telling a developer to take a short brake. in 2 sentances. ";
-const MESSAGE_CALM_DOWN = "Help a programmer who is at a certain calm level to calm down in a friendly manner, but not weird. in 2 sentaces. Be creative so you don't give the same tip every time. You must use the calm level in your message once";
-const CONTEXT_HELPADEV = "You are a helpful AI assitant with the goal to boost a developers productivity and focus. Short respones.";
+const MESSAGE_HELP_UNFOCUSED_DEV = "Help a programmer who is at a certain focus level to become more focused. Give one example of what he can do to become more focused with two sentences. You must use the focus level in your message once. Don't give pomodore example";
+const MESSAGE_TAKE_BREAK = "Generate a friendly messsage telling a developer to take a short brake. in 2 sentences. ";
+const MESSAGE_CALM_DOWN = "Help a programmer who is at a certain calm level to calm down in a friendly manner, but not weird. in 2 sentences. Be creative so you don't give the same tip every time. You must use the calm level in your message once";
+const CONTEXT_HELPADEV = "You are a helpful AI assistant with the goal to boost a developers productivity and focus. Short respones.";
+const CONTEXT_HELPCODE = "You are a helpful AI assistant with the goal to boost a developers productivity and focus. Short responses and any code snippets should be kept concise.";
+const SUFFIX_STUCK_ON_LINE = "This is the code in python. I am stuck here, can you help me explain it briefly. Max 5 short sentences?"
 
 class AIHandler {
     constructor(codeinput, standardinput, extensionpath){
@@ -26,23 +28,6 @@ class AIHandler {
         
     }
 
-    /*retrieveContext(filePath, lineNumber, contextLines = 5){
-        const fs = require('fs');
-            try {
-                const lines = fs.readFileSync(filePath, 'utf8').split('\n');
-                const startLine = Math.max(0, lineNumber - contextLines - 1);
-                const endLine = Math.min(lines.length, lineNumber + contextLines);
-                return lines.slice(startLine, endLine).map((line, index) => ({
-                    line: startLine + index + 1,
-                    content: line.trim()
-                }));
-            } catch (err) {
-                console.error('Error reading file:', err);
-                return [];
-            }
-        
-    }*/
-    //Typ klar behövs test
     async sendMsgToAI(preset, msg, chatActive){
         var templist = []
         if (chatActive == true){
@@ -55,21 +40,19 @@ class AIHandler {
             if (chatActive == true) {
                 this.aipreviousmsg = this.output;
                 this.output = this.output
-                .replace(/&/g, "&amp")
-                .replace(/</g, "&lt")
-                .replace(/>/g,"&gt")
-                .replace(/```/, "<code>")
-                .replace(/```/, "</code>");
-            }
-            
+                    .replace(/&/g, "&amp")
+                    .replace(/</g, "&lt")
+                    .replace(/>/g,"&gt")
+                    .replace(/```/, "<code>")
+                    .replace(/```/, "</code>");
+            }         
         });
     };
     async sendMsgToUnfocusedDev(focus){
         focus *= 100;
         focus = focus.toFixed(0);
-        // console.log(focus);
         focus = "This is the focus level in percent:  " + focus.toString() + "%. ";
-        // console.log(focus);
+
         // sends a message to the AI with standard message telling the user to focus. 
         await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_HELP_UNFOCUSED_DEV + focus, false);
     }
@@ -78,12 +61,14 @@ class AIHandler {
         calm *= 100;
         calm = calm.toFixed(0);
         calm = "This is the calm level in percent:  " + calm.toString() + "%. ";
-        // console.log(calm);
         await this.sendMsgToAI(CONTEXT_HELPADEV , MESSAGE_CALM_DOWN + calm, false);
     }  
     async sendMsgToTakeBreak(){
         // sends a message to the AI with standard message telling the user to take a break.
         await this.sendMsgToAI(CONTEXT_HELPADEV, MESSAGE_TAKE_BREAK, false);
+    }
+    async sendMsgHelpWithFunc(functionText) {
+        await this.sendMsgToAI(CONTEXT_HELPCODE, functionText + '\n' + SUFFIX_STUCK_ON_LINE, true)
     }
 }
 

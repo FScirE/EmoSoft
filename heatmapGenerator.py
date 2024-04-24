@@ -1,14 +1,16 @@
 #import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as clr
 import math
 import random
 import sys
 
+# Heatmap grid contstants
 GRID_WIDTH = 48
 GRID_HEIGHT = 27
 
 def read_file(path):
-    """reads file contents"""
+    """Reads file contents. Returns the contents."""
     file = open(path, 'r')
     text = file.read()
     file.close()
@@ -22,13 +24,11 @@ for arg in sys.argv[1:]:
     this_cwd += arg + ' '
 this_cwd = this_cwd.rstrip()
 
-#this_cwd = 'c:\\Users\\maxco\\OneDrive\\Dokument\\GitHub\\EmoSoft'
-
 x_arr = list(map(float, read_file(this_cwd + '\\xValues.txt').split(','))) 
 y_arr = list(map(float, read_file(this_cwd + '\\yValues.txt').split(',')))
 #x_arr = [random.random() for _ in range(10000)] # test
 #y_arr = [random.random() for _ in range(10000)] # test
-# 1 ruta är 1/48 bred och 1/27 hög
+
 
 def calculate_intensity(x_in, y_in):
     """Calculates the intensity for the heatmeap, based on x and y."""
@@ -39,17 +39,24 @@ def calculate_intensity(x_in, y_in):
     return intensity
                                
 def generate_heatmap(x_in, y_in):
-    """Generates a heatmap, stores it as heatmap.jpg"""
+    """Generates a heatmap, stores it as heatmap.jpg. x_in and y_in are arrays containing the x and y values. """
     intensity = calculate_intensity(x_in, y_in)
 
     # Sample X and Y data
     #X, Y = np.meshgrid(GRID_WIDTH, GRID_HEIGHT)
 
-    # Create heatmap
-    plt.imshow(intensity, cmap='hot', interpolation='nearest')
+    #Create heatmap
+    img = plt.imread("vscodewin.png")
+    plt.imshow(img, extent=[0, GRID_WIDTH, GRID_HEIGHT, 0])
+
+    cmap = clr.LinearSegmentedColormap.from_list(name='transparent-red', colors=[(0, 0, 0, 0), (0.33, 0, 0, 0.33), (0.67, 0, 0, 0.67), (1, 0, 0, 1), (1, 1, 1, 1)])
+    plt.imshow(intensity, cmap=cmap, interpolation='catrom', extent=[0, GRID_WIDTH, GRID_HEIGHT, 0])
+       
     plt.colorbar()  # Add color bar indicating the scale
+
     #plt.show()
     plt.savefig("heatmap.png", transparent=True)
 
 generate_heatmap(x_arr, y_arr)
+#generate_heatmap(x_arr, y_arr)
 exit(0)

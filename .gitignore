@@ -5,10 +5,11 @@ node_modules
 *.env
 .txt
 *.txt
-*.jpg
 .jpg
-*.png
+*.jpg
 .png
+*.png
+
 # Might not need
 envNeurosity.env
 settings.json

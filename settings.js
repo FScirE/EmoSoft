@@ -2,6 +2,17 @@ const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
 
+const colorDictionary = {
+    'Green': '#4fc553', 
+    'Yellow': '#FFC300',
+    'Blue': '#03a9f4',
+    'Pink': '#FF00FF',
+    'Purple': '#b967ff',
+    'Cyan': '#00FFFF',
+    'White': '#FFFFFF',
+    'Mango': '#F4BB44'
+}
+
 class Settings {
     constructor(extensionPath) {
         console.log('Constructing Settings...')
@@ -15,8 +26,13 @@ class Settings {
         this.updatedCrownDeviceID = this.config.get('crownDeviceID')
         this.focusColorChange = this.config.get('focusColor');
         this.calmColorChange = this.config.get('calmColor');
+        this.sessionLengthChange = this.config.get('sessionLength');
         this.listenForConfigChanges();
         this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
+    }
+
+    setUIHandler(uiHandler) {
+        this.uiHandler = uiHandler
     }
 
     // Getter method for notifications configuration option
@@ -131,6 +147,43 @@ class Settings {
         }
     }
 
+    async changeWebviewColors(focus, color) {
+        const cssFilePath = path.join(this.extensionPath, './webview.css');
+
+        // Read the contents of webview.css
+        fs.readFile(cssFilePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading webview.css:', err);
+                return;
+            }
+
+            // Modify the CSS variables
+            if (focus)
+                data = data.replace(/--focus-color:.*?;/, `--focus-color: ${color};`);
+            else
+                data = data.replace(/--calm-color:.*?;/, `--calm-color: ${color};`);
+
+            // Write the updated contents back to webview.css
+            fs.writeFile(cssFilePath, data, 'utf8', (err) => {
+                if (err) {
+                    console.error('Error writing to webview.css:', err);
+                } else {
+                    console.log('webview.css updated successfully.');
+                    
+                    // Reload the webview to apply the changes
+                    this.uiHandler.webView.webview.postMessage({ command: 'reload' });
+                }
+            });
+        });
+    }
+
+    sendColorChange(focus, color) {
+        if (this.uiHandler.webViewIsVisisble) {
+            this.uiHandler.webView.webview.postMessage({ variable: focus ? 'focusColor' : 'calmColor', value: color })                    
+        }
+        this.changeWebviewColors(focus, color) 
+    }
+
     listenForConfigChanges() {
         // IT WORKS
         vscode.workspace.onDidChangeConfiguration(async (event) => {
@@ -159,15 +212,21 @@ class Settings {
             }
 
             if (event.affectsConfiguration('emoide.thresholdFocus')) {
-                const newThresholdFocus = vscode.workspace.getConfiguration('emoide').get('thresholdFocus');
+                var newThresholdFocus = vscode.workspace.getConfiguration('emoide').get('thresholdFocus');
+                if (newThresholdFocus < 0){newThresholdFocus = 0}
+                if (newThresholdFocus > 100){newThresholdFocus = 100}
                 console.log('thresholdFocus changed to:', newThresholdFocus);
                 this.updatedthreshholdFocus = newThresholdFocus
+                vscode.workspace.getConfiguration('emoide').update('thresholdFocus', newThresholdFocus, vscode.ConfigurationTarget.Global);
             }
 
             if (event.affectsConfiguration('emoide.thresholdCalm')) {
-                const newThresholdCalm = vscode.workspace.getConfiguration('emoide').get('thresholdCalm');
+                var newThresholdCalm = vscode.workspace.getConfiguration('emoide').get('thresholdCalm');
+                if (newThresholdCalm < 0){newThresholdCalm = 0}
+                if (newThresholdCalm > 100){newThresholdCalm = 100}
                 console.log('thresholdCalm changed to:', newThresholdCalm);
                 this.updatedthreshholdCalm = newThresholdCalm;
+                vscode.workspace.getConfiguration('emoide').update('thresholdCalm', newThresholdCalm, vscode.ConfigurationTarget.Global);
             }
 
             if (event.affectsConfiguration('emoide.eyeTracker')) {
@@ -179,14 +238,19 @@ class Settings {
                 const newFocusColor = vscode.workspace.getConfiguration('emoide').get('focusColor');
                 console.log('Focus color changed to:', newFocusColor);
                 this.focusColorChange = newFocusColor;
+                this.sendColorChange(true, colorDictionary[this.focusColorChange])
             }
             if (event.affectsConfiguration('emoide.calmColor')) {
                 const newCalmColor = vscode.workspace.getConfiguration('emoide').get('calmColor');
                 console.log('Calm color changed to:', newCalmColor);
                 this.calmColorChange = newCalmColor;
+                this.sendColorChange(false, colorDictionary[this.calmColorChange])
             }
-            
-            
+            if (event.affectsConfiguration('emoide.sessionLength')) {
+                const newSessionLength = vscode.workspace.getConfiguration('emoide').get('sessionLength');
+                console.log('Session length changed to:', newSessionLength);
+                this.sessionLengthChange = newSessionLength;
+            }
         });
     }
     

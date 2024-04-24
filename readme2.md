@@ -7,25 +7,25 @@ AI Chat Assistant: Interact with an AI assistant powered by OpenAI's GPT-4 for p
 Session Recording & Evaluation: Start, manage, and evaluate coding sessions with detailed focus and eye-tracking data visualization to identify areas for improvement.
 
 ## Requirements
-VScode
-Neurosity Crown EEG headset
-GP3 Eye-tracker by Gazepoint
-OpenAI account with balance and access key
-Installation
-Ensure you have the required hardware and software listed above.
-Open VScode and navigate to the Extensions tab.
-Search for "Emotionally Aware IDE by Emosoft" and install the extension.
-Refer to the "How to set up..." sections below for specific device configuration instructions.
-How to Use
+* VScode
+* Neurosity Crown EEG headset
+* GP3 Eye-tracker by Gazepoint
+* OpenAI account with balance and access key
+## Installation
+* Ensure you have the required hardware and software listed above.
+* Open VScode and navigate to the Extensions tab.
+* Search for "Emotionally Aware IDE by Emosoft" and install the extension.
+* Refer to the "How to set up..." sections below for specific device configuration instructions.
+# How to Use
 ## Set Up Devices
 
 ### Neurosity Crown:
-Create a file named "envNeurosity.env" in the plugin folder.
-The file should contain the following lines (including quotation marks):
-DEVICE_ID="your_neurosity_device_id_hexadecimal"
-EMAIL="your_neurosity_account_email@email.com"
-PASSWORD="your_neurosity_account_password"
-Eye-tracker: Refer to the eye-tracker's manual for setup instructions.
+* Create a file named "envNeurosity.env" in the plugin folder.
+* The file should contain the following lines (including quotation marks):
+* DEVICE_ID="your_neurosity_device_id_hexadecimal"
+* EMAIL="your_neurosity_account_email@email.com"
+* PASSWORD="your_neurosity_account_password"
+* Eye-tracker: Refer to the eye-tracker's manual for setup instructions.
 2. Start a Session
 
 Click the "Start Session" button within the VScode interface.
@@ -56,7 +56,7 @@ Users appreciate release notes as you update your extension.
 ### 1.0.0
 
 Initial release
-* Chat with AI assistant (based on GPT4)
+* Chat with AI assistant (powered by GPT4)
 * AI gives notification when unfocused/agitated
 * Show your current focus and calm level (bottom of UI/Chat window)
 

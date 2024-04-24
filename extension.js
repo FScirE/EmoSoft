@@ -71,23 +71,26 @@ async function activate(context) {
 	await closeEmptyTabs();
 
 	//initializations
-	const settings = new Settings(context.extensionPath);
+	this.settings = new Settings(context.extensionPath);
 	
-	this.eyetracker = new EyeTracker(context.extensionPath, settings);
+	this.eyetracker = new EyeTracker(context.extensionPath, this.settings);
 
-	this.dataHandler = new DataHandler(settings);
+	this.dataHandler = new DataHandler(this.settings);
 	await this.dataHandler.init(context.extensionPath);
-	settings.reinitDataHandlerCallback = async () => {
+	this.settings.reinitDataHandlerCallback = async () => {
 		await this.dataHandler.uninit(); 
 		await this.dataHandler.init(context.extensionPath);
 	};
 
-	this.uiHandler = new UIHandler(context, settings);
+	this.uiHandler = new UIHandler(context, this.settings);
 
-	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, settings);
+	this.eventHandler = new EventHandler(context.extensionPath, this.uiHandler, this.eyetracker, this.settings);
 	await this.eventHandler.init(this.dataHandler);
 
+	this.eyetracker.init(this.eventHandler)
 	this.uiHandler.init(context, this.eventHandler);
+
+	this.settings.setUIHandler(this.uiHandler)
 
 	//main loop
 	var setCalmFocusAndStatusBars = setInterval(async () => {
@@ -115,8 +118,7 @@ async function activate(context) {
 	}
 
 	let disposable = vscode.commands.registerCommand('emoide.setCrownPassword', async () => {
-
-        await settings.getCrownPassword();
+        await this.settings.getCrownPassword();
     }); //KAN VARA BRA ATT HA VET INTE
 
 	let disposableCalibrateEyeTracker = vscode.commands.registerCommand('emoide.calibrateEyeTracker', async () => {
