@@ -29,10 +29,15 @@ class Settings {
         this.sessionLengthChange = this.config.get('sessionLength');
         this.listenForConfigChanges();
         this.reinitDataHandlerCallback = async () => {}; // placeholder for reinitDataHandler, to be replaced in extension.js
+        this.highlightEyetracker = this.config.get('highlightEye')
     }
 
     setUIHandler(uiHandler) {
         this.uiHandler = uiHandler
+    }
+
+    get highlightEye(){
+        return this.config.get('highlightEye')
     }
 
     // Getter method for notifications configuration option
@@ -250,6 +255,11 @@ class Settings {
                 const newSessionLength = vscode.workspace.getConfiguration('emoide').get('sessionLength');
                 console.log('Session length changed to:', newSessionLength);
                 this.sessionLengthChange = newSessionLength;
+            }
+            if (event.affectsConfiguration('emoide.highlightEye')) {
+                const newhighlightEye = vscode.workspace.getConfiguration('emoide').get('highlightEye')
+                console.log('Highlight Eyetracker changed to:', newhighlightEye)
+                this.highlightEyetracker = newhighlightEye
             }
         });
     }

@@ -153,6 +153,10 @@ class EyeTracker {
 
 					decorationRange = [range]
                     returnText = editor.document.getText(range) //return text of the 3 lines
+                    
+                    if (!this.settings.highlightEyetracker) {
+                        decorationRange = []
+                    }
 				}
 			}
 			editor.setDecorations(decorationType, decorationRange)

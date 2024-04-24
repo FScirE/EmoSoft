@@ -87,6 +87,11 @@
           "type": "object",
           "description": "Calibrate eyetracker",
           "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEyeTracker)"
+        },
+        "emoide.highlightEye": {
+          "type": "boolean",
+          "description": "Show highlight for eyetracker",
+          "default": true
         }
       }
     },
