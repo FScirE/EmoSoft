@@ -33,7 +33,6 @@ class DataHandler {
     } // end of constructor
 
     async uninit() {
-        console.log("uninitting DataHandler")
         this.dataSourceType = "none";
         try
         {
@@ -63,9 +62,8 @@ class DataHandler {
 
 
     async init(extensionPath) {
-        console.log("initializing DataHandler")
-        try { 
-            // login and connect to Neurosity device
+        try { // login and connect to Neurosity device
+
             const dotenvRequire = await require('dotenv').config({
                 path: path.join(extensionPath, '/envNeurosity.env')
             });
@@ -87,7 +85,6 @@ class DataHandler {
             console.log(`Neurosity email "${this.email}" attempting to authenticate to deviceId "${this.deviceId}"`);
             
             this.neurosity = new Neurosity({deviceId: this.deviceId});
-            
             
             await this.neurosity
                 .login({
@@ -182,8 +179,7 @@ class DataHandler {
         else {
             console.error("DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
         }
-
-
+    
     } // end of init function
 
     
