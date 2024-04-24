@@ -3,7 +3,7 @@
 
 // @ts-ignore
 const vscode = acquireVsCodeApi() //ignore error
-	
+
 var focusValues = []
 var calmValues = []
 var evaluateNames = []
@@ -22,10 +22,10 @@ function createChart() {
 	// Calculate the range of x-values
     let minX = Math.min(...focusValues.map(point => point.x));
     let maxX = Math.max(...focusValues.map(point => point.x));
-    
+
     // Calculate the interval
     let interval = (maxX - minX) / 9; // Divide by 9 to get 10 intervals
-    
+
     // Generate x-values with even interval
     let xValues = [];
     for (let i = 0; i <= 9; i++) {
@@ -71,7 +71,7 @@ function createChart() {
 			showInLegend: true,
 			name: "Focus (%)",
 			dataPoints: focusValues
-			
+
 		},
 		{
 			type: "line",
@@ -110,17 +110,17 @@ function gatherResponses() {
 
     const q1Rating = document.querySelector('input[name="q1rating"]:checked');
 	const q2Rating = document.querySelector('input[name="q2rating"]:checked');
-	
+
 	const q1Value = q1Rating ? q1Rating.value : null;
 	const q2Value = q2Rating ? q2Rating.value : null;
-    
+
 	// Add all evaluate response to a dict
 	responses.topfuncs = topfuncs;
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
 	responses.focusAnswer = focusSliderValue;
 	responses.calmAnswer = calmSliderValue;
-	
+
 }
 
 function saveEvaluateResponses() {
@@ -148,7 +148,7 @@ function saveEvaluateResponses() {
         variable: "evaluateResponses",
         value: responses
     })
-	
+
 }
 
 function setTopFunctions(funcs) {
@@ -264,7 +264,7 @@ selectElement.addEventListener("change", function(event) {
 		variable: 'nameRequest',
 		value: sessionName
 	})
-	
+
 });
 
 selectElement.addEventListener("focus", function(event) {
@@ -280,7 +280,7 @@ selectElement.addEventListener("focus", function(event) {
 
 		const q1Rating = document.querySelector('input[name="q1rating"]:checked');
 		const q2Rating = document.querySelector('input[name="q2rating"]:checked');
-	
+
 		const q1Value = q1Rating ? q1Rating.value : null;
 		const q2Value = q2Rating ? q2Rating.value : null;
 
@@ -292,9 +292,9 @@ selectElement.addEventListener("focus", function(event) {
 
 window.addEventListener("message", e => {
 	const message = e.data; // The JSON data our extension sent
-	
+
 	switch (message.variable) {
-		case "values":			
+		case "values":
 			focusValues = message.value[0]
 			calmValues = message.value[1]
 			createChart()

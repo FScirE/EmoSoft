@@ -77,7 +77,7 @@ class EventHandler {
                                 await this.initEvaluateReceiveMessage(context);
 
                                 await sleepSeconds(1) //safety
-                                
+
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "functions",
                                     value: funcs
@@ -119,12 +119,13 @@ class EventHandler {
                 if (this.evaluate.responses.hasOwnProperty('calmValues')) {
                     this.evaluate.setCalmValues(this.evaluate.responses.calmValues);
                 }
+                let savedNames = this.evaluate.loadEvalNameList();
                 await this.evaluate.saveEvaluationToFile();
                 // Save heatmap if it is a new session
-                let savedNames = this.evaluate.loadEvalNameList();
                 if (!savedNames.includes(this.evaluate.responses.name)) {
                     this.saveHeatmap(this.evaluate.responses.name)
                 }
+
                 vscode.window.showInformationMessage('Evaluation has been saved.');
                 this.uiHandler.evaluateWebView.dispose();
                 vscode.commands.executeCommand('start.ui');
@@ -132,7 +133,7 @@ class EventHandler {
             case 'nameRequest':
                 console.log("Requesting " + message.value);
                 var loadedData = await this.evaluate.loadEvalData(message.value);
-                const heatmapsFolderPath = this.uiHandler.evaluateW.webview.asWebviewUri(path.join(this.path, 'heatmaps')).toString();
+                const heatmapsFolderPath = this.uiHandler.evaluateWebView.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'heatmaps'))).toString();
                 this.uiHandler.evaluateWebView.webview.postMessage({
                     variable: "sessionData",
                     value: loadedData,

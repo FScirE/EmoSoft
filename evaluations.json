@@ -125,5 +125,106 @@
       "expectedWorkAnswer": "3",
       "finishedWorkAnswer": "3"
     }
+  },
+  {
+    "name": "2024-04-24(1)",
+    "date": "2024-04-24",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 58
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 37
+      }
+    ],
+    "topfuncs": [],
+    "responses": {
+      "focusAnswer": "46",
+      "calmAnswer": "46",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "3"
+    }
+  },
+  {
+    "name": "hello world",
+    "date": "2024-04-24",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 50
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 27
+      }
+    ],
+    "topfuncs": [
+      [
+        "'check_sorting_performance'",
+        12
+      ],
+      [
+        "'check_sorting_complexity'",
+        5
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "85",
+      "calmAnswer": "100",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "name": "hi",
+    "date": "2024-04-24",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 60
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 67
+      }
+    ],
+    "topfuncs": [],
+    "responses": {
+      "focusAnswer": "40",
+      "calmAnswer": "39",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "test",
+    "date": "2024-04-24",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 67
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 64
+      }
+    ],
+    "topfuncs": [],
+    "responses": {
+      "focusAnswer": "71",
+      "calmAnswer": "48",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "2"
+    }
   }
 ]
