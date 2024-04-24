@@ -15,6 +15,9 @@ class Evaluate {
 
         // Data to be stored
         this.responses = {};
+
+        //top funcs
+        this.topfuncs = [];
     }
 
     // ------------- Setter and getter functions -------------------------------------------------------------//
@@ -73,6 +76,9 @@ class Evaluate {
         // Focus and calm values
         dataList.focusValues = this.focusValues;
         dataList.calmValues = this.calmValues;
+
+        // Eyetracker stats
+        dataList.topfuncs = this.topfuncs;
         
         // Responses
         dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer, 

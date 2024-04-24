@@ -9,7 +9,12 @@ var calmValues = []
 var evaluateNames = []
 var responses = {}
 var newestSession = {}
+var funcs = []
+var path = []
+var loaded = false
+var pathHeat = ""
 
+// @ts-ignore
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
 
@@ -97,6 +102,9 @@ function addSymbols(e) {
 }
 
 function gatherResponses() {
+
+	const topfuncs = funcs
+
 	const focusSliderValue = document.getElementById("focusSlider").value;
     const calmSliderValue = document.getElementById("calmSlider").value;
 
@@ -107,19 +115,33 @@ function gatherResponses() {
 	const q2Value = q2Rating ? q2Rating.value : null;
     
 	// Add all evaluate response to a dict
+	responses.topfuncs = topfuncs;
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
-	responses.focusAnswer = focusSliderValue
-	responses.calmAnswer = calmSliderValue
+	responses.focusAnswer = focusSliderValue;
+	responses.calmAnswer = calmSliderValue;
 	
 }
 
 function saveEvaluateResponses() {
 	// Fetch data from HTML
 	var name = document.getElementById("textInput").value;
+	var count = 0;
 	gatherResponses()
+	if (loaded == false) {
+		if (name == "") {
+			name = new Date().toISOString().split('T')[0];
+		}
+		for (var i = 0; i < evaluateNames.length; i++) {
+			if (evaluateNames[i] == name) {
+				count++;
+			}
+		}
+		if (count > 0){
+			name = name + "(" + count + ")";
+		}
+	}
 	responses.name = name;
-	
 
 	// Send data to eventhandler
     vscode.postMessage({
@@ -157,6 +179,8 @@ calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
 
+
+
 function populatedropdown(){
 	var dropdown = document.getElementById("History");
 	for (var i = 0; i < evaluateNames.length; i++) {
@@ -169,7 +193,16 @@ function populatedropdown(){
 	}
 }
 
-function loadSession() {
+function changeHeatmapImageSrc(newSrc) {
+    const heatmapImg = document.querySelector('#heatmap img');
+    if (heatmapImg) {
+        heatmapImg.setAttribute('src', newSrc);
+		heatmapImg.setAttribute('alt', newSrc);
+    } else {
+        console.error('Could not find the heatmap image element.');
+    }
+}
+function loadSession(extensionPath) {
 	var name = responses.name
 	if (name != "New Session") {
 		document.getElementById("textInput").value = name;
@@ -177,10 +210,19 @@ function loadSession() {
 	else {
 		document.getElementById("textInput").value = "";
 	}
+
 	//CHART LOAD
 	focusValues = responses.focusValues;
 	calmValues = responses.calmValues;
 	createChart()
+
+	//SET TOP FUNCS
+	funcs = responses.topfuncs;
+	setTopFunctions(funcs)
+
+	//LOAD HEATMAP
+	var FullPathHeatmap = extensionPath + '\\' +  responses.pathHeat;
+	changeHeatmapImageSrc(FullPathHeatmap)
 
 	//SLIDER LOAD
 	focusSlider.value = responses.responses.focusAnswer
@@ -233,6 +275,8 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.calmValues = calmValues;
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
+		newestSession.topfuncs = funcs;
+		newestSession.pathHeat = "heatmap.png"
 
 		const q1Rating = document.querySelector('input[name="q1rating"]:checked');
 		const q2Rating = document.querySelector('input[name="q2rating"]:checked');
@@ -256,7 +300,8 @@ window.addEventListener("message", e => {
 			createChart()
 			break;
 		case "functions":
-			setTopFunctions(message.value)
+			funcs = message.value
+			setTopFunctions(funcs)
 			break;
 		case "evaluateNames":
 			evaluateNames = message.value
@@ -265,10 +310,13 @@ window.addEventListener("message", e => {
 		case "sessionData":
 			if (message.value == -1) {
 				responses = newestSession
+				loaded = false;
 			} else {
 				responses = message.value;
+				loaded = true;
+				responses.pathHeat = "heatmap-" + responses.name + ".png"
 			}
-			loadSession();
+			loadSession(message.path);
 			break;
 	}
 })

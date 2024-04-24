@@ -134,10 +134,10 @@ class EyeTracker {
 				var current = Math.floor(((y - EDITOR_START_Y) * 30) / (EDITOR_END_Y - EDITOR_START_Y)) //assume 30 lines
                 if (current < 0) current = 0 //avoid negative lines
 				var lineNumber = currentRange[0].start.line + current
-                if (lineNumber > lineCount - 1) lineNumber = lineCount - 1 //avoid lines outside range
+                var skip = (lineNumber > lineCount - 1) //lineNumber = lineCount - 1 //avoid lines outside range
 				var line = editor.document.lineAt(lineNumber)
 
-				if (!line.isEmptyOrWhitespace) {
+				if (!skip && !line.isEmptyOrWhitespace) {
                     var startLine = lineNumber == 0 ? lineNumber : lineNumber - 1
                     var endLine = lineNumber == lineCount - 1 ? lineNumber : lineNumber + 1
 

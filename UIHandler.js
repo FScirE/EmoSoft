@@ -10,7 +10,7 @@ class UIHandler{
         //create the UI HTML element, will hold AI window and progress bars
         this.messagePending = false
         this.webViewIsVisisble = true;
-        this.webView = createWebView(context, 'webview', 'webview', 'webview')
+        this.webView = createWebView(context, 'webview')
         this.statusBarButton = createStatusBarButton()
         context.subscriptions.push(this.webView)
         context.subscriptions.push(this.statusBarButton)
@@ -29,7 +29,7 @@ class UIHandler{
         context.subscriptions.push(vscode.commands.registerCommand('start.ui', _ => {
             if (this.webViewIsVisisble) return
             this.webViewIsVisisble = true;
-            this.webView = createWebView(context, 'webview', 'webview', 'webview');
+            this.webView = createWebView(context, 'webview');
             eventHandler.initUIMessage(context)
             this.webView.onDidDispose(_ => { this.webViewIsVisisble = false; this.statusBarButton.show() }) //show button when closed
             this.statusBarButton.hide()
@@ -67,7 +67,7 @@ class UIHandler{
 
     async switchToEvaluatePage() {
         if (this.webViewIsVisisble) await this.webView.dispose(); //close ui window if open
-        this.evaluateWebView = await createWebView(this.context, 'evaluate', 'webview', 'evaluateWebView')
+        this.evaluateWebView = await createWebView(this.context, 'evaluate')
         await this.context.subscriptions.push(this.evaluateWebView)
     }
 
@@ -98,7 +98,7 @@ function createStatusBar(content, weight) {
     return statusBar
 }
 
-function createWebView(context, html, style, script) {
+function createWebView(context, html) {
 	var webView = vscode.window.createWebviewPanel(
 		'emoide',
 		'EmoIDE',
@@ -106,14 +106,9 @@ function createWebView(context, html, style, script) {
 		{ enableScripts: true }
 	);
     webView.iconPath = vscode.Uri.file(context.extensionPath + '\\mfw_cropped.jpg')
-	//set source paths for style and script
-	const styleSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${style}.css`])));
-	const scriptSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, `./${script}.js`])));
-    const heatmapSrc = webView.webview.asWebviewUri(vscode.Uri.file(path.join(...[context.extensionPath, './heatmap.png']))); //for evaluation
+
 	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, `./${html}.html`), 'utf-8')
-        .replace(`./${style}.css`, styleSrc.toString())
-        .replace(`./${script}.js`, scriptSrc.toString())
-        .replace('./heatmap.png', heatmapSrc.toString())
+        .replaceAll('./', webView.webview.asWebviewUri(vscode.Uri.file(context.extensionPath)).toString() + '/')
 	return webView;
 }
 

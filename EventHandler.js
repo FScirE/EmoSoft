@@ -2,13 +2,15 @@
 const vscode = require('vscode')
 const { AIHandler } = require('./AIHandler')
 const { Evaluate } = require('./Evaluate')
+const fs = require('fs');
+const path = require('path');
 
 class EventHandler {
     // Initilize variables
     constructor(extensionPath, uiHandler, eyetracker, settings) {
         // Makes sure user doesn't gets spammed with notifications
-        this.allowNotificationFocus = true
-        this.allowNotificationCalm = true
+        this.allowNotificationFocus = true;
+        this.allowNotificationCalm = true;
         this.mutexFocus = false
         this.mutexCalm = false
 
@@ -16,11 +18,12 @@ class EventHandler {
         this.aiHandler = new AIHandler("", "", extensionPath) // should probably only create one AIHandler in extension.js and use as a parameter here
         this.evaluate = new Evaluate(extensionPath);
         this.settings = settings;
-        this.uiHandler = uiHandler
-        this.eyetracker = eyetracker
+        this.uiHandler = uiHandler;
+        this.eyetracker = eyetracker;
+        this.path = extensionPath;
 
         // Mark when generated
-        this.generated = false
+        this.generated = false;
     }
 
     async init(dataHandler) {
@@ -109,6 +112,7 @@ class EventHandler {
         switch (message.variable) {
             case 'evaluateResponses':
                 this.evaluate.responses = message.value;
+                this.evaluate.topfuncs = message.value.topfuncs;
                 if (this.evaluate.responses.hasOwnProperty('focusValues')) {
                     this.evaluate.setFocusValues(this.evaluate.responses.focusValues);
                 }
@@ -116,6 +120,11 @@ class EventHandler {
                     this.evaluate.setCalmValues(this.evaluate.responses.calmValues);
                 }
                 await this.evaluate.saveEvaluationToFile();
+                // Save heatmap if it is a new session
+                let savedNames = this.evaluate.loadEvalNameList();
+                if (!savedNames.includes(this.evaluate.responses.name)) {
+                    this.saveHeatmap(this.evaluate.responses.name)
+                }
                 vscode.window.showInformationMessage('Evaluation has been saved.');
                 this.uiHandler.evaluateWebView.dispose();
                 vscode.commands.executeCommand('start.ui');
@@ -123,9 +132,11 @@ class EventHandler {
             case 'nameRequest':
                 console.log("Requesting " + message.value);
                 var loadedData = await this.evaluate.loadEvalData(message.value);
+                const heatmapsFolderPath = this.uiHandler.evaluateW.webview.asWebviewUri(path.join(this.path, 'heatmaps')).toString();
                 this.uiHandler.evaluateWebView.webview.postMessage({
                     variable: "sessionData",
-                    value: loadedData
+                    value: loadedData,
+                    path: heatmapsFolderPath
                 })
                 break;
             case 'finished':
@@ -178,6 +189,19 @@ class EventHandler {
                 this.mutexFocus = false
             }
         }
+    }
+
+    async saveHeatmap(name) {
+        // Create the heatmaps folder if it doesn't exist
+        const heatmapsFolderPath = path.join(this.path, 'heatmaps');
+        if (!fs.existsSync(heatmapsFolderPath)) {
+            fs.mkdirSync(heatmapsFolderPath);
+        }
+
+        const oldFilePath = path.join(this.path, 'heatmap.png');
+        const newFileName = `heatmap-${name}.png`;
+        const newFilePath = path.join(heatmapsFolderPath, newFileName);
+        fs.renameSync(oldFilePath, newFilePath)
     }
 }
 

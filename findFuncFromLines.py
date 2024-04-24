@@ -18,7 +18,10 @@ except:
 ##-----------------------------------------------------------------##
 
 #filepath="testfile.py"
-filepath = str(sys.argv[1]).replace('\\', '/')
+filepath = ''
+for arg in sys.argv[1:]:
+    filepath += arg + ' '
+filepath = filepath.rstrip().replace('\\', '/')
 
 def find_definition(line_num):
     """
@@ -33,7 +36,7 @@ def find_definition(line_num):
             tree = ast.parse(file.read())
 
             for item in ast.walk(tree):
-                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     start, end = compute_size(item)
 
                     functions[item.name] = (start, end)
