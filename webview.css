@@ -288,6 +288,9 @@ h2 {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.function:hover {
+    cursor: pointer;
+}
 
 #heatmap {
     align-self: center;

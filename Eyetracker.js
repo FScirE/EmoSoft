@@ -149,6 +149,7 @@ class EyeTracker {
                         this.lookedLines[lineNumber] += 1
                     else
                         this.lookedLines[lineNumber] = 1
+                    //console.log(lineNumber)
 
 					decorationRange = [range]
                     returnText = editor.document.getText(range) //return text of the 3 lines
@@ -173,6 +174,7 @@ class EyeTracker {
     }
     recordingEnd() {
         this.recording = false
+        this.evaluateFilePath = this.filePath
     }
 
     generateHeatmap() {

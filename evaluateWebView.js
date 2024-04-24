@@ -133,10 +133,17 @@ function setTopFunctions(funcs) {
 	var innerHTML = ''
 	for (var f of funcs) {
 		innerHTML += `
-			<li><code>${f[0]}</code>: ${parseInt(f[1]) / 2}s</li>
+			<li><code class="function" onclick="scrollToFunction(${f[0]})">${f[0]}</code>: ${parseInt(f[1]) / 2}s</li>
 		`
 	}
 	document.querySelector('#topFunctions ol').innerHTML = innerHTML
+}
+
+function scrollToFunction(funcName) {
+	vscode.postMessage({
+		variable: 'scrollFunction',
+		value: funcName
+	})
 }
 
 const focusSlider = document.getElementById("focusSlider");

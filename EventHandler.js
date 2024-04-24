@@ -1,5 +1,6 @@
 
 const vscode = require('vscode')
+const fs = require('fs')
 const { AIHandler } = require('./AIHandler')
 const { Evaluate } = require('./Evaluate')
 
@@ -127,6 +128,17 @@ class EventHandler {
                     variable: "sessionData",
                     value: loadedData
                 })
+                break;
+            case 'scrollFunction':
+                var fileContent = fs.readFileSync(this.eyetracker.evaluateFilePath, "utf-8").split('\n')
+                var lineCounter = 0
+                for (let line of fileContent) {
+                    if (line.includes(`def ${message.value}`))
+                        break;
+                    else
+                        lineCounter++
+                }
+                vscode.window.visibleTextEditors[0].revealRange(new vscode.Range(lineCounter, 0, lineCounter + 1, 0), vscode.TextEditorRevealType.AtTop)
                 break;
             case 'finished':
                 console.log(message.value)
