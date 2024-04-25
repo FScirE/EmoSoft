@@ -3,7 +3,6 @@ const vscode = require('vscode')
 const fs = require('fs')
 const { AIHandler } = require('./AIHandler')
 const { Evaluate } = require('./Evaluate')
-const fs = require('fs');
 const path = require('path');
 
 class EventHandler {
