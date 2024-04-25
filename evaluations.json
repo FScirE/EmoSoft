@@ -136,5 +136,51 @@
       "expectedWorkAnswer": "4",
       "finishedWorkAnswer": "3"
     }
+  },
+  {
+    "name": "okej",
+    "date": "2024-04-25",
+    "focusValues": [
+      {
+        "x": 0,
+        "y": 31
+      },
+      {
+        "x": 10,
+        "y": 57
+      }
+    ],
+    "calmValues": [
+      {
+        "x": 0,
+        "y": 72
+      },
+      {
+        "x": 10,
+        "y": 85
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "'check_sorting_performance'"
+      },
+      {
+        "x": 10,
+        "y": "'check_sorting_performance'"
+      }
+    ],
+    "topfuncs": [
+      [
+        "'check_sorting_performance'",
+        45
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "73",
+      "calmAnswer": "81",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "4"
+    }
   }
 ]

@@ -94,7 +94,7 @@ function createChart() {
 			color: "#DF73FF",
 			xValueFormatString: "Function: ###############",
 			showInLegend: false,
-			name: "Function: ",
+			name: "Function",
 			click: scrollToFunctionCanvas,
 			dataPoints: functions
 
@@ -307,7 +307,7 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.responses = {};
 		newestSession.focusValues = focusValues;
 		newestSession.calmValues = calmValues;
-		newestSession.functions = functions;
+		newestSession.sessionFuncs = functions;
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
 		newestSession.topfuncs = funcs;
