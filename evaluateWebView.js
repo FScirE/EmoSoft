@@ -70,7 +70,7 @@ function createChart() {
 		data: [{
 			type: "line",
 			color: "#4fc553",
-			xValueFormatString: "####",
+			xValueFormatString: "Time (s): ####",
 			showInLegend: true,
 			name: "Focus (%)",
 			dataPoints: focusValues
