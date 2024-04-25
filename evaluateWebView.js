@@ -47,6 +47,9 @@ function createChart() {
 			titleFontSize: 16,
 			minimum: 0
 		},
+		toolTip: {
+			shared: true
+		},
 		axisY: {
 			logarithmic: false, //change it to false
 			title: "Focus & Calm",
