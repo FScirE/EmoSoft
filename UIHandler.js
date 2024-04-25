@@ -66,7 +66,7 @@ class UIHandler{
     }
 
     async switchToEvaluatePage() {
-        if (this.webViewIsVisisble) await this.webView.dispose(); //close ui window if open
+        //if (this.webViewIsVisisble) await this.webView.dispose(); //close ui window if open
         this.evaluateWebView = await createWebView(this.context, 'evaluate')
         await this.context.subscriptions.push(this.evaluateWebView)
     }
@@ -105,7 +105,7 @@ function createWebView(context, html) {
 		vscode.ViewColumn.Beside,
 		{ enableScripts: true }
 	);
-    webView.iconPath = vscode.Uri.file(context.extensionPath + '\\mfw_cropped.jpg')
+    webView.iconPath = vscode.Uri.file(context.extensionPath + '\\emoide-icon.png')
 
 	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, `./${html}.html`), 'utf-8')
         .replaceAll('./', webView.webview.asWebviewUri(vscode.Uri.file(context.extensionPath)).toString() + '/')

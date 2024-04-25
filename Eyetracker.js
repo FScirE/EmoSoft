@@ -97,11 +97,6 @@ class EyeTracker {
         this.socket.on('close', () => {
             console.log('Connection closed');
         });
-
-        var disposableInterval = setInterval(async () => {
-            if (this.recording)
-                await this.getMostFocusedFunction()
-        }, readFunctionDelay * 1000 + 200)
     }
 
     getX() {
@@ -135,9 +130,8 @@ class EyeTracker {
                 if (current < 0) current = 0 //avoid negative lines
 				var lineNumber = currentRange[0].start.line + current
                 var skip = (lineNumber > lineCount - 1) //lineNumber = lineCount - 1 //avoid lines outside range
-				var line = editor.document.lineAt(lineNumber)
 
-				if (!skip && !line.isEmptyOrWhitespace) {
+				if (!skip && !editor.document.lineAt(lineNumber).isEmptyOrWhitespace) {
                     var startLine = lineNumber == 0 ? lineNumber : lineNumber - 1
                     var endLine = lineNumber == lineCount - 1 ? lineNumber : lineNumber + 1
 
@@ -187,7 +181,7 @@ class EyeTracker {
         execSync(`python heatmapGenerator.py ${this.path}`, { cwd: this.path })
     }
 
-    getMostFocusedFunction() {
+    async getMostFocusedFunction() { //might not work with async
         fs.writeFileSync(this.path + '\\lineDictionary.txt', '')
         for (let [key, value] of Object.entries(this.lookedLines)) {
             fs.appendFileSync(this.path + '\\lineDictionary.txt', `${key}:${value}\n`)

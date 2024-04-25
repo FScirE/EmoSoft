@@ -69,7 +69,7 @@ span_funcs = {}
 
 for line in content:
     if (line != ''):
-        key = int(line.split(":")[0])
+        key = int(line.split(":")[0]) + 1
         value = int(line.split(":")[1])
         
         print(f"this is line: ", key)

@@ -3,6 +3,7 @@
 const { Neurosity } = require("@neurosity/sdk");
 const path = require('path');
 
+const INTERVAL = 10; // Save values every 10 seconds
 
 /**
  * DataHandler object. Needs "await dataHandler.init();" before use!
@@ -13,9 +14,10 @@ class DataHandler {
     
     #password = ""; // private property
 
-    constructor(settings) {
+    constructor(settings, eyetracker) {
         this.createFakeDataIfNotLoggedIn = true;
 
+        this.eyetracker = eyetracker
         // Evaluate session
         this.isRecording = false;
         this.focusValuesSession = []
@@ -179,6 +181,18 @@ class DataHandler {
         else {
             console.error("DataHandler is not setting this.currentFocus and this.currentCalm to anything (they're NaN)");
         }
+
+        //set up recording interval
+        var disposableInterval = setInterval(async () => {
+            if (this.isRecording) {
+                this.eyetracker.getMostFocusedFunction()
+                var currentFocus = {x: this.recordingTime, y:Math.round(this.getFocus()*100)};
+                var currentCalm = {x: this.recordingTime, y:Math.round(this.getCalm()*100)};
+                this.focusValuesSession.push(currentFocus);
+                this.calmValuesSession.push(currentCalm);
+                this.recordingTime += INTERVAL;
+            }
+        }, INTERVAL * 1000)
     
     } // end of init function
 
@@ -196,21 +210,15 @@ class DataHandler {
         return new Promise(resolve => setTimeout(resolve, s * 1000));
     }
 
-    // Save focus and calm values temporarily during a session
-    async recordSession() {
-        var s = 0;
-        const interval = 10; // Save values every 10 seconds
+    startRecording() {
+        this.recordingTime = 0;
         this.focusValuesSession = [];
         this.calmValuesSession = [];
-        while (this.isRecording) {
-            var currentFocus = {x: s, y:Math.round(this.getFocus()*100)};
-            var currentCalm = {x: s, y:Math.round(this.getCalm()*100)};
-            this.focusValuesSession.push(currentFocus);
-            this.calmValuesSession.push(currentCalm);
-            s += interval;
-            await this.sleepSeconds(interval);
-        } 
-        return;
+        this.isRecording = true;
+    }
+
+    endRecording() {
+        this.isRecording = false
     }
 }
 

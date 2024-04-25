@@ -6,6 +6,7 @@ const vscode = acquireVsCodeApi() //ignore error
 
 var focusValues = []
 var calmValues = []
+var functions = []
 var evaluateNames = []
 var responses = {}
 var newestSession = {}
@@ -36,6 +37,7 @@ function createChart() {
 		animationEnabled: true,
 		zoomEnabled: true,
 		theme: "dark2",
+		interactivityEnabled: true,
 		//title: {
 			//text: "Session"
 		//},
@@ -48,7 +50,8 @@ function createChart() {
 			minimum: 0
 		},
 		toolTip: {
-			shared: true
+			shared: true,
+			
 		},
 		axisY: {
 			logarithmic: false, //change it to false
@@ -73,6 +76,7 @@ function createChart() {
 			xValueFormatString: "Time (s): ####",
 			showInLegend: true,
 			name: "Focus (%)",
+			click: scrollToFunctionCanvas,
 			dataPoints: focusValues
 
 		},
@@ -82,8 +86,20 @@ function createChart() {
 			xValueFormatString: "####",
 			showInLegend: true,
 			name: "Calm (%)",
+			click: scrollToFunctionCanvas,
 			dataPoints: calmValues
-		}]
+		},
+		{
+			type: "line",
+			color: "#DF73FF",
+			xValueFormatString: "Function: ###############",
+			showInLegend: false,
+			name: "Function: ",
+			click: scrollToFunctionCanvas,
+			dataPoints: functions
+
+		}
+	]
 	});
 	chart.render();
 	document.querySelector('body').style.visibility = 'visible'
@@ -170,6 +186,13 @@ function scrollToFunction(funcName) {
 		value: funcName
 	})
 }
+function scrollToFunctionCanvas(e) {
+	for (var i = 0; i < functions.length; i++) {
+		if (functions[i].x == e.dataPoint.x) {
+			scrollToFunction(functions[i].y.toString().replaceAll("'", ""))
+		}
+	}
+}
 
 const focusSlider = document.getElementById("focusSlider");
 const focusOutput = document.getElementById("focusValue");
@@ -224,6 +247,7 @@ function loadSession(extensionPath) {
 	//CHART LOAD
 	focusValues = responses.focusValues;
 	calmValues = responses.calmValues;
+	functions = responses.sessionFuncs;
 	createChart()
 
 	//SET TOP FUNCS
@@ -283,6 +307,7 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.responses = {};
 		newestSession.focusValues = focusValues;
 		newestSession.calmValues = calmValues;
+		newestSession.functions = functions;
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
 		newestSession.topfuncs = funcs;
@@ -307,6 +332,7 @@ window.addEventListener("message", e => {
 		case "values":
 			focusValues = message.value[0]
 			calmValues = message.value[1]
+			functions = message.value[2]
 			createChart()
 			break;
 		case "functions":

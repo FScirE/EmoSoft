@@ -75,7 +75,7 @@ async function activate(context) {
 	
 	this.eyetracker = new EyeTracker(context.extensionPath, this.settings);
 
-	this.dataHandler = new DataHandler(this.settings);
+	this.dataHandler = new DataHandler(this.settings, this.eyetracker);
 	await this.dataHandler.init(context.extensionPath);
 	this.settings.reinitDataHandlerCallback = async () => {
 		await this.dataHandler.uninit(); 

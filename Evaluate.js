@@ -18,6 +18,9 @@ class Evaluate {
 
         //top funcs
         this.topfuncs = [];
+        
+        //funcs for graph
+        this.sessionFuncs = [];
     }
 
     // ------------- Setter and getter functions -------------------------------------------------------------//
@@ -45,6 +48,28 @@ class Evaluate {
         var response = {question, number};
         this.responses.push(response);
     }
+
+    readFuncsFromFile() {
+        this.sessionFuncs = []
+        var lines = fs.readFileSync(this.path + '\\fullDictionaryFile.txt', 'utf-8').split('\n')
+        let time = 0 //yeah
+        for (var line of lines.slice(0, lines.length - 2)) { //skip last func
+            let topKey = 'No function'
+            let topValue = 0
+            for (var entry of line.trim().substring(1, line.length - 1).split(', ')) {
+                let key = entry.split(':')[0]
+                let value = parseInt(entry.split(':')[1])
+                if (key == '-1' || key == '}' || value < topValue) 
+                    continue;
+                topKey = key
+                topValue = value
+            }
+
+            this.sessionFuncs.push({ x: time, y: topKey })
+            time += 10
+        }
+    }
+
 //------------------------------------------------------------------------------//
     saveEvaluationToFile() {
         // Open file
@@ -78,6 +103,7 @@ class Evaluate {
         dataList.calmValues = this.calmValues;
 
         // Eyetracker stats
+        dataList.sessionFuncs = this.sessionFuncs;
         dataList.topfuncs = this.topfuncs;
         
         // Responses

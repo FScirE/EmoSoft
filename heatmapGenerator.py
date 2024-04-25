@@ -55,7 +55,7 @@ def generate_heatmap(x_in, y_in):
     plt.colorbar()  # Add color bar indicating the scale
 
     #plt.show()
-    plt.savefig("heatmap.png", transparent=True)
+    plt.savefig("heatmaps/heatmap.png", transparent=True)
 
 generate_heatmap(x_arr, y_arr)
 #generate_heatmap(x_arr, y_arr)

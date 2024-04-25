@@ -45,12 +45,11 @@ class EventHandler {
                 // Record a session
                 case 'recording':
                     if (message.value == true) {
-                        this.dataHandler.isRecording = true;
+                        this.dataHandler.startRecording()
                         this.eyetracker.recordingStart()
-                        await this.dataHandler.recordSession();
                     }
                     else {
-                        this.dataHandler.isRecording = false;
+                        this.dataHandler.endRecording()
                         this.eyetracker.recordingEnd()
                         this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
                         this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
@@ -71,7 +70,9 @@ class EventHandler {
                                 })
 
                                 await this.eyetracker.generateHeatmap()
+                                await this.eyetracker.getMostFocusedFunction() //get the rest of looked lines
                                 var funcs = await this.eyetracker.calculateTopLines()
+                                await this.evaluate.readFuncsFromFile();
 
                                 await this.uiHandler.switchToEvaluatePage();
                                 await this.initEvaluateReceiveMessage(context);
@@ -85,13 +86,14 @@ class EventHandler {
                                 //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
-                                    value: [this.evaluate.focusValues, this.evaluate.calmValues]
+                                    value: [this.evaluate.focusValues, this.evaluate.calmValues, this.evaluate.sessionFuncs]
                                 })
                                 //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "evaluateNames",
                                     value: this.evaluate.loadEvalNameList()
                                 })
+                                console.log('Reached end of end evaluate call.')
                             }
                             if (e == 'No') {
                                 console.log("No to evaluate")
@@ -108,7 +110,7 @@ class EventHandler {
     }
 
     async initEvaluateReceiveMessage(context) {
-        this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
+        await this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
         switch (message.variable) {
             case 'evaluateResponses':
                 this.evaluate.responses = message.value;
@@ -141,6 +143,7 @@ class EventHandler {
                 })
                 break;
             case 'scrollFunction':
+                console.log('Scroll to: ' + message.value)
                 var fileContent = fs.readFileSync(this.eyetracker.evaluateFilePath, "utf-8").split('\n')
                 var lineCounter = 0
                 for (let line of fileContent) {
@@ -152,6 +155,7 @@ class EventHandler {
                 vscode.window.visibleTextEditors[0].revealRange(new vscode.Range(lineCounter, 0, lineCounter + 1, 0), vscode.TextEditorRevealType.AtTop)
                 break;
             case 'finished':
+                if (this.uiHandler.webViewIsVisisble) this.uiHandler.webView.dispose() //might fix
                 console.log(message.value)
                 this.generated = true
                 break;
@@ -210,7 +214,7 @@ class EventHandler {
             fs.mkdirSync(heatmapsFolderPath);
         }
 
-        const oldFilePath = path.join(this.path, 'heatmap.png');
+        const oldFilePath = path.join(this.path, 'heatmaps/heatmap.png');
         const newFileName = `heatmap-${name}.png`;
         const newFilePath = path.join(heatmapsFolderPath, newFileName);
         fs.renameSync(oldFilePath, newFilePath)
