@@ -284,6 +284,7 @@ h2 {
 }
 
 #topFunctions {
+    text-align: left;
     align-self: center;
     margin: 10px auto;
     padding-top: 10px;
@@ -297,6 +298,7 @@ h2 {
     align-self: center;
     margin: 10px auto;
     height: auto;
+    overflow: visible;
 }
 
 #heatmap img {
