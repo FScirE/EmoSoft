@@ -25,7 +25,7 @@ filepath = filepath.rstrip().replace('\\', '/')
 
 def find_definition(line_num):
     """
-    Parameter is the number of a line. 
+    Parameter is the number of a line.
     Returns the function name the line is in. Ex: foo, meaning that the function name is foo.
     A return value of -1 means that the line of code is not within a function.
     """
@@ -46,7 +46,7 @@ def find_definition(line_num):
     for key, value in functions.items():
         if value[0] <= line_num <= value[1]:
             return key, value
-        
+
     return -1, (0, 0)
 
 def compute_size(node):
@@ -71,11 +71,11 @@ for line in content:
     if (line != ''):
         key = int(line.split(":")[0]) + 1
         value = int(line.split(":")[1])
-        
+
         print(f"this is line: ", key)
         function_name, span = find_definition(key)
         print(function_name)
-        
+
         span_funcs[function_name] = span
         if (function_name not in dict_funcs):
             dict_funcs[function_name] = value
@@ -98,10 +98,8 @@ with open('stuckLine.txt', 'w') as stuck_file:
         content = f'{max_key}:{span_funcs[max_key]}'
         if (dict_funcs[max_key] >= 19):
             stuck_file.write(content)
+    finally:
         stuck_file.close()
-    except:
-        stuck_file.close()
-        raise "No functions in focus"
 
 ##-----------------------------------------------------------------##
 # TESTS
