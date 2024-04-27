@@ -98,13 +98,15 @@ with open('stuckLine.txt', 'w') as stuck_file:
         content = f'{max_key}:{span_funcs[max_key]}'
         if (dict_funcs[max_key] >= 19):
             stuck_file.write(content)
-    finally:
         stuck_file.close()
+    except:
+        stuck_file.close()
+
 
 ##-----------------------------------------------------------------##
 # TESTS
 
-print(find_definition(41))
+# print(find_definition(41))
 
 # print(find_definition(50)
 

@@ -51,7 +51,7 @@ function createChart() {
 		},
 		toolTip: {
 			shared: true,
-			
+
 		},
 		axisY: {
 			logarithmic: false, //change it to false
