@@ -98,9 +98,17 @@ class Evaluate {
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
         dataList.date = dateString;
 
-        // Focus and calm values
-        dataList.focusValues = this.focusValues;
-        dataList.calmValues = this.calmValues;
+        // Renaming focus and calm values to JSON
+        let tempFocus = [];
+        let tempCalm = [];
+        for (let i = 0; i < this.focusValues.length; i++) {
+            tempFocus[i] = { time: this.focusValues[i].x, focusValue: this.focusValues[i].y };
+        }
+        for (let j = 0; j < this.calmValues.length; j++) {
+            tempCalm[j] = { time: this.calmValues[j].x, calmValue: this.calmValues[j].y };
+        }
+        dataList.focusValues = tempFocus;
+        dataList.calmValues = tempCalm;
 
         // Eyetracker stats
         dataList.sessionFuncs = this.sessionFuncs;
@@ -154,6 +162,19 @@ class Evaluate {
         while (jsonData[i].name != name && i < jsonData.length) {
             i++;
         }
+
+        // Renaming focus and calm values so that graph can read them
+        let tempFocus = [];
+        let tempCalm = [];
+        for (let j = 0; j < jsonData[i].focusValues.length; j++) {
+            tempFocus[j] = { x: jsonData[i].focusValues[j].time, y: jsonData[i].focusValues[j].focusValue };
+        }
+        for (let k = 0; k < jsonData[i].calmValues.length; k++) {
+            tempCalm[k] = { x: jsonData[i].calmValues[k].time, y: jsonData[i].calmValues[k].calmValue };
+        }
+        jsonData[i].focusValues = tempFocus;
+        jsonData[i].calmValues = tempCalm;
+
         return jsonData[i];
     }
 }
