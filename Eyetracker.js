@@ -33,6 +33,7 @@ class EyeTracker {
         this.long_X = []
         this.long_Y = []
         this.lookedLines = {}
+        this.functionContents = {}
         this.recording = false
         this.settings = settings;
 
@@ -147,7 +148,7 @@ class EyeTracker {
 
 					decorationRange = [range]
                     returnText = editor.document.getText(range) //return text of the 3 lines
-                    
+
                     if (!this.settings.highlightEyetracker) {
                         decorationRange = []
                     }
@@ -196,19 +197,19 @@ class EyeTracker {
             vscode.window.showInformationMessage(`It seems you are stuck, do you need assistance?`, ...['Yes', 'No']).then((answer) => {
                 console.log(answer + ' to stuck')
                 if (answer == 'Yes') {
-                    var functionText = this.getFuncFromSpan(stuckFileContent[1])
+                    let span = stuckFileContent[1].trim().substring(1, stuckFileContent[1].length - 1).split(', ')
+                    var functionText = this.getFuncFromSpan(span[0], span[1])
                     this.eventHandler.stuckOnFunction(functionText)
                 }
             })
         stuckFunc = stuckFileContent[0]
     }
 
-    getFuncFromSpan(span) {
+    getFuncFromSpan(first, last) {
         var editor = vscode.window.visibleTextEditors[0]
-        var formattedSpan = span.trim().substring(1, span.length - 1).split(', ')
 
-        var startLine = parseInt(formattedSpan[0]) - 1
-        var endLine = parseInt(formattedSpan[1]) - 1
+        let startLine = first - 1
+        let endLine = last - 1
 
         var start = new vscode.Position(startLine, 0);
         var end = new vscode.Position(endLine, editor.document.lineAt(endLine).text.length);
@@ -223,14 +224,18 @@ class EyeTracker {
         for (var line of data.split('\n')) {
             var stripLine = line.trim().substring(1, line.length - 1)
             for (var entry of stripLine.split(', ')) {
-                var key = entry.split(':')[0]
-                var value = parseInt(entry.split(':')[1])
+                let entrySplit = entry.split(':')
+                var key = entrySplit[0]
+                var value = parseInt(entrySplit[1])
+                var start = parseInt(entrySplit[2])
+                var end = parseInt(entrySplit[3])
                 if (key != '' && key != '-1' && key != '}')
                 {
                     if (key in topFuncs)
                         topFuncs[key] += value
                     else
                         topFuncs[key] = value
+                    this.functionContents[key] = this.getFuncFromSpan(start, end)
                 }
             }
         }

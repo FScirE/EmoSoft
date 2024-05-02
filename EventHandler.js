@@ -86,7 +86,7 @@ class EventHandler {
                                 //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
-                                    value: [this.evaluate.focusValues, this.evaluate.calmValues, this.evaluate.sessionFuncs]
+                                    value: [this.evaluate.focusValues, this.evaluate.calmValues, this.evaluate.sessionFuncs, this.eyetracker.functionContents]
                                 })
                                 //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
@@ -210,9 +210,6 @@ class EventHandler {
     async saveHeatmap(name) {
         // Create the heatmaps folder if it doesn't exist
         const heatmapsFolderPath = path.join(this.path, 'heatmaps');
-        if (!fs.existsSync(heatmapsFolderPath)) {
-            fs.mkdirSync(heatmapsFolderPath);
-        }
 
         const oldFilePath = path.join(this.path, 'heatmaps/heatmap.png');
         const newFileName = `heatmap-${name}.png`;

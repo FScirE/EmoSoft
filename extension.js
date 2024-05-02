@@ -5,6 +5,7 @@
 const vscode = require('vscode');
 
 const path = require('path')
+const fs = require('fs')
 
 const { DataHandler } = require('./DataHandler')
 const { EventHandler } = require('./EventHandler')
@@ -25,6 +26,10 @@ async function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "emoide" is now active!');
+	const heatmapsFolderPath = path.join(context.extensionPath, 'heatmaps');
+	if (!fs.existsSync(heatmapsFolderPath)) {
+		fs.mkdirSync(heatmapsFolderPath);
+	}
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
@@ -33,17 +38,17 @@ async function activate(context) {
 		// The code you place here will be executed every time your command is executed
 	//});
 	//context.subscriptions.push(disposable);
-	
+
 	async function closeEmptyTabs(recursionCount = 0) {
 		const tabArray = vscode.window.tabGroups.all;
-		
+
 		console.log("Looking for empty tabs to close. This function has ran recursively this many times: ", recursionCount)
 		for (let groupIndex = tabArray.length - 1; groupIndex >= 0; groupIndex--) {
 			var group = tabArray[groupIndex];
-			
+
 		  	// for (let i = group.tabs.length - 1; i >= 0; i--) {
 			// 	const tab = group.tabs[i];
-				
+
 			// 	// Check if the tab label is empty (usually shows VS Code logo)
 			// 	// if (tab.label === '') {
 			// 	// 	console.log("closing empty tab: ", tab)
@@ -51,10 +56,10 @@ async function activate(context) {
 			// 	// 	await vscode.commands.executeCommand('workbench.action.closeEditorsInGroup', i);
 			// 	// }
 			// }
-			
+
 			if (group.tabs.length === 0) {
 				console.log("Closing empty tab group:", group);
-				
+
 				try {
   					await vscode.window.tabGroups.close(tabArray[groupIndex]);
 				}
@@ -67,18 +72,18 @@ async function activate(context) {
 			}
 		}
 	}
-	  
+
 	await closeEmptyTabs();
 
 	//initializations
 	this.settings = new Settings(context.extensionPath);
-	
+
 	this.eyetracker = new EyeTracker(context.extensionPath, this.settings);
 
 	this.dataHandler = new DataHandler(this.settings, this.eyetracker);
 	await this.dataHandler.init(context.extensionPath);
 	this.settings.reinitDataHandlerCallback = async () => {
-		await this.dataHandler.uninit(); 
+		await this.dataHandler.uninit();
 		await this.dataHandler.init(context.extensionPath);
 	};
 
@@ -104,16 +109,16 @@ async function activate(context) {
 		}
 
 		await this.uiHandler.updateFocusCalmBarColors(focus, calm);
-		
+
 		await this.eventHandler.checkCalm(calm);
 		await this.eventHandler.checkFocus(focus); //MESSAGE WITH AI REGARDING CURRENT FOCUS LEVELS / CALM LEVELS
 
 		await this.eyetracker.getSetLinesInFocus()
-    
+
 	}, 500);
 
-	function isWorkspaceOpen() {	
-		return (vscode.workspace.workspaceFolders && 
+	function isWorkspaceOpen() {
+		return (vscode.workspace.workspaceFolders &&
 			vscode.workspace.workspaceFolders.length > 0);
 	}
 
@@ -142,7 +147,7 @@ async function activate(context) {
 
 // This method is called when your extension is deactivated
 function deactivate() {
-	
+
 }
 
 module.exports = {

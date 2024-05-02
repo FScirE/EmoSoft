@@ -10,6 +10,7 @@ var functions = []
 var evaluateNames = []
 var responses = {}
 var newestSession = {}
+var functionContents = {}
 var funcs = []
 var path = []
 var loaded = false
@@ -177,7 +178,7 @@ function setTopFunctions(funcs) {
 	var innerHTML = ''
 	for (var f of funcs) {
 		innerHTML += `
-			<li><code class="function" onclick="scrollToFunction(${f[0]})">${f[0]}</code>: ${parseInt(f[1]) / 2}s</li>
+			<li><code class="function" onclick="scrollToFunction('${f[0]}')">${f[0]}</code>: ${parseInt(f[1]) / 2}s</li>
 		`
 	}
 	document.querySelector('#topFunctions ol').innerHTML = innerHTML
@@ -192,8 +193,23 @@ function scrollToFunction(funcName) {
 function scrollToFunctionCanvas(e) {
 	for (var i = 0; i < functions.length; i++) {
 		if (functions[i].x == e.dataPoint.x) {
-			scrollToFunction(functions[i].y.toString().replaceAll("'", ""))
+			var nameOfFunction = functions[i].y.toString().replaceAll("'", "")
 		}
+	}
+	scrollToFunction(nameOfFunction)
+	setFunctionContentArea(nameOfFunction != 'No function', functionContents[nameOfFunction])
+}
+
+function setFunctionContentArea(visible, text) {
+	var functionTextArea = document.getElementById("contentViewer")
+	if (visible) {
+		functionTextArea.style.visibility = 'visible'
+		functionTextArea.style.position = 'relative'
+		functionTextArea.querySelector('textarea').textContent = text
+	}
+	else {
+		functionTextArea.style.visibility = 'hidden'
+		functionTextArea.style.position = 'absolute'
 	}
 }
 
@@ -336,6 +352,7 @@ window.addEventListener("message", e => {
 			focusValues = message.value[0]
 			calmValues = message.value[1]
 			functions = message.value[2]
+			functionContents = message.value[3]
 			createChart()
 			break;
 		case "functions":

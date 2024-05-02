@@ -18,7 +18,7 @@ class Evaluate {
 
         //top funcs
         this.topfuncs = [];
-        
+
         //funcs for graph
         this.sessionFuncs = [];
     }
@@ -43,13 +43,13 @@ class Evaluate {
     getMinCalm() {
         return Math.min(...this.calmValues);
     }
-    
+
     setResponse(question, number) {
         var response = {question, number};
         this.responses.push(response);
     }
 
-    readFuncsFromFile() {
+    readFuncsFromFile() { //WE CAN USE GIT LOGS HERE TO GET OLD FUNCTION DEFINITIONS WITH THE SPAN!!
         this.sessionFuncs = []
         var lines = fs.readFileSync(this.path + '\\fullDictionaryFile.txt', 'utf-8').split('\n')
         let time = 0 //yeah
@@ -57,9 +57,10 @@ class Evaluate {
             let topKey = 'No function'
             let topValue = 0
             for (var entry of line.trim().substring(1, line.length - 1).split(', ')) {
-                let key = entry.split(':')[0]
-                let value = parseInt(entry.split(':')[1])
-                if (key == '-1' || key == '}' || value < topValue) 
+                let entrySplit = entry.split(':')
+                let key = entrySplit[0]
+                let value = parseInt(entrySplit[1])
+                if (key == '-1' || key == '}' || value < topValue)
                     continue;
                 topKey = key
                 topValue = value
@@ -86,13 +87,13 @@ class Evaluate {
                 jsonData.splice(i, 1);
             }
         }
-    
+
         // The data that shall be written
         const dataList = {};
 
         // Evaluation Name
         dataList.name = this.responses.name;
-        
+
         // Date
         const currentDate = new Date(); // Todays date
         const uniqueID = currentDate.getTime();
@@ -134,11 +135,11 @@ class Evaluate {
         // Eyetracker stats
         dataList.sessionFuncs = this.responses.sessionFuncs;
         dataList.topfuncs = this.topfuncs;
-        
+
         // Responses
-        dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer, 
+        dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer,
                               expectedWorkAnswer: this.responses.expectedWorkAnswer, finishedWorkAnswer: this.responses.finishedWorkAnswer};
-        
+
         // Write to JSON file
         jsonData.push(dataList);
         fs.writeFileSync(this.path + '\\evaluations.json', JSON.stringify(jsonData, null, 2));
@@ -177,7 +178,7 @@ class Evaluate {
         if (name == "New Session") { // Evaluation ID not found
             return -1;
         }
-        
+
         // Find correct evaluation
         var i = 0;
         while (jsonData[i].name != name && i < jsonData.length) {

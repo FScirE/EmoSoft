@@ -172,5 +172,119 @@
       "expectedWorkAnswer": "3",
       "finishedWorkAnswer": "3"
     }
+  },
+  {
+    "name": "2024-05-02",
+    "date": "2024-05-02",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 43
+      },
+      {
+        "time": 10,
+        "focusValue": 26
+      },
+      {
+        "time": 20,
+        "focusValue": 32
+      },
+      {
+        "time": 30,
+        "focusValue": 48
+      },
+      {
+        "time": 40,
+        "focusValue": 32
+      },
+      {
+        "time": 50,
+        "focusValue": 17
+      },
+      {
+        "time": 60,
+        "focusValue": 35
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 34
+      },
+      {
+        "time": 10,
+        "calmValue": 28
+      },
+      {
+        "time": 20,
+        "calmValue": 29
+      },
+      {
+        "time": 30,
+        "calmValue": 33
+      },
+      {
+        "time": 40,
+        "calmValue": 55
+      },
+      {
+        "time": 50,
+        "calmValue": 59
+      },
+      {
+        "time": 60,
+        "calmValue": 37
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "check_function_definitions"
+      },
+      {
+        "x": 10,
+        "y": "check_function_definitions"
+      },
+      {
+        "x": 20,
+        "y": "check_sorting_function"
+      },
+      {
+        "x": 30,
+        "y": "check_sorting_functionality"
+      },
+      {
+        "x": 40,
+        "y": "check_sorting_performance"
+      },
+      {
+        "x": 50,
+        "y": "check_sorting_complexity"
+      },
+      {
+        "x": 60,
+        "y": "check_code_quality"
+      }
+    ],
+    "topfuncs": [
+      [
+        "check_sorting_performance",
+        30
+      ],
+      [
+        "check_sorting_function",
+        28
+      ],
+      [
+        "check_function_definitions",
+        23
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "23",
+      "calmAnswer": "33",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
   }
 ]

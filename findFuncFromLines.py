@@ -89,7 +89,15 @@ print(dict_funcs)
 # Open the file in append mode
 with open('fullDictionaryFile.txt', 'a') as dict_file:
     # Append to the end of the file
-    content = dict_file.write(str(dict_funcs) + "\n")
+    # content = dict_file.write(str(dict_funcs) + "\n")
+    dict_file.write("{")
+    first = True
+    for key, value in dict_funcs.items():
+        if not first:
+            dict_file.write(", ")
+        dict_file.write(f"{key}:{value}:{span_funcs[key][0]}:{span_funcs[key][1]}")
+        first = False
+    dict_file.write("}\n")
     dict_file.close()
 
 with open('stuckLine.txt', 'w') as stuck_file:
