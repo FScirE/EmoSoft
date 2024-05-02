@@ -132,7 +132,7 @@ class Evaluate {
         dataList.calmValues = tempCalm;
 
         // Eyetracker stats
-        dataList.sessionFuncs = this.sessionFuncs;
+        dataList.sessionFuncs = this.responses.sessionFuncs;
         dataList.topfuncs = this.topfuncs;
         
         // Responses

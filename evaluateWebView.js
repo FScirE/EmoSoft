@@ -135,6 +135,7 @@ function gatherResponses() {
 	const q2Value = q2Rating ? q2Rating.value : null;
 
 	// Add all evaluate response to a dict
+	responses.sessionFuncs = functions;
 	responses.topfuncs = topfuncs;
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
@@ -348,10 +349,12 @@ window.addEventListener("message", e => {
 		case "sessionData":
 			if (message.value == -1) {
 				responses = newestSession;
+				functions = responses.sessionFuncs;
 				ID = -1;
 				loaded = false;
 			} else {
 				responses = message.value;
+				functions = responses.sessionFuncs;
 				ID = responses.ID;
 				loaded = true;
 				responses.pathHeat = "heatmap-" + responses.name + ".png"
