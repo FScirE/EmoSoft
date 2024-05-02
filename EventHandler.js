@@ -154,6 +154,13 @@ class EventHandler {
                 }
                 vscode.window.visibleTextEditors[0].revealRange(new vscode.Range(lineCounter, 0, lineCounter + 1, 0), vscode.TextEditorRevealType.AtTop)
                 break;
+            case 'relevantDataForAi':
+                await this.aiHandler.retrieveFeedback(message.value)
+                console.log(this.aiHandler.output)
+                this.uiHandler.evaluateWebView.webview.postMessage({
+                    variable: "aiFeedback",
+                    value: this.aiHandler.output
+                })
             case 'finished':
                 if (this.uiHandler.webViewIsVisisble) this.uiHandler.webView.dispose() //might fix
                 console.log(message.value)
