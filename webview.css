@@ -506,3 +506,31 @@ input[type=range] {
     padding: 0px;
     border-bottom-right-radius: 11px;
 }
+
+#feedbackContainer {
+    border-radius: 8px;
+    width: 90%;
+    min-height: 140px;
+    height: auto;
+    background-color: rgb(50, 55, 58);
+    margin: 0 auto;
+    margin-bottom: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+    color: #FFF; 
+}
+
+#feedbackContainer #feedbackAiMessage{
+    max-width: 90%;
+    height: auto;
+    padding: 10px;
+    left: 0%;
+}
+
+#feedbackContainer #feedbackAiMessage #textfromAi {
+    font-size: 9px;
+    color: #FFF;
+}
