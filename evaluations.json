@@ -1,0 +1,176 @@
+[
+  {
+    "name": "test2",
+    "ID": 1714648499247,
+    "date": "2024-05-02",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 52
+      },
+      {
+        "time": 10,
+        "focusValue": 33
+      },
+      {
+        "time": 20,
+        "focusValue": 35
+      },
+      {
+        "time": 30,
+        "focusValue": 45
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 63
+      },
+      {
+        "time": 10,
+        "calmValue": 88
+      },
+      {
+        "time": 20,
+        "calmValue": 58
+      },
+      {
+        "time": 30,
+        "calmValue": 44
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "No function"
+      },
+      {
+        "x": 10,
+        "y": "'draw'"
+      },
+      {
+        "x": 20,
+        "y": "'draw'"
+      },
+      {
+        "x": 30,
+        "y": "'draw'"
+      }
+    ],
+    "topfuncs": [
+      [
+        "'draw'",
+        55
+      ],
+      [
+        "'hej'",
+        22
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "30",
+      "calmAnswer": "38",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "test3",
+    "ID": 1714648389010,
+    "date": "2024-05-02",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 28
+      },
+      {
+        "time": 10,
+        "focusValue": 61
+      },
+      {
+        "time": 20,
+        "focusValue": 63
+      },
+      {
+        "time": 30,
+        "focusValue": 53
+      },
+      {
+        "time": 40,
+        "focusValue": 85
+      },
+      {
+        "time": 50,
+        "focusValue": 77
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 34
+      },
+      {
+        "time": 10,
+        "calmValue": 44
+      },
+      {
+        "time": 20,
+        "calmValue": 35
+      },
+      {
+        "time": 30,
+        "calmValue": 11
+      },
+      {
+        "time": 40,
+        "calmValue": 23
+      },
+      {
+        "time": 50,
+        "calmValue": 49
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "'clicked'"
+      },
+      {
+        "x": 10,
+        "y": "'clicked'"
+      },
+      {
+        "x": 20,
+        "y": "'clicked'"
+      },
+      {
+        "x": 30,
+        "y": "'clicked'"
+      },
+      {
+        "x": 40,
+        "y": "'draw'"
+      },
+      {
+        "x": 50,
+        "y": "'draw'"
+      }
+    ],
+    "topfuncs": [
+      [
+        "'clicked'",
+        78
+      ],
+      [
+        "'draw'",
+        41
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "26",
+      "calmAnswer": "24",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
+  }
+]
