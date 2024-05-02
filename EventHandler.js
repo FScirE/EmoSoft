@@ -207,7 +207,7 @@ class EventHandler {
         }
     }
 
-    async saveHeatmap(ID) {
+    async saveHeatmap(name) {
         // Create the heatmaps folder if it doesn't exist
         const heatmapsFolderPath = path.join(this.path, 'heatmaps');
         if (!fs.existsSync(heatmapsFolderPath)) {
@@ -215,7 +215,7 @@ class EventHandler {
         }
 
         const oldFilePath = path.join(this.path, 'heatmaps/heatmap.png');
-        const newFileName = `heatmap-${ID}.png`;
+        const newFileName = `heatmap-${name}.png`;
         const newFilePath = path.join(heatmapsFolderPath, newFileName);
         fs.renameSync(oldFilePath, newFilePath)
     }

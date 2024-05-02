@@ -54,53 +54,6 @@
     }
   },
   {
-    "name": "test",
-    "ID": 1714644157594,
-    "date": "2024-05-02",
-    "focusValues": [
-      {
-        "time": 0,
-        "focusValue": 69
-      },
-      {
-        "time": 10,
-        "focusValue": 36
-      }
-    ],
-    "calmValues": [
-      {
-        "time": 0,
-        "calmValue": 28
-      },
-      {
-        "time": 10,
-        "calmValue": 34
-      }
-    ],
-    "sessionFuncs": [
-      {
-        "x": 0,
-        "y": "'clicked'"
-      },
-      {
-        "x": 10,
-        "y": "'clicked'"
-      }
-    ],
-    "topfuncs": [
-      [
-        "'clicked'",
-        39
-      ]
-    ],
-    "responses": {
-      "focusAnswer": "0",
-      "calmAnswer": "0",
-      "expectedWorkAnswer": "5",
-      "finishedWorkAnswer": "5"
-    }
-  },
-  {
     "name": "SlickaFitta",
     "ID": 1714642594974,
     "date": "2024-05-02",
@@ -164,6 +117,99 @@
       "calmAnswer": "9",
       "expectedWorkAnswer": "2",
       "finishedWorkAnswer": "4"
+    }
+  },
+  {
+    "name": "cykelhjul",
+    "ID": 1714645142885,
+    "date": "2024-05-02",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 29
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 24
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "'clicked'"
+      }
+    ],
+    "topfuncs": [
+      [
+        "'clicked'",
+        27
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "37",
+      "calmAnswer": "0",
+      "expectedWorkAnswer": null,
+      "finishedWorkAnswer": null
+    }
+  },
+  {
+    "name": "pussy",
+    "ID": 1714644157594,
+    "date": "2024-05-02",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 69
+      },
+      {
+        "time": 10,
+        "focusValue": 36
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 28
+      },
+      {
+        "time": 10,
+        "calmValue": 34
+      }
+    ],
+    "sessionFuncs": [],
+    "topfuncs": [
+      [
+        "'clicked'",
+        39
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "0",
+      "calmAnswer": "0",
+      "expectedWorkAnswer": "5",
+      "finishedWorkAnswer": "5"
+    }
+  },
+  {
+    "name": "blblabla",
+    "ID": 1714646726504,
+    "date": "2024-05-02",
+    "focusValues": [],
+    "calmValues": [],
+    "sessionFuncs": [],
+    "topfuncs": [
+      [
+        "'clicked'",
+        3
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "0",
+      "calmAnswer": "0",
+      "expectedWorkAnswer": null,
+      "finishedWorkAnswer": null
     }
   }
 ]

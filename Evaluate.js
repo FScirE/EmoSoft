@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+const path = require('path');
 
 class Evaluate {
     constructor(path) {
@@ -105,6 +105,13 @@ class Evaluate {
             // Remove if ID already exists (overwrite)
             for (let i = 0; i < jsonData.length; i++) {
                 if (jsonData[i].ID == this.responses.ID) {
+                    let lastName = jsonData[i].name;
+                    const heatmapsFolderPath = path.join(this.path, 'heatmaps');
+                    const lastFileName = 'heatmaps/heatmap-' + lastName + '.png';
+                    const oldFilePath = path.join(this.path, lastFileName);
+                    const newFileName = `heatmap-${dataList.name}.png`;
+                    const newFilePath = path.join(heatmapsFolderPath, newFileName);
+                    fs.renameSync(oldFilePath, newFilePath)
                     jsonData.splice(i, 1);
                 }
             }
