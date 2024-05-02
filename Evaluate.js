@@ -95,7 +95,21 @@ class Evaluate {
         
         // Date
         const currentDate = new Date(); // Todays date
+        const uniqueID = currentDate.getTime();
         const dateString = currentDate.toISOString().split('T')[0]; // Transform date as a string
+
+        if (this.responses.ID == -1) {
+            dataList.ID = uniqueID;
+        } 
+        else {
+            // Remove if ID already exists (overwrite)
+            for (let i = 0; i < jsonData.length; i++) {
+                if (jsonData[i].ID == this.responses.ID) {
+                    jsonData.splice(i, 1);
+                }
+            }
+            dataList.ID = this.responses.ID;
+        }
         dataList.date = dateString;
 
         // Renaming focus and calm values to JSON

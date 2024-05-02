@@ -14,6 +14,7 @@ var funcs = []
 var path = []
 var loaded = false
 var pathHeat = ""
+var ID = -1
 
 // @ts-ignore
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
@@ -161,6 +162,7 @@ function saveEvaluateResponses() {
 		}
 	}
 	responses.name = name;
+	responses.ID = ID;
 
 	// Send data to eventhandler
     vscode.postMessage({
@@ -345,10 +347,12 @@ window.addEventListener("message", e => {
 			break;
 		case "sessionData":
 			if (message.value == -1) {
-				responses = newestSession
+				responses = newestSession;
+				ID = -1;
 				loaded = false;
 			} else {
 				responses = message.value;
+				ID = responses.ID;
 				loaded = true;
 				responses.pathHeat = "heatmap-" + responses.name + ".png"
 			}
