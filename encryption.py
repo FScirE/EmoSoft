@@ -1,4 +1,4 @@
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES # pip install pycryptodome
 from Crypto.Random import get_random_bytes
 from Crypto.Protocol.KDF import scrypt
 from Crypto.Util.Padding import pad, unpad
@@ -54,6 +54,14 @@ def load_password_to_shared_memory(password: str):
 # Main flow
 if __name__ == "__main__":
     # TODO: call load_password_to_shared_memory
+    instruction = sys.argv[1] if len(sys.argv) > 1 else ""
+
+    if instruction == "set_password":
+        pass
+    
+    if instruction == "get_password":
+        load_password_to_shared_memory()
+
     
     salt = write_key()  # Generate and save a new key
     
