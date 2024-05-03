@@ -38,6 +38,11 @@
           "description": "IP address for the Eye-tracker",
           "default": "None"
         },
+        "emoide.stuckNotification": {
+          "type": "integer",
+          "description": "The amount of seconds you have to look on the same function to get asked if you need assistance",
+          "default": 60
+        },
         "emoide.crownEmail": {
           "type": "string",
           "description": "Email for Neurosity",

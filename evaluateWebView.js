@@ -20,8 +20,10 @@ var ID = -1
 // @ts-ignore
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
+var feedbackContainer = document.getElementById("feedbackAiMessage");
 
 function createChart() {
+	//feedbackContainer.innerHTML = '<p id = "textfromAi"><span class="loader"></span></p>'
 	// Calculate the range of x-values
     let minX = Math.min(...focusValues.map(point => point.x));
     let maxX = Math.max(...focusValues.map(point => point.x));
@@ -109,6 +111,11 @@ function createChart() {
 		variable: 'finished',
 		value: `Chart generated`
 	})
+	gatherResponses()
+	vscode.postMessage({
+		variable: 'relevantDataForAi',
+		value: responses
+	})
 }
 
 function addSymbols(e) {
@@ -135,8 +142,12 @@ function gatherResponses() {
 	const q1Value = q1Rating ? q1Rating.value : null;
 	const q2Value = q2Rating ? q2Rating.value : null;
 
-	// Add all evaluate response to a dict
+	
+	responses.focusValues = focusValues;
+	responses.calmValues = calmValues;
 	responses.sessionFuncs = functions;
+
+	// Add all evaluate response to a dict
 	responses.topfuncs = topfuncs;
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
@@ -231,7 +242,9 @@ calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
 
-
+function setAiResponse(aioutput) {
+	feedbackContainer.innerHTML = '<p id="textfromAi">' + aioutput + '</p>'
+}
 
 function populatedropdown(){
 	var dropdown = document.getElementById("History");
@@ -363,6 +376,8 @@ window.addEventListener("message", e => {
 			evaluateNames = message.value
 			populatedropdown()
 			break;
+		case "aiFeedback":
+			setAiResponse(message.value)
 		case "sessionData":
 			if (message.value == -1) {
 				responses = newestSession;

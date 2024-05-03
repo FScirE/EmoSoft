@@ -1696,105 +1696,6 @@
     }
   },
   {
-    "name": "test300",
-    "ID": 1714648389010,
-    "date": "2024-05-02",
-    "focusValues": [
-      {
-        "time": 0,
-        "focusValue": 28
-      },
-      {
-        "time": 10,
-        "focusValue": 61
-      },
-      {
-        "time": 20,
-        "focusValue": 63
-      },
-      {
-        "time": 30,
-        "focusValue": 53
-      },
-      {
-        "time": 40,
-        "focusValue": 85
-      },
-      {
-        "time": 50,
-        "focusValue": 77
-      }
-    ],
-    "calmValues": [
-      {
-        "time": 0,
-        "calmValue": 34
-      },
-      {
-        "time": 10,
-        "calmValue": 44
-      },
-      {
-        "time": 20,
-        "calmValue": 35
-      },
-      {
-        "time": 30,
-        "calmValue": 11
-      },
-      {
-        "time": 40,
-        "calmValue": 23
-      },
-      {
-        "time": 50,
-        "calmValue": 49
-      }
-    ],
-    "sessionFuncs": [
-      {
-        "x": 0,
-        "y": "'clicked'"
-      },
-      {
-        "x": 10,
-        "y": "'clicked'"
-      },
-      {
-        "x": 20,
-        "y": "'clicked'"
-      },
-      {
-        "x": 30,
-        "y": "'clicked'"
-      },
-      {
-        "x": 40,
-        "y": "'draw'"
-      },
-      {
-        "x": 50,
-        "y": "'draw'"
-      }
-    ],
-    "topfuncs": [
-      [
-        "'clicked'",
-        78
-      ],
-      [
-        "'draw'",
-        41
-      ]
-    ],
-    "responses": {
-      "focusAnswer": "100",
-      "calmAnswer": "100",
-      "expectedWorkAnswer": "5",
-      "finishedWorkAnswer": "5"
-    }
-  },
-  {
     "name": "2024-05-02(1)",
     "ID": 1714656763197,
     "date": "2024-05-02",
@@ -3131,6 +3032,105 @@
       "calmAnswer": "2",
       "expectedWorkAnswer": "5",
       "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "name": "test300",
+    "ID": 1714648389010,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 28
+      },
+      {
+        "time": 10,
+        "focusValue": 61
+      },
+      {
+        "time": 20,
+        "focusValue": 63
+      },
+      {
+        "time": 30,
+        "focusValue": 53
+      },
+      {
+        "time": 40,
+        "focusValue": 85
+      },
+      {
+        "time": 50,
+        "focusValue": 77
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 34
+      },
+      {
+        "time": 10,
+        "calmValue": 44
+      },
+      {
+        "time": 20,
+        "calmValue": 35
+      },
+      {
+        "time": 30,
+        "calmValue": 11
+      },
+      {
+        "time": 40,
+        "calmValue": 23
+      },
+      {
+        "time": 50,
+        "calmValue": 49
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "'clicked'"
+      },
+      {
+        "x": 10,
+        "y": "'clicked'"
+      },
+      {
+        "x": 20,
+        "y": "'clicked'"
+      },
+      {
+        "x": 30,
+        "y": "'clicked'"
+      },
+      {
+        "x": 40,
+        "y": "'draw'"
+      },
+      {
+        "x": 50,
+        "y": "'draw'"
+      }
+    ],
+    "topfuncs": [
+      [
+        "'clicked'",
+        78
+      ],
+      [
+        "'draw'",
+        41
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "100",
+      "calmAnswer": "100",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "5"
     }
   }
 ]

@@ -34,6 +34,7 @@ class EyeTracker {
         this.long_Y = []
         this.lookedLines = {}
         this.functionContents = {}
+        this.
         this.recording = false
         this.settings = settings;
 
@@ -208,8 +209,8 @@ class EyeTracker {
     getFuncFromSpan(first, last) {
         var editor = vscode.window.visibleTextEditors[0]
 
-        let startLine = first - 1
-        let endLine = last - 1
+        let startLine = first - 1 < 0 ? 0 : first - 1
+        let endLine = last - 1 > editor.document.lineCount
 
         var start = new vscode.Position(startLine, 0);
         var end = new vscode.Position(endLine, editor.document.lineAt(endLine).text.length);
