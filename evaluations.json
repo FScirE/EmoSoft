@@ -3132,5 +3132,338 @@
       "expectedWorkAnswer": "2",
       "finishedWorkAnswer": "5"
     }
+  },
+  {
+    "name": "123",
+    "ID": 1714733151084,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 18
+      },
+      {
+        "time": 10,
+        "focusValue": 29
+      },
+      {
+        "time": 20,
+        "focusValue": 57
+      },
+      {
+        "time": 30,
+        "focusValue": 55
+      },
+      {
+        "time": 40,
+        "focusValue": 23
+      },
+      {
+        "time": 50,
+        "focusValue": 14
+      },
+      {
+        "time": 60,
+        "focusValue": 34
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 69
+      },
+      {
+        "time": 10,
+        "calmValue": 38
+      },
+      {
+        "time": 20,
+        "calmValue": 20
+      },
+      {
+        "time": 30,
+        "calmValue": 27
+      },
+      {
+        "time": 40,
+        "calmValue": 31
+      },
+      {
+        "time": 50,
+        "calmValue": 36
+      },
+      {
+        "time": 60,
+        "calmValue": 27
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "draw"
+      },
+      {
+        "x": 10,
+        "y": "draw"
+      },
+      {
+        "x": 20,
+        "y": "draw"
+      },
+      {
+        "x": 30,
+        "y": "draw"
+      },
+      {
+        "x": 40,
+        "y": "clicked"
+      },
+      {
+        "x": 50,
+        "y": "clicked"
+      },
+      {
+        "x": 60,
+        "y": "clicked"
+      }
+    ],
+    "topfuncs": [
+      [
+        "clicked",
+        66
+      ],
+      [
+        "draw",
+        59
+      ],
+      [
+        "hej",
+        6
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "26",
+      "calmAnswer": "37",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "name": "12345",
+    "ID": 1714733315781,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 70
+      },
+      {
+        "time": 10,
+        "focusValue": 70
+      },
+      {
+        "time": 20,
+        "focusValue": 75
+      },
+      {
+        "time": 30,
+        "focusValue": 71
+      },
+      {
+        "time": 40,
+        "focusValue": 66
+      },
+      {
+        "time": 50,
+        "focusValue": 64
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 21
+      },
+      {
+        "time": 10,
+        "calmValue": 42
+      },
+      {
+        "time": 20,
+        "calmValue": 74
+      },
+      {
+        "time": 30,
+        "calmValue": 82
+      },
+      {
+        "time": 40,
+        "calmValue": 81
+      },
+      {
+        "time": 50,
+        "calmValue": 67
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "hej"
+      },
+      {
+        "x": 10,
+        "y": "hej"
+      },
+      {
+        "x": 20,
+        "y": "hej"
+      },
+      {
+        "x": 30,
+        "y": "hej"
+      },
+      {
+        "x": 40,
+        "y": "clicked"
+      },
+      {
+        "x": 50,
+        "y": "clicked"
+      }
+    ],
+    "topfuncs": [
+      [
+        "clicked",
+        12
+      ]
+    ],
+    "functionContents": {
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        "
+    },
+    "responses": {
+      "focusAnswer": "17",
+      "calmAnswer": "17",
+      "expectedWorkAnswer": "5",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "666",
+    "ID": 1714733488295,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 41
+      },
+      {
+        "time": 10,
+        "focusValue": 79
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 58
+      },
+      {
+        "time": 10,
+        "calmValue": 86
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "draw"
+      },
+      {
+        "x": 10,
+        "y": "draw"
+      }
+    ],
+    "topfuncs": [
+      [
+        "draw",
+        53
+      ]
+    ],
+    "functionContents": {
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        ",
+      "draw": "    def draw(self):\r\n        button_sprite = Rectangle(Point(self.xpos, self.ypos), Point(self.xpos + self.sizex, self.ypos + self.sizey))\r\n        button_sprite.setFill(self.color)\r\n        button_sprite.setOutline(\"Black\")\r\n        button_sprite.setWidth(8)\r\n"
+    },
+    "responses": {
+      "focusAnswer": "64",
+      "calmAnswer": "63",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": null
+    }
+  },
+  {
+    "name": "666666",
+    "ID": 1714733951823,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 48
+      },
+      {
+        "time": 10,
+        "focusValue": 37
+      },
+      {
+        "time": 20,
+        "focusValue": 56
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 17
+      },
+      {
+        "time": 10,
+        "calmValue": 40
+      },
+      {
+        "time": 20,
+        "calmValue": 73
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "clicked"
+      },
+      {
+        "x": 10,
+        "y": "clicked"
+      },
+      {
+        "x": 20,
+        "y": "draw"
+      }
+    ],
+    "topfuncs": [
+      [
+        "draw",
+        28
+      ],
+      [
+        "clicked",
+        27
+      ]
+    ],
+    "functionContents": {
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        ",
+      "draw": "    def draw(self):\r\n        button_sprite = Rectangle(Point(self.xpos, self.ypos), Point(self.xpos + self.sizex, self.ypos + self.sizey))\r\n        button_sprite.setFill(self.color)\r\n        button_sprite.setOutline(\"Black\")\r\n        button_sprite.setWidth(8)\r\n"
+    },
+    "responses": {
+      "focusAnswer": "25",
+      "calmAnswer": "23",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "5"
+    }
   }
 ]

@@ -144,10 +144,10 @@ function gatherResponses() {
 	responses.focusValues = focusValues;
 	responses.calmValues = calmValues;
 	responses.sessionFuncs = functions;
-
-	// Add all evaluate response to a dict
 	responses.topfuncs = topfuncs;
 	responses.functionContents = functionContents;
+
+	// Add all evaluate response to a dict
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
 	responses.focusAnswer = focusSliderValue;
@@ -340,7 +340,7 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.focusValues = focusValues;
 		newestSession.calmValues = calmValues;
 		newestSession.sessionFuncs = functions;
-		newest
+		newestSession.functionContents = functionContents;
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
 		newestSession.topfuncs = funcs;
@@ -384,11 +384,13 @@ window.addEventListener("message", e => {
 			if (message.value == -1) {
 				responses = newestSession;
 				functions = responses.sessionFuncs;
+				funcs = responses.topfuncs;
 				ID = -1;
 				loaded = false;
 			} else {
 				responses = message.value;
 				functions = responses.sessionFuncs;
+				funcs = responses.topfuncs;
 				ID = responses.ID;
 				loaded = true;
 				responses.pathHeat = "heatmap-" + responses.name + ".png"
