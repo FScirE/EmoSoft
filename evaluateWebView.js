@@ -21,7 +21,7 @@ document.querySelector('body').style.visibility = 'hidden'
 
 
 function createChart() {
-	//feedbackContainer.innerHTML = '<p id = "textfromAi"><span class="loader"></span></p>'
+	//feedbackContainer.innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
 	// Calculate the range of x-values
     let minX = Math.min(...focusValues.map(point => point.x));
     let maxX = Math.max(...focusValues.map(point => point.x));
@@ -105,14 +105,14 @@ function createChart() {
 	});
 	chart.render();
 	document.querySelector('body').style.visibility = 'visible'
-	vscode.postMessage({
-		variable: 'finished',
-		value: `Chart generated`
-	})
 	gatherResponses()
 	vscode.postMessage({
 		variable: 'relevantDataForAi',
 		value: responses
+	})
+	vscode.postMessage({
+		variable: 'finished',
+		value: `Chart generated`
 	})
 }
 

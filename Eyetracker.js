@@ -118,10 +118,10 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {
-			// var y = this.getY()
-			// var x = this.getX()
-            var y = 0.5
-            var x = 0.5
+			var y = this.getY()
+			var x = this.getX()
+            //var y = 0.5
+            //var x = 0.5
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
@@ -189,6 +189,7 @@ class EyeTracker {
             fs.appendFileSync(this.path + '\\lineDictionary.txt', `${key}:${value}\n`)
         }
         execSync(`python findFuncFromLines.py ${this.filePath}`, { cwd: this.path })
+        console.log(this.lookedLines)
         this.lookedLines = {} //empty
 
         var stuckFileContent = fs.readFileSync(this.path + '\\stuckLine.txt').toString().split(':')

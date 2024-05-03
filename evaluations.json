@@ -3465,5 +3465,250 @@
       "expectedWorkAnswer": "1",
       "finishedWorkAnswer": "5"
     }
+  },
+  {
+    "name": "real1",
+    "ID": 1714735628491,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 61
+      },
+      {
+        "time": 10,
+        "focusValue": 60
+      },
+      {
+        "time": 20,
+        "focusValue": 62
+      },
+      {
+        "time": 30,
+        "focusValue": 63
+      },
+      {
+        "time": 40,
+        "focusValue": 62
+      },
+      {
+        "time": 50,
+        "focusValue": 61
+      },
+      {
+        "time": 60,
+        "focusValue": 59
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 32
+      },
+      {
+        "time": 10,
+        "calmValue": 31
+      },
+      {
+        "time": 20,
+        "calmValue": 33
+      },
+      {
+        "time": 30,
+        "calmValue": 34
+      },
+      {
+        "time": 40,
+        "calmValue": 34
+      },
+      {
+        "time": 50,
+        "calmValue": 34
+      },
+      {
+        "time": 60,
+        "calmValue": 33
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "draw"
+      },
+      {
+        "x": 10,
+        "y": "draw"
+      },
+      {
+        "x": 20,
+        "y": "draw"
+      },
+      {
+        "x": 30,
+        "y": "clicked"
+      },
+      {
+        "x": 40,
+        "y": "clicked"
+      },
+      {
+        "x": 50,
+        "y": "clicked"
+      },
+      {
+        "x": 60,
+        "y": "clicked"
+      }
+    ],
+    "topfuncs": [
+      [
+        "clicked",
+        37
+      ],
+      [
+        "draw",
+        23
+      ],
+      [
+        "__init__",
+        5
+      ]
+    ],
+    "functionContents": {
+      "draw": "    def draw(self):\r\n        button_sprite = Rectangle(Point(self.xpos, self.ypos), Point(self.xpos + self.sizex, self.ypos + self.sizey))\r\n        button_sprite.setFill(self.color)\r\n        button_sprite.setOutline(\"Black\")\r\n        button_sprite.setWidth(8)\r\n",
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        ",
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "__init__": "    def __init__(self, xpos, ypos, sizex, sizey, color):\r\n        self.xpos = xpos\r\n        self.ypos = ypos\r\n        self.sizex = sizex\r\n        self.sizey = sizey\r\n        self.color = color\r\n    "
+    },
+    "responses": {
+      "focusAnswer": "30",
+      "calmAnswer": "46",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "2024-05-03",
+    "ID": 1714736114019,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 39
+      },
+      {
+        "time": 10,
+        "focusValue": 46
+      },
+      {
+        "time": 20,
+        "focusValue": 46
+      },
+      {
+        "time": 30,
+        "focusValue": 46
+      },
+      {
+        "time": 40,
+        "focusValue": 46
+      },
+      {
+        "time": 50,
+        "focusValue": 42
+      },
+      {
+        "time": 60,
+        "focusValue": 42
+      },
+      {
+        "time": 70,
+        "focusValue": 42
+      },
+      {
+        "time": 80,
+        "focusValue": 40
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 25
+      },
+      {
+        "time": 10,
+        "calmValue": 25
+      },
+      {
+        "time": 20,
+        "calmValue": 25
+      },
+      {
+        "time": 30,
+        "calmValue": 25
+      },
+      {
+        "time": 40,
+        "calmValue": 25
+      },
+      {
+        "time": 50,
+        "calmValue": 30
+      },
+      {
+        "time": 60,
+        "calmValue": 30
+      },
+      {
+        "time": 70,
+        "calmValue": 31
+      },
+      {
+        "time": 80,
+        "calmValue": 32
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "fibbonaci"
+      },
+      {
+        "x": 10,
+        "y": "myNewFunction"
+      },
+      {
+        "x": 20,
+        "y": "myNewFunction"
+      },
+      {
+        "x": 30,
+        "y": "myNewFunction"
+      }
+    ],
+    "topfuncs": [
+      [
+        "myNewFunction",
+        103
+      ],
+      [
+        "fibbonaci",
+        47
+      ],
+      [
+        "hej",
+        1
+      ]
+    ],
+    "functionContents": {
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "fibbonaci": "    def fibbonaci(self, n):\r\n        if n == 0:\r\n            return 0\r\n        elif n == 1:\r\n            return 1\r\n        else:\r\n            return self.fibbonaci(self, n) + self.fibbonaci(self, n)\r\n        ",
+      "myNewFunction": "    def myNewFunction(self, x, y):\r\n        x = 10\r\n        y = 100\r\n        if (x+y == 100):\r\n            print(\"HEJJEJEJEJEEJ\")\r\n        else:\r\n            print(1000000000000)\r\n        return \"NOOOOO\"\r\n        "
+    },
+    "responses": {
+      "focusAnswer": "37",
+      "calmAnswer": "54",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
   }
 ]
