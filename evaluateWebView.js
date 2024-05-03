@@ -1,4 +1,4 @@
-//functions to change values in UI webview
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,//functions to change values in UI webview
 
 
 // @ts-ignore
@@ -20,7 +20,7 @@ var ID = -1
 // @ts-ignore
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
-var feedbackContainer = document.getElementById("feedbackAiMessage");
+
 
 function createChart() {
 	//feedbackContainer.innerHTML = '<p id = "textfromAi"><span class="loader"></span></p>'
@@ -149,6 +149,7 @@ function gatherResponses() {
 
 	// Add all evaluate response to a dict
 	responses.topfuncs = topfuncs;
+	responses.functionContents = functionContents;
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
 	responses.focusAnswer = focusSliderValue;
@@ -243,7 +244,7 @@ calmSlider.oninput = function() {
 };
 
 function setAiResponse(aioutput) {
-	feedbackContainer.innerHTML = '<p id="textfromAi">' + aioutput + '</p>'
+	document.getElementById("feedbackAiMessage").innerHTML = `<p id="textfromAi">${aioutput}</p>`
 }
 
 function populatedropdown(){
@@ -268,6 +269,7 @@ function changeHeatmapImageSrc(newSrc) {
     }
 }
 function loadSession(extensionPath) {
+	document.getElementById("feedbackAiMessage").innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
 	var name = responses.name
 	if (name != "New Session") {
 		document.getElementById("textInput").value = name;
@@ -340,6 +342,7 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.focusValues = focusValues;
 		newestSession.calmValues = calmValues;
 		newestSession.sessionFuncs = functions;
+		newest
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
 		newestSession.topfuncs = funcs;
@@ -378,6 +381,7 @@ window.addEventListener("message", e => {
 			break;
 		case "aiFeedback":
 			setAiResponse(message.value)
+			break;
 		case "sessionData":
 			if (message.value == -1) {
 				responses = newestSession;

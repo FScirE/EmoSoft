@@ -22,7 +22,7 @@ class Settings {
         this.updatedthreshholdFocus = this.config.get('thresholdFocus');
         this.updatedthreshholdCalm = this.config.get('thresholdCalm');
         this.eyeIP = this.config.get('eyeTracker');
-        this.stuckTimer = this.config.get('stuckNotification');
+        this.stuckTime = this.config.get('stuckNotification');
         this.updatedCrownEmail = this.config.get('crownEmail');
         this.updatedCrownDeviceID = this.config.get('crownDeviceID');
         this.focusColorChange = this.config.get('focusColor');
@@ -241,9 +241,14 @@ class Settings {
             }
 
             if (event.affectsConfiguration('emoide.stuckNotification')) {
-                const newStuckTimer = vscode.workspace.getConfiguration('emoide').get('stuckNotification');
-                console.log('Stuck timer changed to:', newStuckTimer);
-                this.stuckTimer = newStuckTimer;
+                const newStuckTime = vscode.workspace.getConfiguration('emoide').get('stuckNotification');
+                if (newStuckTime < 20) {
+                    this.stuckTime = 20
+                }
+                else {
+                    this.stuckTime = newStuckTime;
+                }
+                console.log('Stuck timer changed to:', this.stuckTime);
             }
 
             if (event.affectsConfiguration('emoide.focusColor')) {

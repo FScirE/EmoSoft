@@ -523,14 +523,15 @@ input[type=range] {
     color: #FFF; 
 }
 
-#feedbackContainer #feedbackAiMessage{
+#feedbackAiMessage {
     max-width: 90%;
     height: auto;
     padding: 10px;
     left: 0%;
+    font-size: 12px;
+    color: #FFF;
+    text-align: left;
 }
 
-#feedbackContainer #feedbackAiMessage #textfromAi {
-    font-size: 9px;
-    color: #FFF;
-}
+
+

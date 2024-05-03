@@ -144,17 +144,16 @@ class EventHandler {
                 break;
             case 'scrollFunction':
                 console.log('Scroll to: ' + message.value)
-                var fileContent = fs.readFileSync(this.eyetracker.evaluateFilePath, "utf-8").split('\n')
                 //old file-reading method
-                /*var lineCounter = 0
+                var fileContent = fs.readFileSync(this.eyetracker.evaluateFilePath, "utf-8").split('\n')
+                var lineCounter = 0
                 for (let line of fileContent) {
                     if (line.includes(`def ${message.value}`))
                         break;
                     else
                         lineCounter++
                 }
-                vscode.window.visibleTextEditors[0].revealRange(new vscode.Range(lineCounter, 0, lineCounter + 1, 0), vscode.TextEditorRevealType.AtTop)*/
-                vscode.window.visi
+                vscode.window.visibleTextEditors[0].revealRange(new vscode.Range(lineCounter, 0, lineCounter + 1, 0), vscode.TextEditorRevealType.AtTop)
                 break;
             // Sent from evaluatewebview
             case 'relevantDataForAi':
