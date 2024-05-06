@@ -8,13 +8,13 @@ const MAX_LENGTH = 30
 var readFunctionDelay = 10 //in seconds
 
 // ericvärden
-//const EDITOR_START_Y = 0.103
-//const EDITOR_END_Y = 0.738
-//const EDITOR_START_X = 0.14
+const EDITOR_START_Y = 0.103
+const EDITOR_END_Y = 0.738
+const EDITOR_START_X = 0.14
 // hugovärden
-const EDITOR_START_Y = 0.12
+/*const EDITOR_START_Y = 0.12
 const EDITOR_END_Y = 0.777
-const EDITOR_START_X = 0.20
+const EDITOR_START_X = 0.20*/
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 var timeOut = false;
 var stuckFunc = ''
