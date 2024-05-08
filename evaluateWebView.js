@@ -257,14 +257,11 @@ function populatedropdown(){
 	}
 }
 
-function changeHeatmapImageSrc(newSrc) {
+function changeHeatmapImageSrc(newSrc, missingSrc) {
     const heatmapImg = document.querySelector('#heatmap img');
-    if (heatmapImg) {
-        heatmapImg.setAttribute('src', newSrc);
-		heatmapImg.setAttribute('alt', newSrc);
-    } else {
-        console.error('Could not find the heatmap image element.');
-    }
+	var image = new Image()
+	image.src = newSrc
+	heatmapImg.setAttribute('src', image.width == 0 ? missingSrc : newSrc)
 }
 function loadSession(extensionPath) {
 	document.getElementById("feedbackAiMessage").innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
@@ -288,7 +285,8 @@ function loadSession(extensionPath) {
 
 	//LOAD HEATMAP
 	var FullPathHeatmap = extensionPath + '\\' +  responses.pathHeat;
-	changeHeatmapImageSrc(FullPathHeatmap)
+	var MissingPathHeatmap = extensionPath + '\\imagenotfound.jpg'
+	changeHeatmapImageSrc(FullPathHeatmap, MissingPathHeatmap)
 
 	//SLIDER LOAD
 	focusSlider.value = responses.responses.focusAnswer
