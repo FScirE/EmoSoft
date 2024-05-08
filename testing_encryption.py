@@ -33,6 +33,22 @@ class TestFindDefinition(unittest.TestCase):
         loaded_key, loaded_salt = load_key()
         self.assertEqual(original_key, loaded_key)
         self.assertEqual(original_salt, loaded_salt)
+    
+    def test_read_env_file(self):
+        # Test reading .env file
+        test_env_content = "KEY=value\nMALFORMED_LINE\nPASSWORD=secret"
+        test_env_path = "test.env"
+        with open(test_env_path, 'w') as file:
+            file.write(test_env_content)
+        
+        env_vars = read_env_file(test_env_path)
+        os.remove(test_env_path)  # Cleanup test file
+
+        self.assertIn("KEY", env_vars)
+        self.assertEqual(env_vars["KEY"], "value")
+        self.assertNotIn("MALFORMED_LINE", env_vars)
+        self.assertIn("PASSWORD", env_vars)
+        self.assertEqual(env_vars["PASSWORD"], "secret")    
 
 
 
