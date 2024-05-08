@@ -52,7 +52,13 @@ def generate_heatmap(x_in, y_in):
     cmap = clr.LinearSegmentedColormap.from_list(name='transparent-red', colors=[(0, 0, 0, 0), (0.33, 0, 0, 0.33), (0.67, 0, 0, 0.67), (1, 0, 0, 1), (1, 1, 1, 1)])
     plt.imshow(intensity, cmap=cmap, interpolation='catrom', extent=[0, GRID_WIDTH, GRID_HEIGHT, 0])
        
-    plt.colorbar()  # Add color bar indicating the scale
+    cbar = plt.colorbar()  # Add color bar indicating the scale
+    cbar.set_ticks([0, 1])
+    cbar.set_ticklabels(['Min', 'Max'])
+
+    # Remove x- and y-labels on the heatmap
+    plt.gca().set_xticklabels([])
+    plt.gca().set_yticklabels([])
 
     #plt.show()
     plt.savefig("heatmaps/heatmap.png", transparent=True)
