@@ -8,13 +8,13 @@ const MAX_LENGTH = 30
 var readFunctionDelay = 10 //in seconds
 
 // ericvärden
-//const EDITOR_START_Y = 0.103
-//const EDITOR_END_Y = 0.738
-//const EDITOR_START_X = 0.14
+const EDITOR_START_Y = 0.103
+const EDITOR_END_Y = 0.738
+const EDITOR_START_X = 0.14
 // hugovärden
-const EDITOR_START_Y = 0.12
+/*const EDITOR_START_Y = 0.12
 const EDITOR_END_Y = 0.777
-const EDITOR_START_X = 0.20
+const EDITOR_START_X = 0.20*/
 const LINE_HEIGHT = (EDITOR_END_Y - EDITOR_START_Y) / 30 //assume 30 lines
 var timeOut = false;
 var stuckFunc = ''
@@ -34,6 +34,7 @@ class EyeTracker {
         this.long_Y = []
         this.lookedLines = {}
         this.functionContents = {}
+        //this.functionSpans = {}
         this.recording = false
         this.settings = settings;
 
@@ -117,10 +118,10 @@ class EyeTracker {
 		//console.log("Y: " + this.eyetracker.getY() + "\n")
 
 		if (editor != undefined) {
-			// var y = this.getY()
-			// var x = this.getX()
-            var y = 0.5
-            var x = 0.5
+			var y = this.getY()
+			var x = this.getX()
+            //var y = 0.5
+            //var x = 0.5
 			if (y >= EDITOR_START_Y && y <= EDITOR_END_Y && x >= EDITOR_START_X) {
 
 				var currentRange = editor.visibleRanges
@@ -188,12 +189,13 @@ class EyeTracker {
             fs.appendFileSync(this.path + '\\lineDictionary.txt', `${key}:${value}\n`)
         }
         execSync(`python findFuncFromLines.py ${this.filePath}`, { cwd: this.path })
+        console.log(this.lookedLines)
         this.lookedLines = {} //empty
 
         var stuckFileContent = fs.readFileSync(this.path + '\\stuckLine.txt').toString().split(':')
         stuckCounter = stuckFunc == stuckFileContent[0] ? stuckCounter + 1 : 1
         // console.log(`${stuckCounter}:${stuckFileContent[0]}:${stuckFileContent[1]}`)
-        if (this.settings.allownotifications && stuckCounter == 3 && stuckFunc != '' && stuckFunc != '-1' && stuckFunc != '}') //same a few times in a row
+        if (this.settings.allownotifications && stuckCounter == Math.trunc(this.settings.stuckTime / 10) && stuckFunc != '' && stuckFunc != '-1' && stuckFunc != '}') //same a few times in a row
             vscode.window.showInformationMessage(`It seems you are stuck, do you need assistance?`, ...['Yes', 'No']).then((answer) => {
                 console.log(answer + ' to stuck')
                 if (answer == 'Yes') {
@@ -208,8 +210,8 @@ class EyeTracker {
     getFuncFromSpan(first, last) {
         var editor = vscode.window.visibleTextEditors[0]
 
-        let startLine = first - 1
-        let endLine = last - 1
+        let startLine = first - 1 < 0 ? 0 : first - 1
+        let endLine = last > editor.document.lineCount ? editor.document.lineCount - 1 : last - 1
 
         var start = new vscode.Position(startLine, 0);
         var end = new vscode.Position(endLine, editor.document.lineAt(endLine).text.length);
@@ -236,6 +238,7 @@ class EyeTracker {
                     else
                         topFuncs[key] = value
                     this.functionContents[key] = this.getFuncFromSpan(start, end)
+                    //this.functionSpans[key] = [start, end]
                 }
             }
         }

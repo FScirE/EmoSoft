@@ -22,8 +22,9 @@ class Settings {
         this.updatedthreshholdFocus = this.config.get('thresholdFocus');
         this.updatedthreshholdCalm = this.config.get('thresholdCalm');
         this.eyeIP = this.config.get('eyeTracker');
-        this.updatedCrownEmail = this.config.get('crownEmail')
-        this.updatedCrownDeviceID = this.config.get('crownDeviceID')
+        this.stuckTime = this.config.get('stuckNotification');
+        this.updatedCrownEmail = this.config.get('crownEmail');
+        this.updatedCrownDeviceID = this.config.get('crownDeviceID');
         this.focusColorChange = this.config.get('focusColor');
         this.calmColorChange = this.config.get('calmColor');
         this.listenForConfigChanges();
@@ -57,6 +58,11 @@ class Settings {
     // Getter method for eyeTracker IP configuration option
     get eyeTracker() {
         return this.config.get('eyeTracker');
+    }
+
+    // Getter method for stuck timer configuration option
+    get stuckTimer() {
+        return this.config.get('stuckNotification')
     }
 
     // Getter method for crown Email configuration option
@@ -232,6 +238,17 @@ class Settings {
                 const newEyeTracker = vscode.workspace.getConfiguration('emoide').get('eyeTracker');
                 console.log('eyeTracker changed to:', newEyeTracker);
                 this.eyeIP = newEyeTracker;
+            }
+
+            if (event.affectsConfiguration('emoide.stuckNotification')) {
+                const newStuckTime = vscode.workspace.getConfiguration('emoide').get('stuckNotification');
+                if (newStuckTime < 20) {
+                    this.stuckTime = 20
+                }
+                else {
+                    this.stuckTime = newStuckTime;
+                }
+                console.log('Stuck timer changed to:', this.stuckTime);
             }
 
             if (event.affectsConfiguration('emoide.focusColor')) {

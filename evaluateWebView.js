@@ -1,5 +1,3 @@
-//functions to change values in UI webview
-
 
 // @ts-ignore
 const vscode = acquireVsCodeApi() //ignore error
@@ -21,7 +19,9 @@ var ID = -1
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
 
+
 function createChart() {
+	//feedbackContainer.innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
 	// Calculate the range of x-values
     let minX = Math.min(...focusValues.map(point => point.x));
     let maxX = Math.max(...focusValues.map(point => point.x));
@@ -105,6 +105,11 @@ function createChart() {
 	});
 	chart.render();
 	document.querySelector('body').style.visibility = 'visible'
+	gatherResponses()
+	vscode.postMessage({
+		variable: 'relevantDataForAi',
+		value: responses
+	})
 	vscode.postMessage({
 		variable: 'finished',
 		value: `Chart generated`
@@ -135,9 +140,14 @@ function gatherResponses() {
 	const q1Value = q1Rating ? q1Rating.value : null;
 	const q2Value = q2Rating ? q2Rating.value : null;
 
-	// Add all evaluate response to a dict
+	
+	responses.focusValues = focusValues;
+	responses.calmValues = calmValues;
 	responses.sessionFuncs = functions;
 	responses.topfuncs = topfuncs;
+	responses.functionContents = functionContents;
+
+	// Add all evaluate response to a dict
 	responses.expectedWorkAnswer = q1Value;
 	responses.finishedWorkAnswer = q2Value;
 	responses.focusAnswer = focusSliderValue;
@@ -231,7 +241,9 @@ calmSlider.oninput = function() {
     calmOutput.innerHTML = this.value;
 };
 
-
+function setAiResponse(aioutput) {
+	document.getElementById("feedbackAiMessage").innerHTML = `<p id="textfromAi">${aioutput}</p>`
+}
 
 function populatedropdown(){
 	var dropdown = document.getElementById("History");
@@ -255,6 +267,7 @@ function changeHeatmapImageSrc(newSrc) {
     }
 }
 function loadSession(extensionPath) {
+	document.getElementById("feedbackAiMessage").innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
 	var name = responses.name
 	if (name != "New Session") {
 		document.getElementById("textInput").value = name;
@@ -327,6 +340,7 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.focusValues = focusValues;
 		newestSession.calmValues = calmValues;
 		newestSession.sessionFuncs = functions;
+		newestSession.functionContents = functionContents;
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
 		newestSession.topfuncs = funcs;
@@ -363,15 +377,20 @@ window.addEventListener("message", e => {
 			evaluateNames = message.value
 			populatedropdown()
 			break;
+		case "aiFeedback":
+			setAiResponse(message.value)
+			break;
 		case "sessionData":
 			if (message.value == -1) {
 				responses = newestSession;
 				functions = responses.sessionFuncs;
+				funcs = responses.topfuncs;
 				ID = -1;
 				loaded = false;
 			} else {
 				responses = message.value;
 				functions = responses.sessionFuncs;
+				funcs = responses.topfuncs;
 				ID = responses.ID;
 				loaded = true;
 				responses.pathHeat = "heatmap-" + responses.name + ".png"

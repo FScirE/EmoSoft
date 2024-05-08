@@ -1696,105 +1696,6 @@
     }
   },
   {
-    "name": "test300",
-    "ID": 1714648389010,
-    "date": "2024-05-02",
-    "focusValues": [
-      {
-        "time": 0,
-        "focusValue": 28
-      },
-      {
-        "time": 10,
-        "focusValue": 61
-      },
-      {
-        "time": 20,
-        "focusValue": 63
-      },
-      {
-        "time": 30,
-        "focusValue": 53
-      },
-      {
-        "time": 40,
-        "focusValue": 85
-      },
-      {
-        "time": 50,
-        "focusValue": 77
-      }
-    ],
-    "calmValues": [
-      {
-        "time": 0,
-        "calmValue": 34
-      },
-      {
-        "time": 10,
-        "calmValue": 44
-      },
-      {
-        "time": 20,
-        "calmValue": 35
-      },
-      {
-        "time": 30,
-        "calmValue": 11
-      },
-      {
-        "time": 40,
-        "calmValue": 23
-      },
-      {
-        "time": 50,
-        "calmValue": 49
-      }
-    ],
-    "sessionFuncs": [
-      {
-        "x": 0,
-        "y": "'clicked'"
-      },
-      {
-        "x": 10,
-        "y": "'clicked'"
-      },
-      {
-        "x": 20,
-        "y": "'clicked'"
-      },
-      {
-        "x": 30,
-        "y": "'clicked'"
-      },
-      {
-        "x": 40,
-        "y": "'draw'"
-      },
-      {
-        "x": 50,
-        "y": "'draw'"
-      }
-    ],
-    "topfuncs": [
-      [
-        "'clicked'",
-        78
-      ],
-      [
-        "'draw'",
-        41
-      ]
-    ],
-    "responses": {
-      "focusAnswer": "100",
-      "calmAnswer": "100",
-      "expectedWorkAnswer": "5",
-      "finishedWorkAnswer": "5"
-    }
-  },
-  {
     "name": "2024-05-02(1)",
     "ID": 1714656763197,
     "date": "2024-05-02",
@@ -3131,6 +3032,855 @@
       "calmAnswer": "2",
       "expectedWorkAnswer": "5",
       "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "name": "test300",
+    "ID": 1714648389010,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 28
+      },
+      {
+        "time": 10,
+        "focusValue": 61
+      },
+      {
+        "time": 20,
+        "focusValue": 63
+      },
+      {
+        "time": 30,
+        "focusValue": 53
+      },
+      {
+        "time": 40,
+        "focusValue": 85
+      },
+      {
+        "time": 50,
+        "focusValue": 77
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 34
+      },
+      {
+        "time": 10,
+        "calmValue": 44
+      },
+      {
+        "time": 20,
+        "calmValue": 35
+      },
+      {
+        "time": 30,
+        "calmValue": 11
+      },
+      {
+        "time": 40,
+        "calmValue": 23
+      },
+      {
+        "time": 50,
+        "calmValue": 49
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "'clicked'"
+      },
+      {
+        "x": 10,
+        "y": "'clicked'"
+      },
+      {
+        "x": 20,
+        "y": "'clicked'"
+      },
+      {
+        "x": 30,
+        "y": "'clicked'"
+      },
+      {
+        "x": 40,
+        "y": "'draw'"
+      },
+      {
+        "x": 50,
+        "y": "'draw'"
+      }
+    ],
+    "topfuncs": [
+      [
+        "'clicked'",
+        78
+      ],
+      [
+        "'draw'",
+        41
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "100",
+      "calmAnswer": "100",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "5"
+    }
+  },
+  {
+    "name": "123",
+    "ID": 1714733151084,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 18
+      },
+      {
+        "time": 10,
+        "focusValue": 29
+      },
+      {
+        "time": 20,
+        "focusValue": 57
+      },
+      {
+        "time": 30,
+        "focusValue": 55
+      },
+      {
+        "time": 40,
+        "focusValue": 23
+      },
+      {
+        "time": 50,
+        "focusValue": 14
+      },
+      {
+        "time": 60,
+        "focusValue": 34
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 69
+      },
+      {
+        "time": 10,
+        "calmValue": 38
+      },
+      {
+        "time": 20,
+        "calmValue": 20
+      },
+      {
+        "time": 30,
+        "calmValue": 27
+      },
+      {
+        "time": 40,
+        "calmValue": 31
+      },
+      {
+        "time": 50,
+        "calmValue": 36
+      },
+      {
+        "time": 60,
+        "calmValue": 27
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "draw"
+      },
+      {
+        "x": 10,
+        "y": "draw"
+      },
+      {
+        "x": 20,
+        "y": "draw"
+      },
+      {
+        "x": 30,
+        "y": "draw"
+      },
+      {
+        "x": 40,
+        "y": "clicked"
+      },
+      {
+        "x": 50,
+        "y": "clicked"
+      },
+      {
+        "x": 60,
+        "y": "clicked"
+      }
+    ],
+    "topfuncs": [
+      [
+        "clicked",
+        66
+      ],
+      [
+        "draw",
+        59
+      ],
+      [
+        "hej",
+        6
+      ]
+    ],
+    "responses": {
+      "focusAnswer": "26",
+      "calmAnswer": "37",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "1"
+    }
+  },
+  {
+    "name": "12345",
+    "ID": 1714733315781,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 70
+      },
+      {
+        "time": 10,
+        "focusValue": 70
+      },
+      {
+        "time": 20,
+        "focusValue": 75
+      },
+      {
+        "time": 30,
+        "focusValue": 71
+      },
+      {
+        "time": 40,
+        "focusValue": 66
+      },
+      {
+        "time": 50,
+        "focusValue": 64
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 21
+      },
+      {
+        "time": 10,
+        "calmValue": 42
+      },
+      {
+        "time": 20,
+        "calmValue": 74
+      },
+      {
+        "time": 30,
+        "calmValue": 82
+      },
+      {
+        "time": 40,
+        "calmValue": 81
+      },
+      {
+        "time": 50,
+        "calmValue": 67
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "hej"
+      },
+      {
+        "x": 10,
+        "y": "hej"
+      },
+      {
+        "x": 20,
+        "y": "hej"
+      },
+      {
+        "x": 30,
+        "y": "hej"
+      },
+      {
+        "x": 40,
+        "y": "clicked"
+      },
+      {
+        "x": 50,
+        "y": "clicked"
+      }
+    ],
+    "topfuncs": [
+      [
+        "clicked",
+        12
+      ]
+    ],
+    "functionContents": {
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        "
+    },
+    "responses": {
+      "focusAnswer": "17",
+      "calmAnswer": "17",
+      "expectedWorkAnswer": "5",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "666",
+    "ID": 1714733488295,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 41
+      },
+      {
+        "time": 10,
+        "focusValue": 79
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 58
+      },
+      {
+        "time": 10,
+        "calmValue": 86
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "draw"
+      },
+      {
+        "x": 10,
+        "y": "draw"
+      }
+    ],
+    "topfuncs": [
+      [
+        "draw",
+        53
+      ]
+    ],
+    "functionContents": {
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        ",
+      "draw": "    def draw(self):\r\n        button_sprite = Rectangle(Point(self.xpos, self.ypos), Point(self.xpos + self.sizex, self.ypos + self.sizey))\r\n        button_sprite.setFill(self.color)\r\n        button_sprite.setOutline(\"Black\")\r\n        button_sprite.setWidth(8)\r\n"
+    },
+    "responses": {
+      "focusAnswer": "64",
+      "calmAnswer": "63",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": null
+    }
+  },
+  {
+    "name": "666666",
+    "ID": 1714733951823,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 48
+      },
+      {
+        "time": 10,
+        "focusValue": 37
+      },
+      {
+        "time": 20,
+        "focusValue": 56
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 17
+      },
+      {
+        "time": 10,
+        "calmValue": 40
+      },
+      {
+        "time": 20,
+        "calmValue": 73
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "clicked"
+      },
+      {
+        "x": 10,
+        "y": "clicked"
+      },
+      {
+        "x": 20,
+        "y": "draw"
+      }
+    ],
+    "topfuncs": [
+      [
+        "draw",
+        28
+      ],
+      [
+        "clicked",
+        27
+      ]
+    ],
+    "functionContents": {
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        ",
+      "draw": "    def draw(self):\r\n        button_sprite = Rectangle(Point(self.xpos, self.ypos), Point(self.xpos + self.sizex, self.ypos + self.sizey))\r\n        button_sprite.setFill(self.color)\r\n        button_sprite.setOutline(\"Black\")\r\n        button_sprite.setWidth(8)\r\n"
+    },
+    "responses": {
+      "focusAnswer": "25",
+      "calmAnswer": "23",
+      "expectedWorkAnswer": "1",
+      "finishedWorkAnswer": "5"
+    }
+  },
+  {
+    "name": "real1",
+    "ID": 1714735628491,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 61
+      },
+      {
+        "time": 10,
+        "focusValue": 60
+      },
+      {
+        "time": 20,
+        "focusValue": 62
+      },
+      {
+        "time": 30,
+        "focusValue": 63
+      },
+      {
+        "time": 40,
+        "focusValue": 62
+      },
+      {
+        "time": 50,
+        "focusValue": 61
+      },
+      {
+        "time": 60,
+        "focusValue": 59
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 32
+      },
+      {
+        "time": 10,
+        "calmValue": 31
+      },
+      {
+        "time": 20,
+        "calmValue": 33
+      },
+      {
+        "time": 30,
+        "calmValue": 34
+      },
+      {
+        "time": 40,
+        "calmValue": 34
+      },
+      {
+        "time": 50,
+        "calmValue": 34
+      },
+      {
+        "time": 60,
+        "calmValue": 33
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "draw"
+      },
+      {
+        "x": 10,
+        "y": "draw"
+      },
+      {
+        "x": 20,
+        "y": "draw"
+      },
+      {
+        "x": 30,
+        "y": "clicked"
+      },
+      {
+        "x": 40,
+        "y": "clicked"
+      },
+      {
+        "x": 50,
+        "y": "clicked"
+      },
+      {
+        "x": 60,
+        "y": "clicked"
+      }
+    ],
+    "topfuncs": [
+      [
+        "clicked",
+        37
+      ],
+      [
+        "draw",
+        23
+      ],
+      [
+        "__init__",
+        5
+      ]
+    ],
+    "functionContents": {
+      "draw": "    def draw(self):\r\n        button_sprite = Rectangle(Point(self.xpos, self.ypos), Point(self.xpos + self.sizex, self.ypos + self.sizey))\r\n        button_sprite.setFill(self.color)\r\n        button_sprite.setOutline(\"Black\")\r\n        button_sprite.setWidth(8)\r\n",
+      "clicked": "    def clicked(self, clickedx, clickedy):\r\n        if clickedx >= self.xpos and clickedx <= self.xpos + self.sizex and clickedy >= self.ypos and clickedy < self.ypos + self.sizey:\r\n            return True\r\n        else:\r\n            return False\r\n        ",
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "__init__": "    def __init__(self, xpos, ypos, sizex, sizey, color):\r\n        self.xpos = xpos\r\n        self.ypos = ypos\r\n        self.sizex = sizex\r\n        self.sizey = sizey\r\n        self.color = color\r\n    "
+    },
+    "responses": {
+      "focusAnswer": "30",
+      "calmAnswer": "46",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "2024-05-03",
+    "ID": 1714736114019,
+    "date": "2024-05-03",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 39
+      },
+      {
+        "time": 10,
+        "focusValue": 46
+      },
+      {
+        "time": 20,
+        "focusValue": 46
+      },
+      {
+        "time": 30,
+        "focusValue": 46
+      },
+      {
+        "time": 40,
+        "focusValue": 46
+      },
+      {
+        "time": 50,
+        "focusValue": 42
+      },
+      {
+        "time": 60,
+        "focusValue": 42
+      },
+      {
+        "time": 70,
+        "focusValue": 42
+      },
+      {
+        "time": 80,
+        "focusValue": 40
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 25
+      },
+      {
+        "time": 10,
+        "calmValue": 25
+      },
+      {
+        "time": 20,
+        "calmValue": 25
+      },
+      {
+        "time": 30,
+        "calmValue": 25
+      },
+      {
+        "time": 40,
+        "calmValue": 25
+      },
+      {
+        "time": 50,
+        "calmValue": 30
+      },
+      {
+        "time": 60,
+        "calmValue": 30
+      },
+      {
+        "time": 70,
+        "calmValue": 31
+      },
+      {
+        "time": 80,
+        "calmValue": 32
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "fibbonaci"
+      },
+      {
+        "x": 10,
+        "y": "myNewFunction"
+      },
+      {
+        "x": 20,
+        "y": "myNewFunction"
+      },
+      {
+        "x": 30,
+        "y": "myNewFunction"
+      }
+    ],
+    "topfuncs": [
+      [
+        "myNewFunction",
+        103
+      ],
+      [
+        "fibbonaci",
+        47
+      ],
+      [
+        "hej",
+        1
+      ]
+    ],
+    "functionContents": {
+      "hej": "    def hej(self):\r\n        pass\r\n        i = 1\r\n",
+      "fibbonaci": "    def fibbonaci(self, n):\r\n        if n == 0:\r\n            return 0\r\n        elif n == 1:\r\n            return 1\r\n        else:\r\n            return self.fibbonaci(self, n) + self.fibbonaci(self, n)\r\n        ",
+      "myNewFunction": "    def myNewFunction(self, x, y):\r\n        x = 10\r\n        y = 100\r\n        if (x+y == 100):\r\n            print(\"HEJJEJEJEJEEJ\")\r\n        else:\r\n            print(1000000000000)\r\n        return \"NOOOOO\"\r\n        "
+    },
+    "responses": {
+      "focusAnswer": "37",
+      "calmAnswer": "54",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
+  },
+  {
+    "name": "newsession2024",
+    "ID": 1714994438157,
+    "date": "2024-05-06",
+    "focusValues": [
+      {
+        "time": 0,
+        "focusValue": 39
+      },
+      {
+        "time": 10,
+        "focusValue": 41
+      },
+      {
+        "time": 20,
+        "focusValue": 36
+      },
+      {
+        "time": 30,
+        "focusValue": 34
+      },
+      {
+        "time": 40,
+        "focusValue": 34
+      },
+      {
+        "time": 50,
+        "focusValue": 35
+      },
+      {
+        "time": 60,
+        "focusValue": 33
+      },
+      {
+        "time": 70,
+        "focusValue": 26
+      },
+      {
+        "time": 80,
+        "focusValue": 28
+      },
+      {
+        "time": 90,
+        "focusValue": 34
+      },
+      {
+        "time": 100,
+        "focusValue": 38
+      }
+    ],
+    "calmValues": [
+      {
+        "time": 0,
+        "calmValue": 30
+      },
+      {
+        "time": 10,
+        "calmValue": 34
+      },
+      {
+        "time": 20,
+        "calmValue": 34
+      },
+      {
+        "time": 30,
+        "calmValue": 31
+      },
+      {
+        "time": 40,
+        "calmValue": 25
+      },
+      {
+        "time": 50,
+        "calmValue": 24
+      },
+      {
+        "time": 60,
+        "calmValue": 23
+      },
+      {
+        "time": 70,
+        "calmValue": 16
+      },
+      {
+        "time": 80,
+        "calmValue": 21
+      },
+      {
+        "time": 90,
+        "calmValue": 27
+      },
+      {
+        "time": 100,
+        "calmValue": 24
+      }
+    ],
+    "sessionFuncs": [
+      {
+        "x": 0,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 10,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 20,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 30,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 40,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 50,
+        "y": "check_color_at"
+      },
+      {
+        "x": 60,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 70,
+        "y": "rgb_to_color"
+      },
+      {
+        "x": 80,
+        "y": "move_arm"
+      },
+      {
+        "x": 90,
+        "y": "move_arm"
+      },
+      {
+        "x": 100,
+        "y": "move_arm"
+      }
+    ],
+    "topfuncs": [
+      [
+        "rgb_to_color",
+        88
+      ],
+      [
+        "move_arm",
+        37
+      ],
+      [
+        "check_color_at",
+        20
+      ]
+    ],
+    "functionContents": {
+      "read_color": "def read_color():\r\n    #check if block is being held\r\n    if not is_present():\r\n        return \"None\"\r\n    \r\n    rgb = color_sensor.rgb()\r\n    return rgb_to_color(rgb)\r\n",
+      "rgb_to_color": "def rgb_to_color(rgb):\r\n    if rgb[0] > (rgb[1] + rgb[2]) / 2:\r\n        if (rgb[1] >= rgb[0] / 4) and rgb[1] > 1:\r\n            return \"YELLOW\"\r\n        return \"RED\"\r\n    elif rgb[1] + 1 > (rgb[0] + rgb[2]) / 2:\r\n        return \"GREEN\"\r\n    elif rgb[2] > (rgb[0] + rgb[1]) / 2:\r\n        return \"BLUE\"\r\n    return \"None\"\r\n",
+      "check_color_at": "def check_color_at(position):\r\n    pick_up(position)\r\n    color = read_color()\r\n    drop(position)\r\n    return color\r\n",
+      "drop": "def drop(position): #redundant\r\n    #move claw above\r\n    elbow_motor.run_target(60,15)\r\n\r\n    #move claw to position\r\n    base_motor.run_target(150, position[0])\r\n    elbow_motor.run_target(60, position[1])\r\n\r\n    #drop brick\r\n    gripper_motor.run_target(200,-90)\r\n\r\n    #reset claw position\r\n    elbow_motor.run_target(60,0)\r\n",
+      "move_arm": "def move_arm():\r\n    #reset arm\r\n    elbow_motor.run_target(60, 15)\r\n    base_motor.run_target(150, 0)\r\n    ev3.screen.draw_text(0, 50, \"Move arm\")\r\n\r\n    #move arm\r\n    while True:\r\n        pressed = ev3.buttons.pressed()\r\n        if Button.LEFT in pressed:\r\n            base_motor.run(50)\r\n        elif Button.RIGHT in pressed:\r\n            base_motor.run(-50)\r\n        elif Button.UP in pressed:\r\n            elbow_motor.run(20)\r\n        elif Button.DOWN in pressed:\r\n            elbow_motor.run(-20)\r\n        elif Button.CENTER in pressed:\r\n            break\r\n        else:\r\n            base_motor.brake()\r\n            elbow_motor.brake()\r\n\r\n    #save arm position\r\n    pos = base_motor.angle()\r\n    hgt = elbow_motor.angle()\r\n\r\n    #reset arm\r\n    elbow_motor.run_target(60, 15)\r\n    base_motor.run_target(150, 0)\r\n\r\n    ev3.screen.clear()\r\n\r\n    return (pos, hgt)\r\n",
+      "set_pick_up": "def set_pick_up():\r\n    pick_up_locations[0] = move_arm()\r\n    #default positions\r\n    drop_off_locations[\"RED\"] = pick_up_locations[0]\r\n    drop_off_locations[\"YELLOW\"] = pick_up_locations[0]\r\n    drop_off_locations[\"GREEN\"] = pick_up_locations[0]\r\n    drop_off_locations[\"BLUE\"] = pick_up_locations[0]\r\n",
+      "set_drop_off": "def set_drop_off():\r\n    #max 3\r\n    global amt_set\r\n    if amt_set >= 3:\r\n        return\r\n    amt_set += 1\r\n\r\n    color = check_color_at(pick_up_locations[0])\r\n    drop_off_locations[color] = move_arm()\r\n"
+    },
+    "responses": {
+      "focusAnswer": "37",
+      "calmAnswer": "38",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
     }
   }
 ]

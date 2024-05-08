@@ -53,7 +53,7 @@ class EventHandler {
                         this.eyetracker.recordingEnd()
                         this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
                         this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
-
+                        
                         vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(async e => {
                             if (e == 'Yes') {
                                 console.log("Yes to evaluate")
@@ -144,6 +144,7 @@ class EventHandler {
                 break;
             case 'scrollFunction':
                 console.log('Scroll to: ' + message.value)
+                //old file-reading method
                 var fileContent = fs.readFileSync(this.eyetracker.evaluateFilePath, "utf-8").split('\n')
                 var lineCounter = 0
                 for (let line of fileContent) {
@@ -154,9 +155,11 @@ class EventHandler {
                 }
                 vscode.window.visibleTextEditors[0].revealRange(new vscode.Range(lineCounter, 0, lineCounter + 1, 0), vscode.TextEditorRevealType.AtTop)
                 break;
+            // Sent from evaluatewebview
             case 'relevantDataForAi':
                 await this.aiHandler.retrieveFeedback(message.value)
                 console.log(this.aiHandler.output)
+                //Send back ai output
                 this.uiHandler.evaluateWebView.webview.postMessage({
                     variable: "aiFeedback",
                     value: this.aiHandler.output

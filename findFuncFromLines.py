@@ -41,7 +41,7 @@ def find_definition(line_num):
 
                     functions[item.name] = (start, end)
     except:
-        raise "Error with path: " + filepath
+        print("Error with path: " + filepath)
 
     for key, value in functions.items():
         if value[0] <= line_num <= value[1]:

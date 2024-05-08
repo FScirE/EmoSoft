@@ -190,7 +190,8 @@ class DataHandler {
                 var currentCalm = {x: this.recordingTime, y:Math.round(this.getCalm()*100)};
                 this.focusValuesSession.push(currentFocus);
                 this.calmValuesSession.push(currentCalm);
-                this.recordingTime += INTERVAL;
+                console.log("Focus: " + currentFocus + ", Calm: " + currentCalm + ", Time: " + this.recordingTime)
+                this.recordingTime += INTERVAL;            
             }
         }, INTERVAL * 1000)
     

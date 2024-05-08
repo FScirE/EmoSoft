@@ -135,6 +135,7 @@ class Evaluate {
         // Eyetracker stats
         dataList.sessionFuncs = this.responses.sessionFuncs;
         dataList.topfuncs = this.topfuncs;
+        dataList.functionContents = this.responses.functionContents;
 
         // Responses
         dataList.responses = {focusAnswer: this.responses.focusAnswer, calmAnswer: this.responses.calmAnswer,

@@ -81,7 +81,7 @@ class AIHandler {
         
         //format data to message
         messageBuild += "Focus Values: " + focusValuesToString + ", Calm Values: " + calmValuesToString + ", name of functions looked at: " + functionsToString
-        await this.sendMsgToAI(CONTEXT_FEEDBACK, messageBuild)
+        await this.sendMsgToAI(CONTEXT_FEEDBACK, messageBuild, false)
         
     }
 }
