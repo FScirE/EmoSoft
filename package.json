@@ -35,8 +35,13 @@
         },
         "emoide.eyeTracker": {
           "type": "string",
-          "description": "IP address for the Eye-tracker",
-          "default": "None"
+          "default": "None",
+          "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEyeTracker)  \nIP adress of eyetracker:"
+        },
+        "emoide.highlightEye": {
+          "type": "boolean",
+          "description": "Show highlight for eyetracker",
+          "default": false
         },
         "emoide.stuckNotification": {
           "type": "integer",
@@ -82,16 +87,6 @@
             "Mango"
           ],
           "default": "Blue"
-        },
-        "emoide.calibrateEye": {
-          "type": "object",
-          "description": "Calibrate eyetracker",
-          "markdownDescription": "[Calibrate eye tracker](command:emoide.calibrateEyeTracker)"
-        },
-        "emoide.highlightEye": {
-          "type": "boolean",
-          "description": "Show highlight for eyetracker",
-          "default": true
         }
       }
     },
