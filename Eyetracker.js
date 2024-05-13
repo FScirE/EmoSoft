@@ -173,6 +173,7 @@ class EyeTracker {
         this.recording = true
     }
     recordingEnd() {
+        this.getMostFocusedFunction() //get rest of looked lines
         this.recording = false
         this.evaluateFilePath = this.filePath
     }

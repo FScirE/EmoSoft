@@ -70,7 +70,6 @@ class EventHandler {
                                 })
 
                                 await this.eyetracker.generateHeatmap()
-                                await this.eyetracker.getMostFocusedFunction() //get the rest of looked lines
                                 var funcs = await this.eyetracker.calculateTopLines()
                                 await this.evaluate.readFuncsFromFile();
 

@@ -53,7 +53,7 @@ function createChart() {
 		},
 		toolTip: {
 			shared: true,
-
+			
 		},
 		axisY: {
 			logarithmic: false, //change it to false
@@ -258,9 +258,9 @@ function populatedropdown(){
 
 function changeHeatmapImageSrc(newSrc, missingSrc) {
     const heatmapImg = document.querySelector('#heatmap img');
-	var image = new Image()
-	image.src = newSrc
-	heatmapImg.setAttribute('src', image.width == 0 ? missingSrc : newSrc)
+	const fs = require('fs')
+	let fileExists = fs.existsSync(newSrc)
+	heatmapImg.setAttribute('src', fileExists ? newSrc : missingSrc)
 }
 function loadSession(extensionPath) {
 	document.getElementById("feedbackAiMessage").innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
