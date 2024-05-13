@@ -19,6 +19,24 @@ var ID = -1
 //KOMMENTERA UT IFALL NI ANVÄNDER LIVE SERVER
 document.querySelector('body').style.visibility = 'hidden'
 
+//inputs
+const focusSlider = document.getElementById("focusSlider");
+const focusOutput = document.getElementById("focusValue");
+
+focusOutput.innerHTML = focusSlider.value;
+
+focusSlider.oninput = function() {
+	focusOutput.innerHTML = this.value;
+};
+const calmSlider = document.getElementById("calmSlider");
+const calmOutput = document.getElementById("calmValue");
+
+calmOutput.innerHTML = calmSlider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+calmSlider.oninput = function() {
+    calmOutput.innerHTML = this.value;
+};
 
 function createChart() {
 	//feedbackContainer.innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
@@ -159,7 +177,7 @@ function saveEvaluateResponses() {
 	// Fetch data from HTML
 	var name = document.getElementById("textInput").value;
 	var count = 0;
-	gatherResponses()
+	gatherResponses() 
 	if (loaded == false) {
 		if (name == "") {
 			name = new Date().toISOString().split('T')[0];
@@ -222,24 +240,6 @@ function setFunctionContentArea(visible, text) {
 	}
 }
 
-const focusSlider = document.getElementById("focusSlider");
-const focusOutput = document.getElementById("focusValue");
-
-focusOutput.innerHTML = focusSlider.value;
-
-focusSlider.oninput = function() {
-	focusOutput.innerHTML = this.value;
-};
-const calmSlider = document.getElementById("calmSlider");
-const calmOutput = document.getElementById("calmValue");
-
-calmOutput.innerHTML = calmSlider.value; // Display the default slider value
-
-    // Update the current slider value (each time you drag the slider handle)
-calmSlider.oninput = function() {
-    calmOutput.innerHTML = this.value;
-};
-
 function setAiResponse(aioutput) {
 	document.getElementById("feedbackAiMessage").innerHTML = `<p id="textfromAi">${aioutput}</p>`
 }
@@ -256,11 +256,15 @@ function populatedropdown(){
 	}
 }
 
-function changeHeatmapImageSrc(newSrc, missingSrc) {
+function toggleRatingInputs() {
+	var elements = document.querySelectorAll('input:not(#textInput)')
+	for (let i = 0; i < elements.length; i++)
+		elements[i].disabled = loaded ? true : false
+}
+
+function changeHeatmapImageSrc(newSrc) {
     const heatmapImg = document.querySelector('#heatmap img');
-	const fs = require('fs')
-	let fileExists = fs.existsSync(newSrc)
-	heatmapImg.setAttribute('src', fileExists ? newSrc : missingSrc)
+	heatmapImg.setAttribute('src', newSrc)
 }
 function loadSession(extensionPath) {
 	document.getElementById("feedbackAiMessage").innerHTML = '<p id="textfromAi"><span class="loader"></span></p>'
@@ -273,6 +277,8 @@ function loadSession(extensionPath) {
 	}
 
 	setFunctionContentArea(false) //hide function definition window
+
+	toggleRatingInputs(loaded)
 
 	//SET TOP FUNCS
 	funcs = responses.topfuncs;
@@ -289,8 +295,7 @@ function loadSession(extensionPath) {
 
 	//LOAD HEATMAP
 	var FullPathHeatmap = extensionPath + '\\' +  responses.pathHeat;
-	var MissingPathHeatmap = extensionPath + '\\imagenotfound.jpg'
-	changeHeatmapImageSrc(FullPathHeatmap, MissingPathHeatmap)
+	changeHeatmapImageSrc(FullPathHeatmap)
 
 	//SLIDER LOAD
 	focusSlider.value = responses.responses.focusAnswer
@@ -300,8 +305,8 @@ function loadSession(extensionPath) {
     calmOutput.innerHTML = responses.responses.calmAnswer
 
 	//RADIO BUTTON LOAD
-	var q1Rating = responses.responses.expectedWorkAnswer;
-    var q2Rating = responses.responses.finishedWorkAnswer;
+	var q1Rating = responses.responses.expectedWorkAnswer
+    var q2Rating = responses.responses.finishedWorkAnswer
 
     // Check the radio buttons for question 1
     var q1RadioButtons = document.querySelectorAll('input[name="q1rating"]');
@@ -332,7 +337,6 @@ selectElement.addEventListener("change", function(event) {
 		variable: 'nameRequest',
 		value: sessionName
 	})
-
 });
 
 selectElement.addEventListener("focus", function(event) {

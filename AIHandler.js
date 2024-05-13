@@ -16,7 +16,7 @@ const MESSAGE_CALM_DOWN = "Help a programmer who is at a certain calm level to c
 const CONTEXT_HELPADEV = "You are a helpful AI assistant with the goal to boost a developers productivity and focus. Short respones.";
 const CONTEXT_HELPCODE = "You are a helpful AI assistant with the goal to boost a developers productivity and focus. Short responses and any code snippets should be kept concise.";
 const SUFFIX_STUCK_ON_LINE = "This is the code in python. I am stuck here, can you help me explain it briefly. Max 5 short sentences?"
-const CONTEXT_FEEDBACK = "Evaluate this session the x value indicates time in seconds and y is the focus / calm levels in percentage. Ontop of that there is also which functions the users were looking at where x is time and y is the name of the function. Refer only to the points were a notable shift is seen. Keep it short"
+const CONTEXT_FEEDBACK = "Here I provide you with x values which represents time and y values which represents focus/calm. There are also functions that the user worked on at certain times. Can you draw any conclusions from this, trying to connect the focus/calm level to what function he worked on. For example, maybe one function made the user less focused etc. Keep it short."
 
 class AIHandler {
     constructor(codeinput, standardinput, extensionpath){

@@ -1,6 +1,6 @@
 [
   {
-    "name": "Cool session",
+    "name": "Very stable session",
     "ID": 1715597795872,
     "date": "2024-05-13",
     "dataPoints": [
@@ -80,10 +80,7 @@
       ]
     ],
     "functionContents": {
-      "rgb_to_color": "def rgb_to_color(rgb):\r\n    if rgb[0] > (rgb[1] + rgb[2]) / 2:\r\n        if (rgb[1] >= rgb[0] / 4) and rgb[1] > 1:\r\n            return \"YELLOW\"\r\n        return \"RED\"\r\n    elif rgb[1] + 1 > (rgb[0] + rgb[2]) / 2:\r\n        return \"GREEN\"\r\n    elif rgb[2] > (rgb[0] + rgb[1]) / 2:\r\n        return \"BLUE\"\r\n    return \"None\"\r\n",
-      "drop": "def drop(position): #redundant\r\n    #move claw above\r\n    elbow_motor.run_target(60,15)\r\n\r\n    #move claw to position\r\n    base_motor.run_target(150, position[0])\r\n    elbow_motor.run_target(60, position[1])\r\n\r\n    #drop brick\r\n    gripper_motor.run_target(200,-90)\r\n\r\n    #reset claw position\r\n    elbow_motor.run_target(60,0)\r\n",
-      "is_present": "def is_present():\r\n    angle = int(gripper_motor.angle())\r\n    if angle < -10:\r\n        return True\r\n    return False\r\n",
-      "move_arm": "def move_arm():\r\n    #reset arm\r\n    elbow_motor.run_target(60, 15)\r\n    base_motor.run_target(150, 0)\r\n    ev3.screen.draw_text(0, 50, \"Move arm\")\r\n\r\n    #move arm\r\n    while True:\r\n        pressed = ev3.buttons.pressed()\r\n        if Button.LEFT in pressed:\r\n            base_motor.run(50)\r\n        elif Button.RIGHT in pressed:\r\n            base_motor.run(-50)\r\n        elif Button.UP in pressed:\r\n            elbow_motor.run(20)\r\n        elif Button.DOWN in pressed:\r\n            elbow_motor.run(-20)\r\n        elif Button.CENTER in pressed:\r\n            break\r\n        else:\r\n            base_motor.brake()\r\n            elbow_motor.brake()\r\n\r\n    #save arm position\r\n    pos = base_motor.angle()\r\n    hgt = elbow_motor.angle()\r\n\r\n    #reset arm\r\n    elbow_motor.run_target(60, 15)\r\n    base_motor.run_target(150, 0)\r\n\r\n    ev3.screen.clear()\r\n\r\n    return (pos, hgt)\r\n"
+      "check_pick_up": "def check_pick_up():\r\n    pick_up(pick_up_locations[0])\r\n\r\n    color = read_color()\r\n    if (color == \"None\"):\r\n        #open claw if no brick\r\n        gripper_motor.run_target(200,-90) \r\n        elbow_motor.run_target(60, 15)\r\n        return False\r\n    \r\n    drop_off = drop_off_locations[color]\r\n    drop(drop_off)\r\n\r\n    elbow_motor.run_target(60, 15)\r\n\r\n    #give to other robot\r\n    if drop_off == pick_up_locations[0]:\r\n        return True\r\n    \r\n    return False\r\n"
     },
     "responses": {
       "focusAnswer": "34",
