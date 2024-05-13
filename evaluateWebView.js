@@ -78,7 +78,7 @@ function createChart() {
 			xValueFormatString: "Time (s): ####",
 			showInLegend: true,
 			name: "Focus (%)",
-			click: scrollToFunctionCanvas,
+			click: clickedFunctionCanvas,
 			dataPoints: focusValues
 
 		},
@@ -88,7 +88,7 @@ function createChart() {
 			xValueFormatString: "####",
 			showInLegend: true,
 			name: "Calm (%)",
-			click: scrollToFunctionCanvas,
+			click: clickedFunctionCanvas,
 			dataPoints: calmValues
 		},
 		{
@@ -97,7 +97,7 @@ function createChart() {
 			xValueFormatString: "Function: ###############",
 			showInLegend: false,
 			name: "Function",
-			click: scrollToFunctionCanvas,
+			click: clickedFunctionCanvas,
 			dataPoints: functions
 
 		}
@@ -200,13 +200,12 @@ function scrollToFunction(funcName) {
 		value: funcName
 	})
 }
-function scrollToFunctionCanvas(e) {
+function clickedFunctionCanvas(e) {
 	for (var i = 0; i < functions.length; i++) {
 		if (functions[i].x == e.dataPoint.x) {
 			var nameOfFunction = functions[i].y.toString().replaceAll("'", "")
 		}
 	}
-	scrollToFunction(nameOfFunction)
 	setFunctionContentArea(nameOfFunction != 'No function', functionContents[nameOfFunction])
 }
 
@@ -273,15 +272,20 @@ function loadSession(extensionPath) {
 		document.getElementById("textInput").value = "";
 	}
 
+	setFunctionContentArea(false) //hide function definition window
+
+	//SET TOP FUNCS
+	funcs = responses.topfuncs;
+	setTopFunctions(funcs)
+
 	//CHART LOAD
 	focusValues = responses.focusValues;
 	calmValues = responses.calmValues;
 	functions = responses.sessionFuncs;
 	createChart()
 
-	//SET TOP FUNCS
-	funcs = responses.topfuncs;
-	setTopFunctions(funcs)
+	//SET FUNCTION DEFINITIONS
+	functionContents = responses.functionContents
 
 	//LOAD HEATMAP
 	var FullPathHeatmap = extensionPath + '\\' +  responses.pathHeat;
@@ -381,16 +385,10 @@ window.addEventListener("message", e => {
 		case "sessionData":
 			if (message.value == -1) {
 				responses = newestSession;
-				functions = responses.sessionFuncs;
-				funcs = responses.topfuncs;
-				functionContents = responses.functionContents
 				ID = -1;
 				loaded = false;
 			} else {
 				responses = message.value;
-				functions = responses.sessionFuncs;
-				funcs = responses.topfuncs;
-				functionContents = responses.functionContents
 				ID = responses.ID;
 				loaded = true;
 				responses.pathHeat = "heatmap-" + responses.name + ".png"

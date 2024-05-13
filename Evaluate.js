@@ -31,19 +31,6 @@ class Evaluate {
         this.calmValues = calmValues;
     }
 
-    getMaxFocus() {
-        return Math.max(...this.focusValues);
-    }
-    getMinFocus() {
-        return Math.min(...this.focusValues);
-    }
-    getMaxCalm() {
-        return Math.max(...this.calmValues);
-    }
-    getMinCalm() {
-        return Math.min(...this.calmValues);
-    }
-
     setResponse(question, number) {
         var response = {question, number};
         this.responses.push(response);
@@ -121,7 +108,7 @@ class Evaluate {
         dataList.date = dateString;
 
         // Renaming focus and calm values to JSON
-        let tempFocus = [];
+        /*let tempFocus = [];
         let tempCalm = [];
         for (let i = 0; i < this.focusValues.length; i++) {
             tempFocus[i] = { time: this.focusValues[i].x, focusValue: this.focusValues[i].y };
@@ -130,10 +117,17 @@ class Evaluate {
             tempCalm[j] = { time: this.calmValues[j].x, calmValue: this.calmValues[j].y };
         }
         dataList.focusValues = tempFocus;
-        dataList.calmValues = tempCalm;
+        dataList.calmValues = tempCalm;*/
+        
+        //dataList.sessionFuncs = this.responses.sessionFuncs;
+
+        let tempDataPoints = []
+        for (let i = 0; i < this.focusValues.length; i++) {
+            tempDataPoints[i] = { time: i * 10, focusValue: this.focusValues[i].y, calmValue: this.calmValues[i].y, function: this.responses.sessionFuncs[i].y }
+        }
+        dataList.dataPoints = tempDataPoints
 
         // Eyetracker stats
-        dataList.sessionFuncs = this.responses.sessionFuncs;
         dataList.topfuncs = this.topfuncs;
         dataList.functionContents = this.responses.functionContents;
 
@@ -185,20 +179,22 @@ class Evaluate {
         while (jsonData[i].name != name && i < jsonData.length) {
             i++;
         }
+        var session = jsonData[i]
 
         // Renaming focus and calm values so that graph can read them
         let tempFocus = [];
-        let tempCalm = [];
-        for (let j = 0; j < jsonData[i].focusValues.length; j++) {
-            tempFocus[j] = { x: jsonData[i].focusValues[j].time, y: jsonData[i].focusValues[j].focusValue };
+        let tempCalm = []; 
+        let tempFuncs = [];
+        for (let j = 0; j < session.dataPoints.length; j++) {
+            tempFocus[j] = { x: session.time, y: session.dataPoints[j].focusValue };
+            tempCalm[j] = { x: session.time, y: session.dataPoints[j].calmValue }
+            tempFuncs[j] = { x: session.time, y: session.dataPoints[j].function }
         }
-        for (let k = 0; k < jsonData[i].calmValues.length; k++) {
-            tempCalm[k] = { x: jsonData[i].calmValues[k].time, y: jsonData[i].calmValues[k].calmValue };
-        }
-        jsonData[i].focusValues = tempFocus;
-        jsonData[i].calmValues = tempCalm;
+        session.focusValues = tempFocus;
+        session.calmValues = tempCalm;
+        session.sessionFuncs = tempFuncs;
 
-        return jsonData[i];
+        return session;
     }
 }
 
