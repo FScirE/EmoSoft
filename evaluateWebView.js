@@ -383,12 +383,14 @@ window.addEventListener("message", e => {
 				responses = newestSession;
 				functions = responses.sessionFuncs;
 				funcs = responses.topfuncs;
+				functionContents = responses.functionContents
 				ID = -1;
 				loaded = false;
 			} else {
 				responses = message.value;
 				functions = responses.sessionFuncs;
 				funcs = responses.topfuncs;
+				functionContents = responses.functionContents
 				ID = responses.ID;
 				loaded = true;
 				responses.pathHeat = "heatmap-" + responses.name + ".png"

@@ -104,7 +104,7 @@ with open('stuckLine.txt', 'w') as stuck_file:
     try:
         max_key = max(dict_funcs, key=dict_funcs.get)
         content = f'{max_key}:{span_funcs[max_key]}'
-        if (dict_funcs[max_key] >= 19):
+        if (dict_funcs[max_key] >= 17):
             stuck_file.write(content)
         stuck_file.close()
     except:
