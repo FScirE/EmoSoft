@@ -534,5 +534,19 @@ input[type=range] {
     text-align: left;
 }
 
+.evaluateButton {
+    min-height: 28px;
+    min-width: 135px;
+    border-radius: 10px;
+    float: left;
+    margin-left: calc(100vw / 13);;
+    margin-bottom: 10px;
+    border-width: 1px;
+    text-align: center;
+    color: white;
+    background-color: rgb(65, 65, 65);
+    
+}
+
 
 

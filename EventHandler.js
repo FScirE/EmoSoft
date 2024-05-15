@@ -42,6 +42,23 @@ class EventHandler {
                         value: responseFromAi
                     })
                     break;
+                case 'gotoEval':
+                    await this.uiHandler.switchToEvaluatePage();
+                    await this.initEvaluateReceiveMessage(context);
+                    await sleepSeconds(1) //safety
+
+                    
+                        //await sleepSeconds(1) //safety
+                    this.uiHandler.evaluateWebView.webview.postMessage({
+                        variable: "values",
+                        value: [this.evaluate.focusValues, this.evaluate.calmValues, this.evaluate.sessionFuncs, this.eyetracker.functionContents]
+                    })
+                        //await sleepSeconds(1) //safety
+                    this.uiHandler.evaluateWebView.webview.postMessage({
+                        variable: "evaluateNames",
+                        value: this.evaluate.loadEvalNameList()
+                    })
+                    break;
                 // Record a session
                 case 'recording':
                     if (message.value == true) {

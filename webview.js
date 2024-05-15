@@ -142,3 +142,9 @@ window.addEventListener('message', e => {
     }
 })
 
+function gotoEvaluate(){
+    vscode.postMessage({
+        variable: "gotoEval",
+    })
+}
+
