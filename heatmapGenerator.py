@@ -2,7 +2,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as clr
 import math
-import random
 import sys
 
 # Heatmap grid contstants
@@ -26,6 +25,7 @@ this_cwd = this_cwd.rstrip()
 
 x_arr = list(map(float, read_file(this_cwd + '\\xValues.txt').split(','))) 
 y_arr = list(map(float, read_file(this_cwd + '\\yValues.txt').split(',')))
+#import random
 #x_arr = [random.random() for _ in range(10000)] # test
 #y_arr = [random.random() for _ in range(10000)] # test
 
