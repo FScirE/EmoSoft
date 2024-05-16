@@ -88,7 +88,7 @@ class Evaluate {
 
         if (this.responses.ID == -1) {
             dataList.ID = uniqueID;
-        } 
+        }
         else {
             // Remove if ID already exists (overwrite)
             for (let i = 0; i < jsonData.length; i++) {
@@ -118,7 +118,7 @@ class Evaluate {
         }
         dataList.focusValues = tempFocus;
         dataList.calmValues = tempCalm;*/
-        
+
         //dataList.sessionFuncs = this.responses.sessionFuncs;
 
         let tempDataPoints = []
@@ -183,12 +183,13 @@ class Evaluate {
 
         // Renaming focus and calm values so that graph can read them
         let tempFocus = [];
-        let tempCalm = []; 
+        let tempCalm = [];
         let tempFuncs = [];
         for (let j = 0; j < session.dataPoints.length; j++) {
-            tempFocus[j] = { x: j * 10, y: session.dataPoints[j].focusValue };
-            tempCalm[j] = { x: j * 10, y: session.dataPoints[j].calmValue };
-            tempFuncs[j] = { x: j * 10, y: session.dataPoints[j].function };
+            let dataPoint = session.dataPoints[j]
+            tempFocus[j] = { x: dataPoint.time, y: dataPoint.focusValue };
+            tempCalm[j] = { x: dataPoint.time, y: dataPoint.calmValue };
+            tempFuncs[j] = { x: dataPoint.time, y: dataPoint.function };
         }
         session.focusValues = tempFocus;
         session.calmValues = tempCalm;
