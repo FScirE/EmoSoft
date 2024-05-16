@@ -278,20 +278,21 @@ function loadSession(extensionPath) {
 
 	setFunctionContentArea(false) //hide function definition window
 
-	toggleRatingInputs(loaded)
+	toggleRatingInputs()
 
 	//SET TOP FUNCS
 	funcs = responses.topfuncs;
 	setTopFunctions(funcs)
 
+	//SET FUNCTION DEFINITIONS
+	functionContents = responses.functionContents
+
 	//CHART LOAD
 	focusValues = responses.focusValues;
 	calmValues = responses.calmValues;
 	functions = responses.sessionFuncs;
-	createChart()
-
-	//SET FUNCTION DEFINITIONS
-	functionContents = responses.functionContents
+	
+	createChart() //this ereases the local values from responses, use after defining them
 
 	//LOAD HEATMAP
 	var FullPathHeatmap = extensionPath + '\\' +  responses.pathHeat;
