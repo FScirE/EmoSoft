@@ -17,6 +17,7 @@ const CONTEXT_HELPADEV = "You are a helpful AI assistant with the goal to boost 
 const CONTEXT_HELPCODE = "You are a helpful AI assistant with the goal to boost a developers productivity and focus. Short responses and any code snippets should be kept concise.";
 const SUFFIX_STUCK_ON_LINE = "This is the code in python. I am stuck here, can you help me explain it briefly. Max 5 short sentences?"
 const CONTEXT_FEEDBACK = "Here I provide you with x values which represents time and y values which represents focus/calm. There are also functions that the user worked on at certain times. Can you draw any conclusions from this, trying to connect the focus/calm level to what function he worked on. For example, maybe one function made the user less focused etc. Keep it short."
+const HELP_CONTEXT_FOR_FEEDBACK = "Summarize this the most intresting points in this text: "
 
 class AIHandler {
     constructor(codeinput, standardinput, extensionpath){
@@ -81,6 +82,25 @@ class AIHandler {
         
         //format data to message
         messageBuild += "Focus Values: " + focusValuesToString + ", Calm Values: " + calmValuesToString + ", name of functions looked at: " + functionsToString
+        
+        messageBuild += messageBuild + messageBuild + messageBuild + messageBuild + messageBuild
+        if (messageBuild.length > 36000) {
+            
+            var messageLength = messageBuild.length;
+
+            var midpoint = Math.floor(messageLength / 2);
+
+            var firstPart = messageBuild.substring(0, midpoint);
+            var secondPart = messageBuild.substring(midpoint);
+
+            // Send both parts to the AI for summarize
+            await this.sendMsgToAI(HELP_CONTEXT_FOR_FEEDBACK, firstPart, false);
+            var firstOutput = this.output;
+            await this.sendMsgToAI(HELP_CONTEXT_FOR_FEEDBACK, secondPart, false);
+            var secondOutput = this.output;
+            messageBuild = firstOutput + secondOutput
+        }
+        
         await this.sendMsgToAI(CONTEXT_FEEDBACK, messageBuild, false)
         
     }
