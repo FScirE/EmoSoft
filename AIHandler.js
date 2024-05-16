@@ -83,7 +83,6 @@ class AIHandler {
         //format data to message
         messageBuild += "Focus Values: " + focusValuesToString + ", Calm Values: " + calmValuesToString + ", name of functions looked at: " + functionsToString
         
-        messageBuild += messageBuild + messageBuild + messageBuild + messageBuild + messageBuild
         if (messageBuild.length > 36000) {
             
             var messageLength = messageBuild.length;
