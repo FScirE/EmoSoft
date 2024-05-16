@@ -14,7 +14,7 @@ class DataHandler {
     
     #password = ""; // private property
 
-    constructor(settings, eyetracker) {
+    constructor(eyetracker) {
         this.createFakeDataIfNotLoggedIn = true;
 
         this.eyetracker = eyetracker

@@ -6,7 +6,7 @@ const fs = require('fs')
  * @param {vscode.ExtensionContext} context
  */
 class UIHandler{
-    constructor (context, settings) {
+    constructor (context) {
         //create the UI HTML element, will hold AI window and progress bars
         this.messagePending = false
         this.webViewIsVisisble = true;
