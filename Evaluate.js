@@ -186,9 +186,9 @@ class Evaluate {
         let tempCalm = []; 
         let tempFuncs = [];
         for (let j = 0; j < session.dataPoints.length; j++) {
-            tempFocus[j] = { x: session.time, y: session.dataPoints[j].focusValue };
-            tempCalm[j] = { x: session.time, y: session.dataPoints[j].calmValue }
-            tempFuncs[j] = { x: session.time, y: session.dataPoints[j].function }
+            tempFocus[j] = { x: j * 10, y: session.dataPoints[j].focusValue };
+            tempCalm[j] = { x: j * 10, y: session.dataPoints[j].calmValue };
+            tempFuncs[j] = { x: j * 10, y: session.dataPoints[j].function };
         }
         session.focusValues = tempFocus;
         session.calmValues = tempCalm;
