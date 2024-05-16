@@ -125,24 +125,28 @@ class EventHandler {
         await this.uiHandler.evaluateWebView.webview.onDidReceiveMessage(async message => {
         switch (message.variable) {
             case 'evaluateResponses':
-                this.evaluate.responses = message.value;
-                this.evaluate.topfuncs = message.value.topfuncs;
-                if (this.evaluate.responses.hasOwnProperty('focusValues')) {
-                    this.evaluate.setFocusValues(this.evaluate.responses.focusValues);
-                }
-                if (this.evaluate.responses.hasOwnProperty('calmValues')) {
-                    this.evaluate.setCalmValues(this.evaluate.responses.calmValues);
-                }
-                let savedNames = this.evaluate.loadEvalNameList();
-                await this.evaluate.saveEvaluationToFile();
-                // Save heatmap if it is a new session
-                if (!savedNames.includes(this.evaluate.responses.name)) {
-                    this.saveHeatmap(this.evaluate.responses.name)
-                }
+                vscode.window.showInformationMessage('Are you sure you want to save? Saved session can not be changed at a later stage.', 'Yes', 'No').then(async e => {
+                    if (e == 'Yes') {
+                        this.evaluate.responses = message.value;
+                        this.evaluate.topfuncs = message.value.topfuncs;
+                        if (this.evaluate.responses.hasOwnProperty('focusValues')) {
+                            this.evaluate.setFocusValues(this.evaluate.responses.focusValues);
+                        }
+                        if (this.evaluate.responses.hasOwnProperty('calmValues')) {
+                            this.evaluate.setCalmValues(this.evaluate.responses.calmValues);
+                        }
+                        let savedNames = this.evaluate.loadEvalNameList();
+                        await this.evaluate.saveEvaluationToFile();
+                        // Save heatmap if it is a new session
+                        if (!savedNames.includes(this.evaluate.responses.name)) {
+                            this.saveHeatmap(this.evaluate.responses.name)
+                        }
 
-                vscode.window.showInformationMessage('Evaluation has been saved.');
-                this.uiHandler.evaluateWebView.dispose();
-                vscode.commands.executeCommand('start.ui');
+                        vscode.window.showInformationMessage('Evaluation has been saved.');
+                        this.uiHandler.evaluateWebView.dispose();
+                        vscode.commands.executeCommand('start.ui');
+                    }
+                });
                 break;
             case 'nameRequest':
                 console.log("Requesting " + message.value);
