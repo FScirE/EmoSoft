@@ -188,7 +188,7 @@ class EyeTracker {
             fs.appendFileSync(this.path + '\\lineDictionary.txt', `${key}:${value}\n`)
         }
         execSync(`python findFuncFromLines.py ${this.filePath}`, { cwd: this.path })
-        console.log(this.lookedLines)
+        //console.log(this.lookedLines)
         this.lookedLines = {} //empty
 
         var stuckFileContent = fs.readFileSync(this.path + '\\stuckLine.txt').toString().split(':')

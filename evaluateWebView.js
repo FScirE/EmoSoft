@@ -71,7 +71,7 @@ function createChart() {
 		},
 		toolTip: {
 			shared: true,
-			
+
 		},
 		axisY: {
 			logarithmic: false, //change it to false
@@ -98,7 +98,6 @@ function createChart() {
 			name: "Focus (%)",
 			click: clickedFunctionCanvas,
 			dataPoints: focusValues
-
 		},
 		{
 			type: "line",
@@ -117,7 +116,6 @@ function createChart() {
 			name: "Function",
 			click: clickedFunctionCanvas,
 			dataPoints: functions
-
 		}
 	]
 	});
@@ -158,7 +156,7 @@ function gatherResponses() {
 	const q1Value = q1Rating ? q1Rating.value : null;
 	const q2Value = q2Rating ? q2Rating.value : null;
 
-	
+
 	responses.focusValues = focusValues;
 	responses.calmValues = calmValues;
 	responses.sessionFuncs = functions;
@@ -170,14 +168,13 @@ function gatherResponses() {
 	responses.finishedWorkAnswer = q2Value;
 	responses.focusAnswer = focusSliderValue;
 	responses.calmAnswer = calmSliderValue;
-
 }
 
 function saveEvaluateResponses() {
 	// Fetch data from HTML
 	var name = document.getElementById("textInput").value;
 	var count = 0;
-	gatherResponses() 
+	gatherResponses()
 	if (loaded == false) {
 		if (name == "") {
 			name = new Date().toISOString().split('T')[0];
@@ -291,7 +288,7 @@ function loadSession(extensionPath) {
 	focusValues = responses.focusValues;
 	calmValues = responses.calmValues;
 	functions = responses.sessionFuncs;
-	
+
 	createChart() //this ereases the local values from responses, use after defining them
 
 	//LOAD HEATMAP
