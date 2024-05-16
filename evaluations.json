@@ -114,5 +114,1160 @@
       "expectedWorkAnswer": "3",
       "finishedWorkAnswer": null
     }
+  },
+  {
+    "name": "2024-05-16 Ahmad",
+    "ID": 1715856967672,
+    "date": "2024-05-16",
+    "dataPoints": [
+      {
+        "time": 0,
+        "focusValue": 80,
+        "calmValue": 43,
+        "function": "No function"
+      },
+      {
+        "time": 10,
+        "focusValue": 73,
+        "calmValue": 20,
+        "function": "No function"
+      },
+      {
+        "time": 20,
+        "focusValue": 40,
+        "calmValue": 15,
+        "function": "No function"
+      },
+      {
+        "time": 30,
+        "focusValue": 20,
+        "calmValue": 17,
+        "function": "No function"
+      },
+      {
+        "time": 40,
+        "focusValue": 19,
+        "calmValue": 32,
+        "function": "No function"
+      },
+      {
+        "time": 50,
+        "focusValue": 49,
+        "calmValue": 47,
+        "function": "No function"
+      },
+      {
+        "time": 60,
+        "focusValue": 83,
+        "calmValue": 25,
+        "function": "No function"
+      },
+      {
+        "time": 70,
+        "focusValue": 79,
+        "calmValue": 18,
+        "function": "No function"
+      },
+      {
+        "time": 80,
+        "focusValue": 79,
+        "calmValue": 32,
+        "function": "No function"
+      },
+      {
+        "time": 90,
+        "focusValue": 78,
+        "calmValue": 26,
+        "function": "No function"
+      },
+      {
+        "time": 100,
+        "focusValue": 75,
+        "calmValue": 24,
+        "function": "No function"
+      },
+      {
+        "time": 110,
+        "focusValue": 64,
+        "calmValue": 50,
+        "function": "No function"
+      },
+      {
+        "time": 120,
+        "focusValue": 38,
+        "calmValue": 63,
+        "function": "No function"
+      },
+      {
+        "time": 130,
+        "focusValue": 25,
+        "calmValue": 40,
+        "function": "No function"
+      },
+      {
+        "time": 140,
+        "focusValue": 17,
+        "calmValue": 39,
+        "function": "No function"
+      },
+      {
+        "time": 150,
+        "focusValue": 36,
+        "calmValue": 57,
+        "function": "No function"
+      },
+      {
+        "time": 160,
+        "focusValue": 38,
+        "calmValue": 67,
+        "function": "No function"
+      },
+      {
+        "time": 170,
+        "focusValue": 8,
+        "calmValue": 46,
+        "function": "No function"
+      },
+      {
+        "time": 180,
+        "focusValue": 10,
+        "calmValue": 34,
+        "function": "No function"
+      },
+      {
+        "time": 190,
+        "focusValue": 23,
+        "calmValue": 46,
+        "function": "No function"
+      },
+      {
+        "time": 200,
+        "focusValue": 39,
+        "calmValue": 36,
+        "function": "No function"
+      },
+      {
+        "time": 210,
+        "focusValue": 56,
+        "calmValue": 28,
+        "function": "No function"
+      },
+      {
+        "time": 220,
+        "focusValue": 43,
+        "calmValue": 44,
+        "function": "No function"
+      },
+      {
+        "time": 230,
+        "focusValue": 46,
+        "calmValue": 59,
+        "function": "No function"
+      },
+      {
+        "time": 240,
+        "focusValue": 79,
+        "calmValue": 68,
+        "function": "No function"
+      },
+      {
+        "time": 250,
+        "focusValue": 85,
+        "calmValue": 62,
+        "function": "No function"
+      },
+      {
+        "time": 260,
+        "focusValue": 51,
+        "calmValue": 34,
+        "function": "No function"
+      },
+      {
+        "time": 270,
+        "focusValue": 28,
+        "calmValue": 40,
+        "function": "No function"
+      },
+      {
+        "time": 280,
+        "focusValue": 39,
+        "calmValue": 58,
+        "function": "No function"
+      },
+      {
+        "time": 290,
+        "focusValue": 55,
+        "calmValue": 70,
+        "function": "No function"
+      },
+      {
+        "time": 300,
+        "focusValue": 61,
+        "calmValue": 83,
+        "function": "No function"
+      },
+      {
+        "time": 310,
+        "focusValue": 30,
+        "calmValue": 60,
+        "function": "No function"
+      },
+      {
+        "time": 320,
+        "focusValue": 29,
+        "calmValue": 23,
+        "function": "No function"
+      },
+      {
+        "time": 330,
+        "focusValue": 55,
+        "calmValue": 43,
+        "function": "No function"
+      },
+      {
+        "time": 340,
+        "focusValue": 67,
+        "calmValue": 63,
+        "function": "No function"
+      },
+      {
+        "time": 350,
+        "focusValue": 41,
+        "calmValue": 60,
+        "function": "No function"
+      },
+      {
+        "time": 360,
+        "focusValue": 26,
+        "calmValue": 60,
+        "function": "No function"
+      },
+      {
+        "time": 370,
+        "focusValue": 66,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 380,
+        "focusValue": 68,
+        "calmValue": 51,
+        "function": "No function"
+      },
+      {
+        "time": 390,
+        "focusValue": 45,
+        "calmValue": 45,
+        "function": "No function"
+      },
+      {
+        "time": 400,
+        "focusValue": 46,
+        "calmValue": 32,
+        "function": "image_statistics"
+      },
+      {
+        "time": 410,
+        "focusValue": 64,
+        "calmValue": 24,
+        "function": "image_statistics"
+      },
+      {
+        "time": 420,
+        "focusValue": 43,
+        "calmValue": 46,
+        "function": "image_statistics"
+      },
+      {
+        "time": 430,
+        "focusValue": 27,
+        "calmValue": 63,
+        "function": "image_statistics"
+      },
+      {
+        "time": 440,
+        "focusValue": 60,
+        "calmValue": 53,
+        "function": "image_statistics"
+      },
+      {
+        "time": 450,
+        "focusValue": 73,
+        "calmValue": 46,
+        "function": "image_statistics"
+      },
+      {
+        "time": 460,
+        "focusValue": 67,
+        "calmValue": 62,
+        "function": "image_statistics"
+      },
+      {
+        "time": 470,
+        "focusValue": 47,
+        "calmValue": 48,
+        "function": "image_statistics"
+      },
+      {
+        "time": 480,
+        "focusValue": 26,
+        "calmValue": 34,
+        "function": "image_statistics"
+      },
+      {
+        "time": 490,
+        "focusValue": 30,
+        "calmValue": 40,
+        "function": "image_statistics"
+      },
+      {
+        "time": 500,
+        "focusValue": 43,
+        "calmValue": 49,
+        "function": "image_statistics"
+      },
+      {
+        "time": 510,
+        "focusValue": 55,
+        "calmValue": 40,
+        "function": "image_statistics"
+      },
+      {
+        "time": 520,
+        "focusValue": 51,
+        "calmValue": 18,
+        "function": "image_statistics"
+      },
+      {
+        "time": 530,
+        "focusValue": 32,
+        "calmValue": 14,
+        "function": "image_statistics"
+      },
+      {
+        "time": 540,
+        "focusValue": 32,
+        "calmValue": 11,
+        "function": "image_statistics"
+      },
+      {
+        "time": 550,
+        "focusValue": 49,
+        "calmValue": 19,
+        "function": "image_statistics"
+      },
+      {
+        "time": 560,
+        "focusValue": 42,
+        "calmValue": 28,
+        "function": "image_statistics"
+      },
+      {
+        "time": 570,
+        "focusValue": 38,
+        "calmValue": 61,
+        "function": "image_statistics"
+      },
+      {
+        "time": 580,
+        "focusValue": 74,
+        "calmValue": 70,
+        "function": "image_statistics"
+      },
+      {
+        "time": 590,
+        "focusValue": 80,
+        "calmValue": 49,
+        "function": "image_statistics"
+      },
+      {
+        "time": 600,
+        "focusValue": 80,
+        "calmValue": 57,
+        "function": "image_statistics"
+      },
+      {
+        "time": 610,
+        "focusValue": 78,
+        "calmValue": 53,
+        "function": "image_statistics"
+      },
+      {
+        "time": 620,
+        "focusValue": 40,
+        "calmValue": 47,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 630,
+        "focusValue": 30,
+        "calmValue": 32,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 640,
+        "focusValue": 25,
+        "calmValue": 9,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 650,
+        "focusValue": 44,
+        "calmValue": 13,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 660,
+        "focusValue": 82,
+        "calmValue": 43,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 670,
+        "focusValue": 84,
+        "calmValue": 52,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 680,
+        "focusValue": 54,
+        "calmValue": 46,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 690,
+        "focusValue": 33,
+        "calmValue": 59,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 700,
+        "focusValue": 51,
+        "calmValue": 57,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 710,
+        "focusValue": 44,
+        "calmValue": 65,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 720,
+        "focusValue": 28,
+        "calmValue": 51,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 730,
+        "focusValue": 24,
+        "calmValue": 24,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 740,
+        "focusValue": 26,
+        "calmValue": 38,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 750,
+        "focusValue": 28,
+        "calmValue": 65,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 760,
+        "focusValue": 51,
+        "calmValue": 79,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 770,
+        "focusValue": 70,
+        "calmValue": 74,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 780,
+        "focusValue": 36,
+        "calmValue": 59,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 790,
+        "focusValue": 27,
+        "calmValue": 27,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 800,
+        "focusValue": 67,
+        "calmValue": 23,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 810,
+        "focusValue": 69,
+        "calmValue": 36,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 820,
+        "focusValue": 39,
+        "calmValue": 36,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 830,
+        "focusValue": 28,
+        "calmValue": 39,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 840,
+        "focusValue": 54,
+        "calmValue": 53,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 850,
+        "focusValue": 70,
+        "calmValue": 62,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 860,
+        "focusValue": 69,
+        "calmValue": 42,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 870,
+        "focusValue": 75,
+        "calmValue": 19,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 880,
+        "focusValue": 50,
+        "calmValue": 34,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 890,
+        "focusValue": 20,
+        "calmValue": 40,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 900,
+        "focusValue": 31,
+        "calmValue": 32,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 910,
+        "focusValue": 51,
+        "calmValue": 26,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 920,
+        "focusValue": 52,
+        "calmValue": 23,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 930,
+        "focusValue": 67,
+        "calmValue": 46,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 940,
+        "focusValue": 81,
+        "calmValue": 39,
+        "function": "No function"
+      },
+      {
+        "time": 950,
+        "focusValue": 81,
+        "calmValue": 34,
+        "function": "No function"
+      },
+      {
+        "time": 960,
+        "focusValue": 75,
+        "calmValue": 35,
+        "function": "No function"
+      },
+      {
+        "time": 970,
+        "focusValue": 65,
+        "calmValue": 17,
+        "function": "No function"
+      },
+      {
+        "time": 980,
+        "focusValue": 48,
+        "calmValue": 32,
+        "function": "No function"
+      },
+      {
+        "time": 990,
+        "focusValue": 31,
+        "calmValue": 65,
+        "function": "No function"
+      },
+      {
+        "time": 1000,
+        "focusValue": 52,
+        "calmValue": 61,
+        "function": "No function"
+      },
+      {
+        "time": 1010,
+        "focusValue": 58,
+        "calmValue": 43,
+        "function": "No function"
+      },
+      {
+        "time": 1020,
+        "focusValue": 33,
+        "calmValue": 24,
+        "function": "No function"
+      },
+      {
+        "time": 1030,
+        "focusValue": 34,
+        "calmValue": 13,
+        "function": "image_statistics"
+      },
+      {
+        "time": 1040,
+        "focusValue": 43,
+        "calmValue": 32,
+        "function": "No function"
+      },
+      {
+        "time": 1050,
+        "focusValue": 68,
+        "calmValue": 51,
+        "function": "No function"
+      },
+      {
+        "time": 1060,
+        "focusValue": 72,
+        "calmValue": 58,
+        "function": "No function"
+      },
+      {
+        "time": 1070,
+        "focusValue": 77,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1080,
+        "focusValue": 90,
+        "calmValue": 70,
+        "function": "No function"
+      },
+      {
+        "time": 1090,
+        "focusValue": 68,
+        "calmValue": 84,
+        "function": "No function"
+      },
+      {
+        "time": 1100,
+        "focusValue": 68,
+        "calmValue": 76,
+        "function": "No function"
+      },
+      {
+        "time": 1110,
+        "focusValue": 55,
+        "calmValue": 85,
+        "function": "No function"
+      },
+      {
+        "time": 1120,
+        "focusValue": 52,
+        "calmValue": 80,
+        "function": "No function"
+      },
+      {
+        "time": 1130,
+        "focusValue": 71,
+        "calmValue": 62,
+        "function": "No function"
+      },
+      {
+        "time": 1140,
+        "focusValue": 76,
+        "calmValue": 46,
+        "function": "No function"
+      },
+      {
+        "time": 1150,
+        "focusValue": 86,
+        "calmValue": 25,
+        "function": "No function"
+      },
+      {
+        "time": 1160,
+        "focusValue": 74,
+        "calmValue": 32,
+        "function": "No function"
+      },
+      {
+        "time": 1170,
+        "focusValue": 68,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1180,
+        "focusValue": 65,
+        "calmValue": 62,
+        "function": "No function"
+      },
+      {
+        "time": 1190,
+        "focusValue": 70,
+        "calmValue": 40,
+        "function": "No function"
+      },
+      {
+        "time": 1200,
+        "focusValue": 58,
+        "calmValue": 25,
+        "function": "No function"
+      },
+      {
+        "time": 1210,
+        "focusValue": 46,
+        "calmValue": 45,
+        "function": "No function"
+      },
+      {
+        "time": 1220,
+        "focusValue": 44,
+        "calmValue": 38,
+        "function": "No function"
+      },
+      {
+        "time": 1230,
+        "focusValue": 27,
+        "calmValue": 24,
+        "function": "No function"
+      },
+      {
+        "time": 1240,
+        "focusValue": 54,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1250,
+        "focusValue": 71,
+        "calmValue": 57,
+        "function": "No function"
+      },
+      {
+        "time": 1260,
+        "focusValue": 74,
+        "calmValue": 46,
+        "function": "No function"
+      },
+      {
+        "time": 1270,
+        "focusValue": 87,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1280,
+        "focusValue": 75,
+        "calmValue": 55,
+        "function": "No function"
+      },
+      {
+        "time": 1290,
+        "focusValue": 38,
+        "calmValue": 63,
+        "function": "No function"
+      },
+      {
+        "time": 1300,
+        "focusValue": 47,
+        "calmValue": 54,
+        "function": "No function"
+      },
+      {
+        "time": 1310,
+        "focusValue": 62,
+        "calmValue": 23,
+        "function": "No function"
+      },
+      {
+        "time": 1320,
+        "focusValue": 45,
+        "calmValue": 29,
+        "function": "No function"
+      },
+      {
+        "time": 1330,
+        "focusValue": 64,
+        "calmValue": 48,
+        "function": "No function"
+      },
+      {
+        "time": 1340,
+        "focusValue": 83,
+        "calmValue": 41,
+        "function": "No function"
+      },
+      {
+        "time": 1350,
+        "focusValue": 68,
+        "calmValue": 39,
+        "function": "No function"
+      },
+      {
+        "time": 1360,
+        "focusValue": 50,
+        "calmValue": 53,
+        "function": "No function"
+      },
+      {
+        "time": 1370,
+        "focusValue": 41,
+        "calmValue": 37,
+        "function": "No function"
+      },
+      {
+        "time": 1380,
+        "focusValue": 35,
+        "calmValue": 11,
+        "function": "No function"
+      },
+      {
+        "time": 1390,
+        "focusValue": 41,
+        "calmValue": 14,
+        "function": "No function"
+      },
+      {
+        "time": 1400,
+        "focusValue": 58,
+        "calmValue": 54,
+        "function": "No function"
+      },
+      {
+        "time": 1410,
+        "focusValue": 70,
+        "calmValue": 88,
+        "function": "No function"
+      },
+      {
+        "time": 1420,
+        "focusValue": 42,
+        "calmValue": 83,
+        "function": "No function"
+      },
+      {
+        "time": 1430,
+        "focusValue": 18,
+        "calmValue": 54,
+        "function": "No function"
+      },
+      {
+        "time": 1440,
+        "focusValue": 51,
+        "calmValue": 31,
+        "function": "No function"
+      },
+      {
+        "time": 1450,
+        "focusValue": 60,
+        "calmValue": 41,
+        "function": "No function"
+      },
+      {
+        "time": 1460,
+        "focusValue": 32,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1470,
+        "focusValue": 16,
+        "calmValue": 49,
+        "function": "No function"
+      },
+      {
+        "time": 1480,
+        "focusValue": 18,
+        "calmValue": 32,
+        "function": "No function"
+      },
+      {
+        "time": 1490,
+        "focusValue": 19,
+        "calmValue": 23,
+        "function": "No function"
+      },
+      {
+        "time": 1500,
+        "focusValue": 37,
+        "calmValue": 37,
+        "function": "No function"
+      },
+      {
+        "time": 1510,
+        "focusValue": 79,
+        "calmValue": 68,
+        "function": "No function"
+      },
+      {
+        "time": 1520,
+        "focusValue": 70,
+        "calmValue": 42,
+        "function": "No function"
+      },
+      {
+        "time": 1530,
+        "focusValue": 46,
+        "calmValue": 22,
+        "function": "image_statistics"
+      },
+      {
+        "time": 1540,
+        "focusValue": 38,
+        "calmValue": 57,
+        "function": "No function"
+      },
+      {
+        "time": 1550,
+        "focusValue": 31,
+        "calmValue": 61,
+        "function": "No function"
+      },
+      {
+        "time": 1560,
+        "focusValue": 22,
+        "calmValue": 45,
+        "function": "No function"
+      },
+      {
+        "time": 1570,
+        "focusValue": 38,
+        "calmValue": 48,
+        "function": "No function"
+      },
+      {
+        "time": 1580,
+        "focusValue": 43,
+        "calmValue": 63,
+        "function": "No function"
+      },
+      {
+        "time": 1590,
+        "focusValue": 55,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1600,
+        "focusValue": 79,
+        "calmValue": 27,
+        "function": "No function"
+      },
+      {
+        "time": 1610,
+        "focusValue": 49,
+        "calmValue": 29,
+        "function": "No function"
+      },
+      {
+        "time": 1620,
+        "focusValue": 42,
+        "calmValue": 65,
+        "function": "calculate_folder_stats"
+      },
+      {
+        "time": 1630,
+        "focusValue": 37,
+        "calmValue": 74,
+        "function": "calculate_euclidean_distance"
+      },
+      {
+        "time": 1640,
+        "focusValue": 28,
+        "calmValue": 34,
+        "function": "No function"
+      },
+      {
+        "time": 1650,
+        "focusValue": 65,
+        "calmValue": 17,
+        "function": "No function"
+      },
+      {
+        "time": 1660,
+        "focusValue": 76,
+        "calmValue": 56,
+        "function": "No function"
+      },
+      {
+        "time": 1670,
+        "focusValue": 38,
+        "calmValue": 82,
+        "function": "adventure_game"
+      },
+      {
+        "time": 1680,
+        "focusValue": 17,
+        "calmValue": 76,
+        "function": "adventure_game"
+      },
+      {
+        "time": 1690,
+        "focusValue": 49,
+        "calmValue": 78,
+        "function": "No function"
+      },
+      {
+        "time": 1700,
+        "focusValue": 84,
+        "calmValue": 85,
+        "function": "No function"
+      },
+      {
+        "time": 1710,
+        "focusValue": 66,
+        "calmValue": 79,
+        "function": "No function"
+      },
+      {
+        "time": 1720,
+        "focusValue": 52,
+        "calmValue": 58,
+        "function": "No function"
+      },
+      {
+        "time": 1730,
+        "focusValue": 74,
+        "calmValue": 37,
+        "function": "No function"
+      },
+      {
+        "time": 1740,
+        "focusValue": 87,
+        "calmValue": 27,
+        "function": "No function"
+      },
+      {
+        "time": 1750,
+        "focusValue": 59,
+        "calmValue": 37,
+        "function": "No function"
+      },
+      {
+        "time": 1760,
+        "focusValue": 43,
+        "calmValue": 54,
+        "function": "No function"
+      },
+      {
+        "time": 1770,
+        "focusValue": 74,
+        "calmValue": 44,
+        "function": "No function"
+      },
+      {
+        "time": 1780,
+        "focusValue": 87,
+        "calmValue": 37,
+        "function": "No function"
+      },
+      {
+        "time": 1790,
+        "focusValue": 55,
+        "calmValue": 36,
+        "function": "No function"
+      },
+      {
+        "time": 1800,
+        "focusValue": 57,
+        "calmValue": 20,
+        "function": "No function"
+      },
+      {
+        "time": 1810,
+        "focusValue": 87,
+        "calmValue": 37,
+        "function": "No function"
+      },
+      {
+        "time": 1820,
+        "focusValue": 91,
+        "calmValue": 77,
+        "function": "No function"
+      },
+      {
+        "time": 1830,
+        "focusValue": 83,
+        "calmValue": 93,
+        "function": "No function"
+      },
+      {
+        "time": 1840,
+        "focusValue": 64,
+        "calmValue": 81,
+        "function": "No function"
+      },
+      {
+        "time": 1850,
+        "focusValue": 61,
+        "calmValue": 69,
+        "function": "No function"
+      },
+      {
+        "time": 1860,
+        "focusValue": 55,
+        "calmValue": 83,
+        "function": "No function"
+      }
+    ],
+    "topfuncs": [
+      [
+        "calculate_folder_stats",
+        453
+      ],
+      [
+        "image_statistics",
+        432
+      ],
+      [
+        "calculate_euclidean_distance",
+        181
+      ]
+    ],
+    "functionContents": {
+      "image_statistics": "    def go(self, direction):\r\n        return self.paths.get(direction, None)\r\n\r\ndef create_rooms():\r\n    \r\n    start_room = Room('Start Room', 'You are in a small room. there are doors to the north and east.')\r\n    north_room= Room('North Room', 'You are in a dark room. There is a door to the south')\r\n    east_room= Room('East Room', 'You are in a bright room. There os a door to the west and a ladder going up')",
+      "calculate_folder_stats": "    upstairs_room= Room('East Room','You are in an attic. There is a window to the north.')\r\n    secret_room = Room(\"Secret Room\", \"You have found a secret room! There is a trapdoor to the south.\")\r\n\r\n    start_room.add_paths({'north': north_room, 'east':east_room})\r\n    north_room.add_paths({'south': start_room})\r\n    east_room.add_paths({'west': start_room, 'up':upstairs_room})\r\n    upstairs_room.add_paths({'down': east_room, 'north':secret_room})\r\n    secret_room.add_paths({'south': upstairs_room})\r\n    \r\n    return start_room",
+      "calculate_euclidean_distance": "\r\ndef print_slow(text):\r\n    for char in text:\r\n        print(char, end='', flush=True)",
+      "adventure_game": "def adventure_game():\r\n    current_room = create_rooms()\r\n    inventory= []\r\n    \r\n    print_slow('Welcome to the adventure game!')\r\n    print_slow(\"Type 'quit' or 'exit' to end the game.\")\r\n    print_slow(\"Type 'inventory' to check your items.\\n\")\r\n\r\n    while True:\r\n        print('\\n'+ current_room)\r\n        print(current_room.description)\r\n        \r\n        if current_room.name == 'Secret Room':\r\n            print_slow('You found a treasure! You win!')\r\n            break\r\n        \r\n        command= input(\"\\n> \").strip().lower()\r\n        if command in ['quit', 'exit']:\r\n            print_slow('Thanks for playing!')\r\n            break\r\n        elif command == 'inventory':\r\n            print(\"You have: \"+\", \".join(inventory) if inventory else 'Your inventory is empty.')\r\n        elif command in current_room.paths:\r\n            current_room = current_room.go(command)\r\n        else:\r\n            print_slow('You cant go that way.')\r\n"
+    },
+    "responses": {
+      "focusAnswer": "47",
+      "calmAnswer": "50",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "3"
+    }
   }
 ]
