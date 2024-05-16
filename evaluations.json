@@ -1,118 +1,72 @@
 [
   {
-    "name": "Very stable session",
-    "ID": 1715597795872,
-    "date": "2024-05-13",
+    "name": "Stable session",
+    "ID": 1715854595463,
+    "date": "2024-05-16",
     "dataPoints": [
       {
         "time": 0,
         "focusValue": 50,
         "calmValue": 50,
-        "function": "rgb_to_color"
+        "function": "move_arm"
       },
       {
         "time": 10,
         "focusValue": 50,
         "calmValue": 50,
-        "function": "rgb_to_color"
+        "function": "move_arm"
       },
       {
         "time": 20,
         "focusValue": 50,
         "calmValue": 50,
-        "function": "rgb_to_color"
+        "function": "setup_pickup_dropoffs"
       },
       {
         "time": 30,
         "focusValue": 50,
         "calmValue": 50,
-        "function": "drop"
+        "function": "setup_pickup_dropoffs"
       },
       {
         "time": 40,
         "focusValue": 50,
         "calmValue": 50,
-        "function": "No function"
+        "function": "check_pick_up"
       },
       {
         "time": 50,
         "focusValue": 50,
         "calmValue": 50,
-        "function": "drop"
-      },
-      {
-        "time": 60,
-        "focusValue": 50,
-        "calmValue": 50,
-        "function": "move_arm"
-      },
-      {
-        "time": 70,
-        "focusValue": 50,
-        "calmValue": 50,
-        "function": "move_arm"
-      },
-      {
-        "time": 80,
-        "focusValue": 50,
-        "calmValue": 50,
-        "function": "move_arm"
-      },
-      {
-        "time": 90,
-        "focusValue": 50,
-        "calmValue": 50,
-        "function": "move_arm"
+        "function": "check_pick_up"
       }
     ],
     "topfuncs": [
       [
         "move_arm",
-        84
+        42
       ],
       [
-        "rgb_to_color",
-        51
+        "check_pick_up",
+        39
       ],
       [
-        "drop",
-        26
+        "setup_pickup_dropoffs",
+        27
       ]
     ],
     "functionContents": {
+      "move_arm": "def move_arm():\r\n    #reset arm\r\n    elbow_motor.run_target(60, 15)\r\n    base_motor.run_target(150, 0)\r\n    ev3.screen.draw_text(0, 50, \"Move arm\")\r\n\r\n    #move arm\r\n    while True:\r\n        pressed = ev3.buttons.pressed()\r\n        if Button.LEFT in pressed:\r\n            base_motor.run(50)\r\n        elif Button.RIGHT in pressed:\r\n            base_motor.run(-50)\r\n        elif Button.UP in pressed:\r\n            elbow_motor.run(20)\r\n        elif Button.DOWN in pressed:\r\n            elbow_motor.run(-20)\r\n        elif Button.CENTER in pressed:\r\n            break\r\n        else:\r\n            base_motor.brake()\r\n            elbow_motor.brake()\r\n\r\n    #save arm position\r\n    pos = base_motor.angle()\r\n    hgt = elbow_motor.angle()\r\n\r\n    #reset arm\r\n    elbow_motor.run_target(60, 15)\r\n    base_motor.run_target(150, 0)\r\n\r\n    ev3.screen.clear()\r\n\r\n    return (pos, hgt)\r\n",
+      "set_pick_up": "def set_pick_up():\r\n    pick_up_locations[0] = move_arm()\r\n    #default positions\r\n    drop_off_locations[\"RED\"] = pick_up_locations[0]\r\n    drop_off_locations[\"YELLOW\"] = pick_up_locations[0]\r\n    drop_off_locations[\"GREEN\"] = pick_up_locations[0]\r\n    drop_off_locations[\"BLUE\"] = pick_up_locations[0]\r\n",
+      "setup_pickup_dropoffs": "def setup_pickup_dropoffs():\r\n    wait_for_press(\"Press: set pick-up\")\r\n    set_pick_up()\r\n    move_clear()\r\n    wait_for_press(\"Press: set drop-off\")\r\n    set_drop_off()\r\n    wait_for_press(\"Press: set drop-off\")\r\n    set_drop_off()\r\n",
+      "wait_for_press": "def wait_for_press(text):\r\n    while True:\r\n        ev3.screen.draw_text(0, 50, text)\r\n        if Button.CENTER in ev3.buttons.pressed():\r\n            ev3.screen.clear()\r\n            wait(250)\r\n            return\r\n",
       "check_pick_up": "def check_pick_up():\r\n    pick_up(pick_up_locations[0])\r\n\r\n    color = read_color()\r\n    if (color == \"None\"):\r\n        #open claw if no brick\r\n        gripper_motor.run_target(200,-90) \r\n        elbow_motor.run_target(60, 15)\r\n        return False\r\n    \r\n    drop_off = drop_off_locations[color]\r\n    drop(drop_off)\r\n\r\n    elbow_motor.run_target(60, 15)\r\n\r\n    #give to other robot\r\n    if drop_off == pick_up_locations[0]:\r\n        return True\r\n    \r\n    return False\r\n"
     },
     "responses": {
-      "focusAnswer": "34",
-      "calmAnswer": "58",
-      "expectedWorkAnswer": "3",
-      "finishedWorkAnswer": "4"
-    }
-  },
-  {
-    "name": "test12222",
-    "ID": 1715782919983,
-    "date": "2024-05-15",
-    "dataPoints": [
-      {
-        "time": 0,
-        "focusValue": 35,
-        "calmValue": 47,
-        "function": "check_sorting_performance"
-      }
-    ],
-    "topfuncs": [
-      [
-        "check_sorting_performance",
-        31
-      ]
-    ],
-    "functionContents": [],
-    "responses": {
-      "focusAnswer": "13",
-      "calmAnswer": "25",
-      "expectedWorkAnswer": "3",
-      "finishedWorkAnswer": null
+      "focusAnswer": "25",
+      "calmAnswer": "27",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
     }
   },
   {
