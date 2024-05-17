@@ -48,14 +48,7 @@ class EyeTracker {
         this.eventHandler = eventHandler
 
         // Connect to the server
-        this.socket.connect(4242, this.settings.eyeTracker, () => {
-            console.log('Connected to EyeTracker server');
-
-            // Sending initial command after the connection is established
-            this.socket.write(
-                '<SET ID="ENABLE_SEND_DATA" STATE="1" />\r\n' +
-                '<SET ID="ENABLE_SEND_POG_FIX" STATE="1" />\r\n')
-        });
+        this.connect()
 
         this.socket.on('data', (data) => {
             const parsedXml = new DOMParser().parseFromString(data.toString(), 'text/xml')
@@ -96,6 +89,17 @@ class EyeTracker {
 
         this.socket.on('close', () => {
             console.log('Connection closed');
+        });
+    }
+
+    connect() {
+        this.socket.connect(4242, this.settings.eyeTracker, () => {
+            console.log('Connected to EyeTracker server');
+
+            // Sending initial command after the connection is established
+            this.socket.write(
+                '<SET ID="ENABLE_SEND_DATA" STATE="1" />\r\n' +
+                '<SET ID="ENABLE_SEND_POG_FIX" STATE="1" />\r\n')
         });
     }
 

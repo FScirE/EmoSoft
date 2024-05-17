@@ -6,6 +6,7 @@ const MAX_LENGTH = 500
 const vscode = acquireVsCodeApi() //ignore error
 
 var canSendMessage = true
+var canClickRecord = true
 
 function setFocusValue(value) {
     document.querySelector(".focus").getElementsByTagName("progress")[0].value = value
@@ -43,7 +44,7 @@ function addUserMessage() {
     </div>
     `
     innerHTML = document.querySelector("#textbox").innerHTML
-    document.querySelector("#textbox").innerHTML = aiHTML + innerHTML 
+    document.querySelector("#textbox").innerHTML = aiHTML + innerHTML
 }
 
 function setAIResponse(text) {
@@ -90,6 +91,10 @@ function setRecordingButton(recording) {
 }
 
 function record(button){
+    if (!canClickRecord)
+        return
+    setRecordTimeout()
+
     if (button.classList.contains('recordboxstart')) {
         button.classList.remove('recordboxstart');
         button.classList.add('recordboxend');
@@ -114,6 +119,14 @@ function record(button){
         value: isRecording
     })
 }
+async function setRecordTimeout() {
+    canClickRecord = false
+    await sleep(1000)
+    canClickRecord = true
+}
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 window.addEventListener('message', e => {
     const message = e.data; // The JSON data our extension sent
@@ -126,7 +139,7 @@ window.addEventListener('message', e => {
             break
         case "airesponse":
             setAIResponse(message.value)
-            break 
+            break
         case "aimessage":
             addAIMessage(message.value, message.type)
             break

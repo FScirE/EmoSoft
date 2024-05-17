@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const colorDictionary = {
-    'Green': '#4fc553', 
+    'Green': '#4fc553',
     'Yellow': '#FFC300',
     'Blue': '#03a9f4',
     'Pink': '#FF00FF',
@@ -34,6 +34,9 @@ class Settings {
 
     setUIHandler(uiHandler) {
         this.uiHandler = uiHandler
+    }
+    setEyetracker(eyetracker) {
+        this.eyetracker = eyetracker
     }
 
     get highlightEye(){
@@ -74,7 +77,7 @@ class Settings {
     get crownDeviceID() {
         return this.config.get('crownDeviceID');
     }
-    
+
     get focusColor() {
         return this.config.get('focusColor');
     }
@@ -124,25 +127,25 @@ class Settings {
         try {
             const extensionPath = this.extensionPath;
             const filePath = path.join(extensionPath, fileName);
-        
+
             // Check if the file exists and delete it if it does
             const fileExists = await this.checkFileExists(filePath);
             if (fileExists) {
                 await vscode.workspace.fs.delete(vscode.Uri.file(filePath));
             }
-    
+
             // Get configuration values
             const email = this.updatedCrownEmail;
             const deviceID = this.updatedCrownDeviceID;
             const password = await this.getCrownPassword(); // Wait for password input
-    
+
             // Create env data
             const envData = `
                 PASSWORD=${password}
                 EMAIL=${email}
                 DEVICE_ID=${deviceID}
             `;
-    
+
             // Write data to file
             const envDataBuffer = Buffer.from(envData, 'utf-8');
             await vscode.workspace.fs.writeFile(vscode.Uri.file(filePath), envDataBuffer);
@@ -174,7 +177,7 @@ class Settings {
                     console.error('Error writing to webview.css:', err);
                 } else {
                     console.log('webview.css updated successfully.');
-                    
+
                     // Reload the webview to apply the changes
                     this.uiHandler.webView.webview.postMessage({ command: 'reload' });
                 }
@@ -184,9 +187,9 @@ class Settings {
 
     sendColorChange(focus, color) {
         if (this.uiHandler.webViewIsVisisble) {
-            this.uiHandler.webView.webview.postMessage({ variable: focus ? 'focusColor' : 'calmColor', value: color })                    
+            this.uiHandler.webView.webview.postMessage({ variable: focus ? 'focusColor' : 'calmColor', value: color })
         }
-        this.changeWebviewColors(focus, color) 
+        this.changeWebviewColors(focus, color)
     }
 
     listenForConfigChanges() {
@@ -200,7 +203,7 @@ class Settings {
                 await this.createEnvFile('envNeurosity.env');
                 await this.reinitDataHandlerCallback();
             }
-    
+
             if (event.affectsConfiguration('emoide.crownEmail')) {
                 // Handle changes to crownEmail
                 const newEmail = vscode.workspace.getConfiguration('emoide').get('crownEmail');
@@ -209,7 +212,7 @@ class Settings {
                 await this.createEnvFile('envNeurosity.env');
                 await this.reinitDataHandlerCallback();
             }
-    
+
             if (event.affectsConfiguration('emoide.notifications')) {
                 const newNotifications = vscode.workspace.getConfiguration('emoide').get('notifications');
                 console.log('notifications changed to:', newNotifications);
@@ -238,6 +241,7 @@ class Settings {
                 const newEyeTracker = vscode.workspace.getConfiguration('emoide').get('eyeTracker');
                 console.log('eyeTracker changed to:', newEyeTracker);
                 this.eyeIP = newEyeTracker;
+                this.eyetracker.connect() //attempt reconnect to eyetracker
             }
 
             if (event.affectsConfiguration('emoide.stuckNotification')) {
@@ -272,7 +276,7 @@ class Settings {
             }
         });
     }
-    
+
 }
 
 module.exports = {
