@@ -241,7 +241,7 @@ class Settings {
                 const newEyeTracker = vscode.workspace.getConfiguration('emoide').get('eyeTracker');
                 console.log('eyeTracker changed to:', newEyeTracker);
                 this.eyeIP = newEyeTracker;
-                this.eyetracker.connect() //attempt reconnect to eyetracker
+                this.eyetracker.reconnect() //attempt reconnect to eyetracker
             }
 
             if (event.affectsConfiguration('emoide.stuckNotification')) {
