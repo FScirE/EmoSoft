@@ -52,9 +52,10 @@ class EyeTracker {
     }
 
     reconnect() {
-        this.socket.end() //close old connection
+        this.socket.destroy() //close old connection
+        this.socket.removeAllListeners() //remove old listener
 
-        this.socket.connect(4242, this.settings.eyeTrackerIP, () => {
+        this.socket.connect(4242, this.settings.eyeIP, () => {
             console.log('Connected to EyeTracker server');
 
             // Sending initial command after the connection is established

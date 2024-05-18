@@ -59,7 +59,7 @@ class Settings {
     }
 
     // Getter method for eyeTracker IP configuration option
-    get eyeTrackerIP() {
+    get eyeTracker() {
         return this.config.get('eyeTracker');
     }
 
