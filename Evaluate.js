@@ -36,6 +36,14 @@ class Evaluate {
         this.responses.push(response);
     }
 
+    getDatapointsFromCurrentValues() {
+        let tempDataPoints = []
+        for (let i = 0; i < this.focusValues.length; i++) {
+            tempDataPoints[i] = { time: i * 10, focusValue: this.focusValues[i].y, calmValue: this.calmValues[i].y, function: this.sessionFuncs[i].y }
+        }
+        return tempDataPoints
+    }
+
     readFuncsFromFile() { //WE CAN USE GIT LOGS HERE TO GET OLD FUNCTION DEFINITIONS WITH THE SPAN!!
         this.sessionFuncs = []
         var lines = fs.readFileSync(this.path + '\\fullDictionaryFile.txt', 'utf-8').split('\n')
@@ -121,11 +129,7 @@ class Evaluate {
 
         //dataList.sessionFuncs = this.responses.sessionFuncs;
 
-        let tempDataPoints = []
-        for (let i = 0; i < this.focusValues.length; i++) {
-            tempDataPoints[i] = { time: i * 10, focusValue: this.focusValues[i].y, calmValue: this.calmValues[i].y, function: this.responses.sessionFuncs[i].y }
-        }
-        dataList.dataPoints = tempDataPoints
+        dataList.dataPoints = this.getDatapointsFromCurrentValues()
 
         // Eyetracker stats
         dataList.topfuncs = this.topfuncs;

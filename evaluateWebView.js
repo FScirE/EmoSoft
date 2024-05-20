@@ -9,6 +9,7 @@ var evaluateNames = []
 var responses = {}
 var newestSession = {}
 var functionContents = {}
+var dataPoints = []
 var funcs = []
 var path = []
 var loaded = false
@@ -156,12 +157,14 @@ function gatherResponses() {
 	const q1Value = q1Rating ? q1Rating.value : null;
 	const q2Value = q2Rating ? q2Rating.value : null;
 
-
 	responses.focusValues = focusValues;
 	responses.calmValues = calmValues;
 	responses.sessionFuncs = functions;
 	responses.topfuncs = topfuncs;
 	responses.functionContents = functionContents;
+
+	//needed for ai feedback on newest session
+	responses.dataPoints = dataPoints
 
 	// Add all evaluate response to a dict
 	responses.expectedWorkAnswer = q1Value;
@@ -289,6 +292,9 @@ function loadSession(extensionPath) {
 	calmValues = responses.calmValues;
 	functions = responses.sessionFuncs;
 
+	//for ai evaluation fix
+	dataPoints = responses.dataPoints
+
 	createChart() //this ereases the local values from responses, use after defining them
 
 	//LOAD HEATMAP
@@ -345,6 +351,7 @@ selectElement.addEventListener("focus", function(event) {
 		newestSession.calmValues = calmValues;
 		newestSession.sessionFuncs = functions;
 		newestSession.functionContents = functionContents;
+		newestSession.dataPoints = dataPoints //
 		newestSession.responses.focusAnswer = document.getElementById("focusSlider").value;
 		newestSession.responses.calmAnswer = document.getElementById("calmSlider").value;
 		newestSession.topfuncs = funcs;
@@ -371,6 +378,7 @@ window.addEventListener("message", e => {
 			calmValues = message.value[1]
 			functions = message.value[2]
 			functionContents = message.value[3]
+			dataPoints = message.value[4] //
 			createChart()
 			break;
 		case "functions":

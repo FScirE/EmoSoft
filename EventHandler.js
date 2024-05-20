@@ -66,7 +66,7 @@ class EventHandler {
                         this.eyetracker.recordingEnd()
                         this.evaluate.setFocusValues(this.dataHandler.focusValuesSession);
                         this.evaluate.setCalmValues(this.dataHandler.calmValuesSession);
-                        
+
                         vscode.window.showInformationMessage('Would you like to evaluate the session?', 'Yes', 'No').then(async e => {
                             if (e == 'Yes') {
                                 console.log("Yes to evaluate")
@@ -98,7 +98,7 @@ class EventHandler {
                                 //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
                                     variable: "values",
-                                    value: [this.evaluate.focusValues, this.evaluate.calmValues, this.evaluate.sessionFuncs, this.eyetracker.functionContents]
+                                    value: [this.evaluate.focusValues, this.evaluate.calmValues, this.evaluate.sessionFuncs, this.eyetracker.functionContents, this.evaluate.getDatapointsFromCurrentValues()]
                                 })
                                 //await sleepSeconds(1) //safety
                                 this.uiHandler.evaluateWebView.webview.postMessage({
