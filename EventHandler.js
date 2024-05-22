@@ -48,7 +48,7 @@ class EventHandler {
                     //Empty to have a blankslate
                     this.uiHandler.evaluateWebView.webview.postMessage({
                         variable: "values",
-                        value: [[], [], [], []]
+                        value: [[], [], [], [], []]
                     })
                     this.uiHandler.evaluateWebView.webview.postMessage({
                         variable: "evaluateNames",
