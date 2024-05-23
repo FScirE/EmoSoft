@@ -49,7 +49,7 @@ You need to install:
 * vscode (`npm install vscode`)
 * net (`npm install net`)
 * xmldom (`npm install xmldom`)
-* matplotlib (`pip install matplotlib`)  
+* matplotlib (`pip install matplotlib`)
 
 After this you should be able to use our extension.
 
@@ -76,7 +76,7 @@ The focus is a value calculated from the Neurosity Crowns API.
 The calm is a value calculated from the Neurosity Crowns API
 
 #### If crown is not connected
-If the crown is not connected, or a false log in has been entered, the data for focus and calm are generated. 
+If the crown is not connected, or a false log in has been entered, the data for focus and calm are generated.
 
 ### Gazepoint GP3 (Eye-tracker)
 
@@ -98,7 +98,7 @@ In JavaScript we adhere to the snake_case convention for naming variables, this 
 #### AIHandler class
 The AIHandler class is the controller for our AI usage. It has the ability to send messages via `sendMsgToAI()` where it also retrieves the message. This also has the functions that sends the messages when a developer either has low focus or low calm. It also sends the message to explain a function ia `sendMsgHelpWithFunc()`. All of these sendMsgXXX functions call on the main send function called `sendMsgToAI()`, but it uses a diffrent prompt for it.
 #### Prompts
-We decided to have a few standard prompts in the 
+We decided to have a few standard prompts in the
 
 ### DataHandler.js
 
@@ -110,87 +110,110 @@ The Evaluate class is used for saving data from a session and evaluation to a js
 ### evaluateWebView.js`
 `evaluateWebView.js` builds around the evaluate html document it handles events and manages relevant information it cooparetes with `EventHandler.js` and `Evaluate.js`
 it utilizes canvas.js for graph functionallity.
-For further graph documentation visit: (https://canvasjs.com/).  
+For further graph documentation visit: (https://canvasjs.com/).
 
-`EvaluateWebView.js` is the script file for `evaluate.html`. It contains functions:  
+`EvaluateWebView.js` is the script file for `evaluate.html`. It contains functions:
 
 
-`focusSlider.oninput`: Updates the focus slider values on input  
+`focusSlider.oninput`: Updates the focus slider values on input
 
-`calmSlider.oninput`: Updates the calm slider values on input  
+`calmSlider.oninput`: Updates the calm slider values on input
 
-`createChart()`: Renders and sets up the chart from canvasjs  
+`createChart()`: Renders and sets up the chart from canvasjs
 
-`addSymbols(e)`: Sets up suffixes for the chart  
+`addSymbols(e)`: Sets up suffixes for the chart
 
-`gatherResponses()`: Collects all values of a session  
+`gatherResponses()`: Collects all values of a session
 
-`saveEvaluateResponses()`: Prepares all values and sends them to evaluate  
+`saveEvaluateResponses()`: Prepares all values and sends them to evaluate
 
-`setTopfunction(funcname)`: Creates a list in the html with the top functions  
+`setTopfunction(funcname)`: Creates a list in the html with the top functions
 
-`scrollToFunctionCanvas(e)`: Sends a message to trigger a scroll function  
+`scrollToFunctionCanvas(e)`: Sends a message to trigger a scroll function
 
-`clickedFunctionCanvas(e)`: Handles click events on the chart nodes  
+`clickedFunctionCanvas(e)`: Handles click events on the chart nodes
 
-`setFunctionContentArea(visible, text)`: Manages the visibility and content area for the functions  
+`setFunctionContentArea(visible, text)`: Manages the visibility and content area for the functions
 
-`setAiResponse(aioutput)`: Sets the ai response in the html document.  
+`setAiResponse(aioutput)`: Sets the ai response in the html document.
 
-`populatedropdown()`: Fills the dropdown with the names from evaluations.json  
+`populatedropdown()`: Fills the dropdown with the names from evaluations.json
 
-`toggleRatingInput()`: Handles the accessibility to rating  
+`toggleRatingInput()`: Handles the accessibility to rating
 
-`changeHeatmapImageSrc(newSrc)`: Setups for correct heatmap display  
+`changeHeatmapImageSrc(newSrc)`: Setups for correct heatmap display
 
-`loadSession(extensionPath)`: Loads in all the data from a session and displays it  
+`loadSession(extensionPath)`: Loads in all the data from a session and displays it
 
-`selectElement.addEventListener("change", function(event))`: Sends name to Evaluation.js to retrieve data for that name  
+`selectElement.addEventListener("change", function(event))`: Sends name to Evaluation.js to retrieve data for that name
 
-`selectElement.addEventListener("focus", function(event))`: Saves the newest session when dropdown is in focus  
+`selectElement.addEventListener("focus", function(event))`: Saves the newest session when dropdown is in focus
 
 `window.addEventListener("message", e -> {})` : Is a mailbox for the script file
 
 ### EventHandler.js
-EventHander is can be seen as the controller of all other classes. Almost all events and information pass through and is handled by this class. Firsly, it has a function called `initUIMessage` which handles events caused by UI interaction in the main extension page (the one with the AI chat in the middle). The first case, 'user', is the event when the user types a message to the AI assistent in the chat. The message is sent to AI handler and we get a response which is then sent back to the UI. After this we have the case 'gotoEval', which is used for switching to the evaluation page after a session or when the 'evaluate page' button is pressed. We finally have the case 'recording' which inits a recording when record button is pressed and stores all relevant data when recording is done.  
+EventHander is can be seen as the controller of all other classes. Almost all events and information pass through and is handled by this class. Firsly, it has a function called `initUIMessage` which handles events caused by UI interaction in the main extension page (the one with the AI chat in the middle). The first case, 'user', is the event when the user types a message to the AI assistent in the chat. The message is sent to AI handler and we get a response which is then sent back to the UI. After this we have the case 'gotoEval', which is used for switching to the evaluation page after a session or when the 'evaluate page' button is pressed. We finally have the case 'recording' which inits a recording when record button is pressed and stores all relevant data when recording is done.
 
-The second function is `initEvaluateRecieveMessage` which is similar to the first one as it also handles UI messages. However, in this case we recieve messages form the evaluation page. The first message, 'evaluateResponses', handles saving a session. It recieves data from different modules and calls function from `Evaluate` class to save these. 'nameRequest' is used to get the data from a selected function so that this can be shown to the user. 'scrollFunctions' is used when a user press a function in the evaluation page so that the editor automatically scrolls to that function in the code. 'relevantDataForAi' sends data from a session to the `AiHandler` to get feedback for the session based on the data.  
+The second function is `initEvaluateRecieveMessage` which is similar to the first one as it also handles UI messages. However, in this case we recieve messages form the evaluation page. The first message, 'evaluateResponses', handles saving a session. It recieves data from different modules and calls function from `Evaluate` class to save these. 'nameRequest' is used to get the data from a selected function so that this can be shown to the user. 'scrollFunctions' is used when a user press a function in the evaluation page so that the editor automatically scrolls to that function in the code. 'relevantDataForAi' sends data from a session to the `AiHandler` to get feedback for the session based on the data.
 
-We have a couple of additional functions. The first one being `stuckOnFunction` which is used for sending an AI-generated explanation when a user has looked at the same function for a longer period of time. `checkFocus` and `checkCalm` checks if focus/calm has dropped below threshold and if so, send advice in chat on how to regain focus/calm. 
+We have a couple of additional functions. The first one being `stuckOnFunction` which is used for sending an AI-generated explanation when a user has looked at the same function for a longer period of time. `checkFocus` and `checkCalm` checks if focus/calm has dropped below threshold and if so, send advice in chat on how to regain focus/calm.
+
 ### extension.js
-The `extension.js` file is what handles the main program of the extenion, the `activate()`.
+The `extension.js` file is what handles the main program of the extenion, the `activate()` function is what runs when the extension activates (which we have set to be on startup in package.json). The `activate()` functions begins by initializing all instances of all classes, the order is very important and should not be changed. It then starts the main program loop which gets calm/focus values and sends them to the UIHandler to display, it updates the focus/calm bar and calls the EventHandler function that checks if the values are under the threshold, finally it runs eyetracker check which records which line is in focus.
 
 ### Eyetracker.js
-This file requires `net` and `xmldom` to be installed via `npm install net, xmldom`. It handles the client-server for the eye-tracker. From the eye-tracker we get x,y-values which are then converted to a line. This is done in the `getSetLineInFocus()` method. Here we also handle the calculations for top lines, calibration and call on generate heatmap.
+This file requires `net` and `xmldom` to be installed via `npm install net, xmldom`. It handles the client-server for the eye-tracker. From the eye-tracker we get x,y-values which are then converted to a line. This is done in the `getSetLineInFocus()` method which is called from extension.js. Here we also handle the calculations for top lines, calibration and call on generate heatmap.
 
 ### heatmapGenerator.py
-
 This file generates the heatmap from the eye-tracking data. We use matplotlib as a library to make the heatmap. The data from the eye-tracker is read from two txt documents, `xValues.txt` and `yValues.txt`. We calculate an intesity for the heatmap, i.e how much we looked at a specific coordinate relative to the others. Then we generate the heatmap in `generate_heatmap()`. This is saved as a png file called `heatmap.png` in the heatmaps folder. Path is `heatmaps/heatmap.png`.
 
 ### OpenAIExtension.js
-
 This file handles the API from OpenAI.
 
-- Here you can choose which model to use on line 28: model: `gpt-3.5-turbo` is current. You can change this to `GPT-4o` or `gpt-4-turbo`. The documentation for this is avilable on: https://platform.openai.com/docs/models.  
+- Here you can choose which model to use on line 28: model: `gpt-3.5-turbo` is current. You can change this to `GPT-4o` or `gpt-4-turbo`. The documentation for this is avilable on: https://platform.openai.com/docs/models.
 
-- This file contains the `retrieveResponse(p,m,e)` function. It takes in a preset, which is some standard text that goes before the message. It also takes the message and and extension path. 
+- This file contains the `retrieveResponse(p,m,e)` function. It takes in a preset, which is some standard text that goes before the message. It also takes the message and and extension path.
 
-- You can also set the max lenght of a message that can be sent. Standard in our extension is 2500. 
+- You can also set the max lenght of a message that can be sent. Standard in our extension is 2500.
 
 - There is a safetey mechanism that is commented out, which can be used when testing out new functionalities that risk spamming the AI so as to not run out of funds.
 
 ### UIhandler.js
-Eric
+The UIHandler class has the following functions:
 
+- `setFocusProgress(f)` and `setCalmProgress(c)`; These functions send the focus and calm values gathered from the crown to the webview.
+
+- `printAIMessage(t,c)`; This function waits for the webview to be visible, then sends text with a specific cssClass to the webview for displaying a chat message from the AI.
+
+- `switchToEvaluationPage()`; Creates a new webview for the evaluation window.
+
+The functions outside the class are:
+
+- `createStatusBarButton()`; Creates the 'Open UI' button that pops up when the UI window is closed, it calls the start.ui command which is created in the `init` function, this command itself calls the `createWebView` command to open the UI window.
+
+- `createStatusBar(c,w)`; Creates a status bar item that looks like a block, it is transparent by default and the name and position is sent through the parameters.
+
+- `createWebView(c,h)`; This function creates a webview with a desired html document as the source code.
 
 ### webview.js
+This file is the script for the 'webview.html' file.
+
+- `setFocusValue(value)` and `setCalmValue(value)`; Chenges the values displayed in the progress and calm bars, as well as the percentage as text.
+- `addUserMessage()`; Tries to add the users input text as a message to the chat, as well as sending the message value back to the extension. Also creates the loading symbol in place of the AI response.
+- `setAIResponse(text)`; Replaces the AI loading symbol with the response retrieved.
+- `addAIMessage(text, type)`; Adds an AI message to the chat with a desired class.
+- `textareaChanged(element)`; Called when the text area changes, updates the size counter and restricts user from exceeding size limit.
+- `setRecordingButton(recording)`; Used to set record button as recording when UI window is restarted.
+- `record(button)`; Toggles the recording state of the record button and sends the new recording state to the extension.
+- `setRecordTimeout()`; Used as a mutex to make sure record button can't be spammed.
+- `gotoEvaluate()`; Sends message to start evaluation window to the extension.
+
+The file also creates listeners for all messages sent to the webview as well as pressing enter within the text box.
 
 ### findFuncsFromLines.py
-
 This file handles finding the function from it's line number. This is used with the eye-tracker. So that if we are looking at line 36, we can know that line 36 is in the function xxx. This is done by generating an AST (abstract syntax tree) then parsing through the nodes until we find the correct function. Each function has a size and start value so we know which lines are in which functions. This data is written to `fullDictionaryFile.txt` file in order to access it later from JavaScript when generating the evaluation screen.
 
 ## Known bugs
-
 - B.1 When having a long session (over 1 hour) the max tokens by GPT is reached. I.e we send to much input to the AI.
 
 - B.2 Show evaluate page button in UI not always working. Sometimes only opens empty tab.
