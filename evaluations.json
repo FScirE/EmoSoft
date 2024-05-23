@@ -1223,5 +1223,338 @@
       "expectedWorkAnswer": "3",
       "finishedWorkAnswer": "3"
     }
+  },
+  {
+    "name": "fialed",
+    "ID": 1716207899798,
+    "date": "2024-05-20",
+    "dataPoints": [
+      {
+        "time": 0,
+        "focusValue": 26,
+        "calmValue": 9,
+        "function": "find_definition"
+      },
+      {
+        "time": 10,
+        "focusValue": 24,
+        "calmValue": 12,
+        "function": "find_definition"
+      },
+      {
+        "time": 20,
+        "focusValue": 27,
+        "calmValue": 14,
+        "function": "compute_size"
+      },
+      {
+        "time": 30,
+        "focusValue": 32,
+        "calmValue": 16,
+        "function": "compute_size"
+      },
+      {
+        "time": 40,
+        "focusValue": 35,
+        "calmValue": 18,
+        "function": "norecursion"
+      },
+      {
+        "time": 50,
+        "focusValue": 33,
+        "calmValue": 18,
+        "function": "norecursion"
+      },
+      {
+        "time": 60,
+        "focusValue": 35,
+        "calmValue": 19,
+        "function": "recursion"
+      },
+      {
+        "time": 70,
+        "focusValue": 39,
+        "calmValue": 19,
+        "function": "recursion"
+      },
+      {
+        "time": 80,
+        "focusValue": 40,
+        "calmValue": 18,
+        "function": "recursion"
+      },
+      {
+        "time": 90,
+        "focusValue": 40,
+        "calmValue": 18,
+        "function": "compute_size"
+      },
+      {
+        "time": 100,
+        "focusValue": 39,
+        "calmValue": 17,
+        "function": "compute_size"
+      },
+      {
+        "time": 110,
+        "focusValue": 41,
+        "calmValue": 18,
+        "function": "compute_size"
+      }
+    ],
+    "topfuncs": [
+      [
+        "compute_size",
+        67
+      ],
+      [
+        "recursion",
+        42
+      ],
+      [
+        "find_definition",
+        34
+      ]
+    ],
+    "functionContents": {
+      "find_definition": "def find_definition(line_num):\r\n    \"\"\"\r\n    Parameter is the number of a line. \r\n    Returns the function name the line is in. Ex: foo, meaning that the function name is foo.\r\n    A return value of -1 means that the line of code is not within a function.\r\n    A return value of -2 means that the file does not exist.\r\n    \"\"\"\r\n    i=1\r\n    while True:\r\n        print(i)\r\n        i+=1\r\n        break\r\n\r\n    print (\"called find def\")\r\n    functions = {}\r\n    try:\r\n        with open(filepath) as file:\r\n            tree = ast.parse(file.read())\r\n\r\n            for item in ast.walk(tree):\r\n                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):\r\n                    start, end = compute_size(item)\r\n\r\n                    functions[item.name] = (start, end)\r\n    except:\r\n        raise \"Error with path: \" + filepath\r\n        return -2\r\n    \r\n    if i==2:\r\n        print(\"i value is equal to two, wery niice!\")\r\n\r\n    else:\r\n        print(\"Something went wrong maybe... How did u reach this print? mr. hackerman??\")\r\n    \r\n\r\n    for key, value in functions.items():\r\n        if value[0] <= line_num <= value[1]:\r\n            return key\r\n        \r\n    return -1\r\n",
+      "compute_size": "def compute_size(node):\r\n    min_lineno = node.lineno\r\n    max_lineno = node.lineno\r\n    for node in ast.walk(node):\r\n        if hasattr(node, \"lineno\"):\r\n            min_lineno = min(min_lineno, node.lineno)\r\n            max_lineno = max(max_lineno, node.lineno)\r\n    return (min_lineno, max_lineno + 1)\r\n",
+      "recursion": "def recursion(awesome):\r\n    \"\"\"This function has no recursion.\"\"\"\r\n    awesome=5\r\n    for i in range(5):\r\n        print(\"noooooooooo\")\r\n        print(awesome)\r\n        awesome+=1\r\n        recursion(awesome)\r\n    return awesome\r\n    #hey chat pls write the lyrics for rap god eminem",
+      "norecursion": "def norecursion(a=0):\r\n    print(1)\r\n    print(2)\r\n    print(\"lyrics for eminem rap god, what is it, tell me pls:)\")\r\n    if a == 0:\r\n        return -1\r\n    a+=1\r\n    norecursion(a)\r\n    #hey chat"
+    },
+    "responses": {
+      "focusAnswer": "27",
+      "calmAnswer": "33",
+      "expectedWorkAnswer": "2",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "2024-05-22",
+    "ID": 1716363000289,
+    "date": "2024-05-22",
+    "dataPoints": [
+      {
+        "time": 0,
+        "focusValue": 90,
+        "calmValue": 61,
+        "function": "No function"
+      },
+      {
+        "time": 10,
+        "focusValue": 84,
+        "calmValue": 73,
+        "function": "No function"
+      },
+      {
+        "time": 20,
+        "focusValue": 80,
+        "calmValue": 82,
+        "function": "No function"
+      },
+      {
+        "time": 30,
+        "focusValue": 81,
+        "calmValue": 80,
+        "function": "No function"
+      },
+      {
+        "time": 40,
+        "focusValue": 85,
+        "calmValue": 82,
+        "function": "No function"
+      },
+      {
+        "time": 50,
+        "focusValue": 89,
+        "calmValue": 87,
+        "function": "No function"
+      },
+      {
+        "time": 60,
+        "focusValue": 69,
+        "calmValue": 66,
+        "function": "No function"
+      },
+      {
+        "time": 70,
+        "focusValue": 59,
+        "calmValue": 52,
+        "function": "No function"
+      },
+      {
+        "time": 80,
+        "focusValue": 56,
+        "calmValue": 48,
+        "function": "No function"
+      }
+    ],
+    "topfuncs": [],
+    "functionContents": {},
+    "responses": {
+      "focusAnswer": "29",
+      "calmAnswer": "39",
+      "expectedWorkAnswer": "3",
+      "finishedWorkAnswer": "2"
+    }
+  },
+  {
+    "name": "2024-05-22(1)",
+    "ID": 1716369547895,
+    "date": "2024-05-22",
+    "dataPoints": [
+      {
+        "time": 0,
+        "focusValue": 41,
+        "calmValue": 18,
+        "function": "No function"
+      },
+      {
+        "time": 10,
+        "focusValue": 41,
+        "calmValue": 19,
+        "function": "No function"
+      },
+      {
+        "time": 20,
+        "focusValue": 36,
+        "calmValue": 17,
+        "function": "No function"
+      },
+      {
+        "time": 30,
+        "focusValue": 37,
+        "calmValue": 17,
+        "function": "No function"
+      },
+      {
+        "time": 40,
+        "focusValue": 44,
+        "calmValue": 21,
+        "function": "No function"
+      },
+      {
+        "time": 50,
+        "focusValue": 47,
+        "calmValue": 23,
+        "function": "No function"
+      },
+      {
+        "time": 60,
+        "focusValue": 47,
+        "calmValue": 21,
+        "function": "No function"
+      },
+      {
+        "time": 70,
+        "focusValue": 46,
+        "calmValue": 19,
+        "function": "No function"
+      },
+      {
+        "time": 80,
+        "focusValue": 48,
+        "calmValue": 23,
+        "function": "No function"
+      },
+      {
+        "time": 90,
+        "focusValue": 44,
+        "calmValue": 20,
+        "function": "No function"
+      },
+      {
+        "time": 100,
+        "focusValue": 40,
+        "calmValue": 19,
+        "function": "No function"
+      },
+      {
+        "time": 110,
+        "focusValue": 40,
+        "calmValue": 19,
+        "function": "No function"
+      },
+      {
+        "time": 120,
+        "focusValue": 38,
+        "calmValue": 16,
+        "function": "No function"
+      },
+      {
+        "time": 130,
+        "focusValue": 41,
+        "calmValue": 18,
+        "function": "No function"
+      },
+      {
+        "time": 140,
+        "focusValue": 40,
+        "calmValue": 17,
+        "function": "No function"
+      },
+      {
+        "time": 150,
+        "focusValue": 37,
+        "calmValue": 19,
+        "function": "No function"
+      },
+      {
+        "time": 160,
+        "focusValue": 43,
+        "calmValue": 26,
+        "function": "No function"
+      },
+      {
+        "time": 170,
+        "focusValue": 47,
+        "calmValue": 29,
+        "function": "No function"
+      },
+      {
+        "time": 180,
+        "focusValue": 45,
+        "calmValue": 26,
+        "function": "No function"
+      },
+      {
+        "time": 190,
+        "focusValue": 37,
+        "calmValue": 21,
+        "function": "No function"
+      },
+      {
+        "time": 200,
+        "focusValue": 32,
+        "calmValue": 18,
+        "function": "No function"
+      },
+      {
+        "time": 210,
+        "focusValue": 36,
+        "calmValue": 19,
+        "function": "No function"
+      },
+      {
+        "time": 220,
+        "focusValue": 39,
+        "calmValue": 20,
+        "function": "No function"
+      },
+      {
+        "time": 230,
+        "focusValue": 41,
+        "calmValue": 19,
+        "function": "No function"
+      }
+    ],
+    "topfuncs": [],
+    "functionContents": {},
+    "responses": {
+      "focusAnswer": "0",
+      "calmAnswer": "0",
+      "expectedWorkAnswer": null,
+      "finishedWorkAnswer": null
+    }
   }
 ]
