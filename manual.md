@@ -1,6 +1,6 @@
 # Developer manual for Emotionally Aware IDE
 
-**Revisited:** <!-- Insert today's date manually -->
+**Revisited:** 27-05-2024
 
 ## Abstract
 
@@ -10,7 +10,6 @@ This manual is for a developer who wishes to make changes in the code. In this d
 - How the components interact with each other
 - Explain the most important functionality
 
----
 
 ## Table of Contents
 
@@ -22,10 +21,7 @@ This manual is for a developer who wishes to make changes in the code. In this d
 - [Coding conventions](#coding-conventions)
   - [Javascript](#javascript)
   - [Python](#python)
-  - [HTML](#html)
-  - [CSS](#css)
-- [Components and interactions](#components-and-interactions)
-  - [Overview of the system](#overview-of-the-system)
+- [Class diagram](#class-diagram)
 - [Navigating the files](#navigating-the-files)
 - [Known bugs](#known-bugs)
 
@@ -39,7 +35,7 @@ The plugin was developed as a project course at BTH (Blekinge Tekniska Högskola
 
 ## Current restraints/requirements of environment
 ### Screen Size and Screen Restraints
-Screen sizes are limited to 1920x1080 monitors. Otherwise the eye-tracker will not work with our extension. Curved monitors are not recomended as testing has not been done with it.
+Screen sizes are limited to 1920x1080 monitors. Otherwise the eye-tracker will not work optimally with our extension. Curved monitors are not recomended as testing has not been done with it.
 
 ### Imports/installs
 You need to install:
@@ -64,21 +60,20 @@ macOS with M-series chip are not recomended for this extension. Attempts with M1
 ## Most important functionalities
 
 ### Neurosity crown
-
-One of the most important functionality is the Neurosity Crown. This is handled inside the `dataHandler.js` file.
+One of the most important functionality is the Neurosity Crown. This is handled inside the `DataHandler.js` file.
 
 #### Focus
-
 The focus is a value calculated from the Neurosity Crowns API.
 
 #### Calm
-
-The calm is a value calculated from the Neurosity Crowns API
+The calm is a value calculated from the Neurosity Crowns API.
 
 #### If crown is not connected
 If the crown is not connected, or a false log in has been entered, the data for focus and calm are generated.
 
 ### Gazepoint GP3 (Eye-tracker)
+The eyetracker allows for the user to see where on the screen and what functions they are looking at.
+
 
 ## Coding conventions
 
@@ -86,25 +81,24 @@ If the crown is not connected, or a false log in has been entered, the data for 
 In JavaScript we adhere to the camelCase convention for naming variables, this is the standard for js. We also tried to have the variable names as explanatory as possible so that we did not need much comments in the code. Docstrings are available for some of the functions.
 
 ### Python
-In JavaScript we adhere to the snake_case convention for naming variables, this is the standard for py. We also tried to have the variable names as explanatory as possible so that we did not need much comments in the code. Docstrings are available for some of the functions.
+In Python we adhere to the snake_case convention for naming variables, this is the standard for py. We also tried to have the variable names as explanatory as possible so that we did not need much comments in the code. Docstrings are available for some of the functions.
 
 ## Class diagram
+![Alt text](uml_diagram.png)
 
-![Alt text](uml_class_diagram.png)
 
 ## Navigating the files
 
 ### AIhandler.js
-#### AIHandler class
 The AIHandler class is the controller for our AI usage. It has the ability to send messages via `sendMsgToAI()` where it also retrieves the message. This also has the functions that sends the messages when a developer either has low focus or low calm. It also sends the message to explain a function ia `sendMsgHelpWithFunc()`. All of these sendMsgXXX functions call on the main send function called `sendMsgToAI()`, but it uses a diffrent prompt for it.
+
 #### Prompts
 We decided to have a few standard prompts in the
 
 ### DataHandler.js
+The DataHandler is for logging into and handling data from Neurosity. If login fails, it will generate simulated (fake) data and return that instead. Creation of simulated data can be affected with the boolean createFakeDataIfNotLoggedIn. The function init(extensionPath) takes the directory of the extension as a parameter, and tries to log in with the envNeurosity.env file found in that folder, or if that fails it sets up the creation of simulated data. The uninit() function resets the DataHandler instance. The getCalm and getFocus functions get the average calm and focus values respectively from the Neurosity device over the last 20 seconds (as defined in milliseconds by recentCalmDuration and recentFocusDuration). There is a helper function sleepSeconds, which is awaitable. The startRecording and endRecording functions are used to store the calm and focus values in the calmValuesSession and focusValuesSession variables. This class also holds the loop which created the nodes for the evaluation graph.
 
-Tommie
 ### Evaluate.js
-
 The Evaluate class is used for saving data from a session and evaluation to a json file called `evaluations.json`. The first functions are setFocusValues and setCalmValues which are called in eventhandler to prepare values gathered during a session to be saved. We also have readFuncsFromFile which reads in the functions you looked at during the session. After this comes saveEvaluation to file which does the actual saving. It gathers the focusvalues, calmvalues, functions, top functions, heatmap, and answers to question, formats these in a object which is then saved to `evaluations.json`. Additionally, this class has two functions to load data from the json file. The first one is loadEvalNameList which simply loads in all the names of the saved session so that these can be shown in the drop down menu in the evaluation page. We also have loadEvalData which loads in the data from a specific session which is also used in the evaluation page when the user want to view an old session.
 
 ### evaluateWebView.js`
@@ -113,7 +107,6 @@ it utilizes canvas.js for graph functionallity.
 For further graph documentation visit: (https://canvasjs.com/).
 
 `EvaluateWebView.js` is the script file for `evaluate.html`. It contains functions:
-
 
 `focusSlider.oninput`: Updates the focus slider values on input
 
@@ -214,12 +207,14 @@ The file also creates listeners for all messages sent to the webview as well as 
 This file handles finding the function from it's line number. This is used with the eye-tracker. So that if we are looking at line 36, we can know that line 36 is in the function xxx. This is done by generating an AST (abstract syntax tree) then parsing through the nodes until we find the correct function. Each function has a size and start value so we know which lines are in which functions. This data is written to `fullDictionaryFile.txt` file in order to access it later from JavaScript when generating the evaluation screen.
 
 ## Known bugs
-- B.1 When having a long session (over 1 hour) the max tokens by GPT is reached. I.e we send to much input to the AI.
+- B.1 When having a long session (over ~3 hours) the max tokens by GPT is reached. I.e we send to much input to the AI.
 
-- B.2 Show evaluate page button in UI not always working. Sometimes only opens empty tab.
+- B.2 Loading evaluation page in UI not always working. Sometimes only opens empty tab (very rare).
 
-- B.3 If you open a new "page/window", like settings, while in a session, the session ends and you cause the program to work in an unintended way.
+- B.3 If you open a new "page/window", like settings, while in a session, the session ends as the webview resets and you cause the program to work in an unintended way.
 
-- B.4 If the python code you are writing is not compilable at the time when the AST is generated, the read function program crashes and will not be able to read what function you are looking at, at that tiime. As soon as it is compilable it will resume working.
+- B.4 If the python code you are writing is not compilable at the time when the AST is generated, the read function program crashes and will not be able to read what function you are looking at, at that time. As soon as it is compilable it will resume working.
 
 - B.5 We have not successfully run our extension on a device with macOS and M-series chip. Only limited attempts have been done with a M1 mac which were not successful.
+
+- B.6 The eyetracker line interpretation only works for some specific resolutions and sizes of screens (1980x1080 17.3" with 30 lines visible is optimal), not exactly a bug but something that should be changed.
