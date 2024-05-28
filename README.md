@@ -47,6 +47,8 @@ You need to install:
 * xmldom (`npm install xmldom`)
 * matplotlib (`pip install matplotlib`)
 
+A .env file with the API key and organization must be created with values for OPENAI_API_KEY and OPENAI_ORGANIZATION (see `OpenAIExtension.js`).
+
 After this you should be able to use our extension.
 
 

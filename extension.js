@@ -7,12 +7,12 @@ const vscode = require('vscode');
 const path = require('path')
 const fs = require('fs')
 
-const { DataHandler } = require('./DataHandler')
-const { EventHandler } = require('./EventHandler')
-const { EyeTracker } = require('./Eyetracker')
-const { AIHandler } = require('./AIHandler')
-const { UIHandler } = require('./UIHandler')
-const { Settings } = require('./settings.js')
+const { DataHandler } = require('./Classes/DataHandler')
+const { EventHandler } = require('./Classes/EventHandler')
+const { EyeTracker } = require('./Classes/Eyetracker')
+const { AIHandler } = require('./Classes/AIHandler')
+const { UIHandler } = require('./Classes/UIHandler')
+const { Settings } = require('./Classes/settings.js')
 
 
 // This method is called when your extension is activated

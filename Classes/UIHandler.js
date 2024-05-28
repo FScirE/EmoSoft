@@ -107,7 +107,7 @@ function createWebView(context, html) {
 	);
     webView.iconPath = vscode.Uri.file(context.extensionPath + '\\emoide-icon.png')
 
-	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, `./${html}.html`), 'utf-8')
+	webView.webview.html = fs.readFileSync(path.join(context.extensionPath, `./Webviews/${html}.html`), 'utf-8')
         .replaceAll('./', webView.webview.asWebviewUri(vscode.Uri.file(context.extensionPath)).toString() + '/')
 	return webView;
 }
